@@ -58,6 +58,21 @@
                 	<picUrl>www.ejemplo.com</picUrl>
             </properties>
         </developer>
+        
+        <developer>
+            <id>raumonmar1</id>
+            <name>Raúl</name>
+            <email>raumonmar1@alum.us.es</email>
+            <url>https://github.com/raumonmar1</url>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <properties>
+                	<picUrl>https://avatars.githubusercontent.com/u/72814383?v=4</picUrl>
+            </properties>
+        </developer>
+        
+        
     </developers>
 
     <dependencies>
