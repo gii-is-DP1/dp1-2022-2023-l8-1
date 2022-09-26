@@ -33,6 +33,20 @@
     </properties>
 
 	<developers>
+	
+		<developer>
+		<id>Jose</id>
+		<name>Jose Antonio</name>
+		<email>josreimun@alum.us.es</email>
+		<url>https://github.com/Josreimun</url>
+		<roles>
+			<role>Developer</role>
+		</roles>
+		<properties>
+			<picURL>https://avatars.githubusercontent.com/u/80253947?v=4</picURL>
+		</properties>
+		</developer>
+		
 		<developer>
 		<id>Miguel</id>
 		<name>Miguel</name>
