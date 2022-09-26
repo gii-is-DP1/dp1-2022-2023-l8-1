@@ -33,7 +33,6 @@
     </properties>
 
 	<developers>
-	
 		<developer>
             <id>Sam</id>
             <name>Samuel</name>
@@ -46,9 +45,9 @@
                 <picUrl>
                 https://cdn.discordapp.com/attachments/834429825002242118/1015184658037747732/IMG_1387.jpg
             =large
-        </picUrl>
+                </picUrl>
             </properties>
-        </developer>
+    </developer>
 	
 		<developer>
 		<id>Jose</id>
