@@ -33,6 +33,21 @@
     </properties>
 
 	<developers>
+		<developer>
+            <id>Sam</id>
+            <name>Samuel</name>
+            <email>saoalbalat@gmail.com</email>
+            <url></url>
+            <roles>
+                <role>member</role>
+            </roles>
+            <properties>
+                <picUrl>
+                https://cdn.discordapp.com/attachments/834429825002242118/1015184658037747732/IMG_1387.jpg
+            =large
+                </picUrl>
+            </properties>
+    </developer>
 	
 		<developer>
 		<id>Jose</id>
