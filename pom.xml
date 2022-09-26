@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.springframework.samples</groupId>
-    <artifactId>G3-L8-1</artifactId>
+    <artifactId>spring-petclinic</artifactId>
     <version>2.2.0.BUILD-SNAPSHOT</version>
 
     <parent>
@@ -12,7 +12,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.4.RELEASE</version>
     </parent>
-    <name>G3-L8-1</name>
+    <name>petclinic</name>
 
     <properties>
 
@@ -32,8 +32,9 @@
 
     </properties>
 
-    <developers>
-         <developer>
+	<developers>
+	
+		<developer>
             <id>Sam</id>
             <name>Samuel</name>
             <email>saoalbalat@gmail.com</email>
@@ -48,7 +49,61 @@
         </picUrl>
             </properties>
         </developer>
-</developers>
+	
+		<developer>
+		<id>Jose</id>
+		<name>Jose Antonio</name>
+		<email>josreimun@alum.us.es</email>
+		<url>https://github.com/Josreimun</url>
+		<roles>
+			<role>Developer</role>
+		</roles>
+		<properties>
+			<picURL>https://avatars.githubusercontent.com/u/80253947?v=4</picURL>
+		</properties>
+		</developer>
+		
+		<developer>
+		<id>Miguel</id>
+		<name>Miguel</name>
+		<email>miguel.ybarra.mym@gmail.com</email>
+		<url>www.ejemplo.com</url>
+		<roles>
+			<role>Developer</role>
+		</roles>
+		<properties>
+			<picURL>https://avatars.githubusercontent.com/u/80253947?v=4</picURL>
+		</properties>
+		</developer>
+	
+        <developer>
+            <id>jesmarver</id>
+            <name>Jesus</name>
+            <email>jesusperike@gmail.com</email>
+            <url></url>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <properties>
+                	<picUrl>www.ejemplo.com</picUrl>
+            </properties>
+        </developer>
+        
+        <developer>
+            <id>raumonmar1</id>
+            <name>Raúl</name>
+            <email>raumonmar1@alum.us.es</email>
+            <url>https://github.com/raumonmar1</url>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <properties>
+                	<picUrl>https://avatars.githubusercontent.com/u/72814383?v=4</picUrl>
+            </properties>
+        </developer>
+        
+        
+    </developers>
 
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
