@@ -18,6 +18,8 @@ INSERT INTO authorities(id,username,authority) VALUES (5,'raumonmar1','owner');
 INSERT INTO users(username,password,enabled) VALUES ('samalbort','s4m4lb0rt',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (6,'samalbort','owner');
 
+INSERT INTO users(username,password,enabled) VALUES ('josreimun','admin',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (7,'josreimun','owner');
 
 INSERT INTO vets(id, first_name,last_name) VALUES (1, 'James', 'Carter');
 INSERT INTO vets(id, first_name,last_name) VALUES (2, 'Helen', 'Leary');
