@@ -89,3 +89,11 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
+
+
+
+INSERT INTO players(id, glory, gold, wounds, evasion, hero_type) VALUES (1, 5, 10, 20, TRUE, 'MAGO_MASCULINO');
+INSERT INTO players(id, glory, gold, wounds, evasion, hero_type) VALUES (2, 10, 25, 10, FALSE, 'GUERRERO_FEMENINO');
+
+-- INSERT INTO MARKET_CARDS(id, price, type) VALUES (1, 10, DAGA_ELFICA);
+
