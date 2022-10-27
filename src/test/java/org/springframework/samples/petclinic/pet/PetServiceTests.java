@@ -27,10 +27,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.samples.petclinic.owner.Owner;
-import org.springframework.samples.petclinic.owner.OwnerService;
-import org.springframework.samples.petclinic.pet.exceptions.DuplicatedPetNameException;
-import org.springframework.samples.petclinic.util.EntityUtils;
+import org.springframework.samples.notimeforheroes.owner.Owner;
+import org.springframework.samples.notimeforheroes.owner.OwnerService;
+import org.springframework.samples.notimeforheroes.pet.Pet;
+import org.springframework.samples.notimeforheroes.pet.PetService;
+import org.springframework.samples.notimeforheroes.pet.PetType;
+import org.springframework.samples.notimeforheroes.pet.Visit;
+import org.springframework.samples.notimeforheroes.pet.exceptions.DuplicatedPetNameException;
+import org.springframework.samples.notimeforheroes.util.EntityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
