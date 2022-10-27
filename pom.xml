@@ -100,7 +100,20 @@
                 	<picUrl>https://avatars.githubusercontent.com/u/72814383?v=4</picUrl>
             </properties>
         </developer>
-        
+        <developer>
+			<id>pablonunnez</id>
+			<name>Pablo</name>
+			<email>pabnunmor@alum.us.es</email>
+			<url>http://www.example.com</url>
+			<roles>
+				<role>dev</role>
+			</roles>
+			<properties>
+				<picUrl>
+					https://avatars.githubusercontent.com/u/62183728
+				</picUrl>
+			</properties>
+		</developer>
         
     </developers>
 
@@ -243,7 +256,7 @@
                     </execution>
                 </executions>
             </plugin>
-           
+
 
             <!-- Spring Boot Actuator displays build-related information if a git.properties 
             file is present at the classpath -->
