@@ -1,6 +1,5 @@
 -- -- One admin user, named admin1 with passwor 4dm1n and authority admin
 -- INSERT INTO users(username,password,enabled) VALUES ('admin1','4dm1n',TRUE);
--- INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
 -- -- One owner user, named owner1 with passwor 0wn3r
 -- INSERT INTO users(username,password,enabled) VALUES ('owner1','0wn3r',TRUE);
 -- INSERT INTO authorities(id,username,authority) VALUES (2,'owner1','owner');
@@ -90,21 +89,37 @@
 -- INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
 
-
-
-INSERT INTO players(glory, gold, wounds, evasion, hero_type) VALUES (5, 10, 20, TRUE, 'MAGO_MASCULINO');
-
 INSERT INTO users(username, password, email, birth_date, enabled) VALUES
 ('admin', 'admin', 'admin@admin.com', '2013-01-03', 1);
 
 
+INSERT INTO players(glory, gold, wounds, evasion, hero_type, user_id) VALUES (5, 10, 20, TRUE, 'MAGO_MASCULINO',1);
 
--- INSERT INTO Users_players(user_id, player_id) VALUES(1,1);
--- -- INSERT INTO Users(id, username, password, email, birth_date) VALUES 
--- -- (1, 'admin', 'admin', 'admin@admin.com', '2013-01-03');
+INSERT INTO ability_cards(ability_type, damage, hero_type) VALUES ('COMPANERO_LOBO', 10, 'MAGO_MASCULINO');
 
--- -- INSERT INTO Users_players VALUES (1,1);
--- -- INSERT INTO players(id, glory, gold, wounds, evasion, hero_type) VALUES (2, 10, 25, 10, FALSE, 'GUERRERO_FEMENINO');
+INSERT INTO ABILITY_CARD_IN_GAME(damage, ability_card_id, player_id) VALUES (10, 1, 1);
 
--- -- -- INSERT INTO MARKET_CARDS(id, price, type) VALUES (1, 10, DAGA_ELFICA);
+INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(1,1);
+
+INSERT INTO authorities(authority, username) VALUES ('admin', 1);
+
+INSERT INTO enemies(endurance, glory, type) VALUES (10,10,'HONDERO');
+
+INSERT INTO enemy_in_game(endurance) VALUES (10);
+
+INSERT INTO games(start_time, end_time, has_scenes, max_players,min_players, state, user_id, winner_id ) VALUES
+('2022-11-10', '2022-11-10', 0, 4, 2, 'LOBBY', 1,1);
+
+
+INSERT INTO GAMES_PLAYERS(game_id, players_id) VALUES(1,1);
+
+INSERT INTO MARKET_CARD(price, profiency, type) VALUES(10, 10, 'DAGA_ELFICA');
+
+INSERT INTO MARKET_CARD_IN_GAME (player_id) VALUES (1);
+
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,1);
+
+INSERT INTO PLAYERS_MARKET_HAND (players_id, market_hand_id) VALUES(1,1);
+
+
 

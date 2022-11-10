@@ -1,7 +1,6 @@
 package org.springframework.samples.notimeforheroes.user;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -17,8 +16,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "authorities")
 public class Authorities extends BaseEntity{
-
-
 	
 	@ManyToOne
 	@JoinColumn(name = "username")
@@ -26,6 +23,7 @@ public class Authorities extends BaseEntity{
 	
 	@Size(min = 3, max = 50)
 	String authority;
+
 	
 	
 }
