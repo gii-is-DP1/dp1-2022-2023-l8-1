@@ -89,9 +89,9 @@
 -- INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
 
-INSERT INTO users(username, password, email, birth_date, enabled) VALUES
-('admin', 'admin', 'admin@admin.com', '2013-01-03', 1);
-
+INSERT INTO users(id,username, password, email, birth_date, enabled) VALUES --, birth_date
+(1,'admin', 'admin', 'admin@admin.com','2013-01-03', 1);--, '2013-01-03'
+INSERT INTO authorities(id,user_id,username,authority) VALUES (1,1,'admin', 'admin');
 
 INSERT INTO players(glory, gold, wounds, evasion, hero_type, user_id) VALUES (5, 10, 20, TRUE, 'MAGO_MASCULINO',1);
 
@@ -101,7 +101,7 @@ INSERT INTO ABILITY_CARD_IN_GAME(damage, ability_card_id, player_id) VALUES (10,
 
 INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(1,1);
 
-INSERT INTO authorities(authority, username) VALUES ('admin', 1);
+
 
 INSERT INTO enemies(endurance, glory, type) VALUES (10,10,'HONDERO');
 
