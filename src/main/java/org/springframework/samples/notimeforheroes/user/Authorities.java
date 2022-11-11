@@ -1,5 +1,6 @@
 package org.springframework.samples.notimeforheroes.user;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,8 +19,11 @@ import lombok.Setter;
 public class Authorities extends BaseEntity{
 	
 	@ManyToOne
-	@JoinColumn(name = "username")
+	@JoinColumn(name = "user_id")
 	User user;
+	
+	@Column(name="username")
+	private String username;
 	
 	@Size(min = 3, max = 50)
 	String authority;
