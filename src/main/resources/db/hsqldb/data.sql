@@ -93,6 +93,10 @@ INSERT INTO users(id,username, password, email, birth_date, enabled) VALUES --, 
 (1,'admin', 'admin', 'admin@admin.com','2013-01-03', 1);--, '2013-01-03'
 INSERT INTO authorities(id,user_id,username,authority) VALUES (1,1,'admin', 'admin');
 
+INSERT INTO users(id,username, password, email, birth_date, enabled) VALUES 
+(2,'user', 'user', 'user@user.com','1950-01-09', 1);
+INSERT INTO authorities(id,user_id,username,authority) VALUES (2,2,'user', 'user');
+
 INSERT INTO players(glory, gold, wounds, evasion, hero_type, user_id) VALUES (5, 10, 20, TRUE, 'MAGO_MASCULINO',1);
 
 INSERT INTO ability_cards(ability_type, damage, hero_type) VALUES ('COMPANERO_LOBO', 10, 'MAGO_MASCULINO');

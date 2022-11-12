@@ -15,17 +15,20 @@
  */
 package org.springframework.samples.notimeforheroes.user;
 
+import java.util.Collection;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.notimeforheroes.owner.Owner;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author Juergen Hoeller
@@ -76,5 +79,39 @@ public class UserController {
 			return "redirect:/";
 		}
 	}
+	
+	@GetMapping(value = "/admins/users")
+	public String showUserList(Map<String, Object> model) {
+		Users users = new Users();
+		users.getUserList().addAll(this.userService.findUsers());
+		model.put("users", users);
+		return "admins/usersLists";
+	}
+	@GetMapping(value = "/admins/users.xml")
+	public @ResponseBody Users showResourcesUserList() {
+		Users users = new Users();
+		users.getUserList().addAll(this.userService.findUsers());
+		return users;
+	}
+//	@GetMapping(value = { "/vets" })
+//	public String showVetList(Map<String, Object> model) {
+//		// Here we are returning an object of type 'Vets' rather than a collection of Vet
+//		// objects
+//		// so it is simpler for Object-Xml mapping
+//		Vets vets = new Vets();
+//		vets.getVetList().addAll(this.vetService.findVets());
+//		model.put("vets", vets);
+//		return "vets/vetList";
+//	}
 
+//	@GetMapping(value = { "/vets.xml"})
+//	public @ResponseBody Vets showResourcesVetList() {
+//		// Here we are returning an object of type 'Vets' rather than a collection of Vet
+//		// objects
+//		// so it is simpler for JSon/Object mapping
+//		Vets vets = new Vets();
+//		vets.getVetList().addAll(this.vetService.findVets());
+//		return vets;
+//	}
+//
 }

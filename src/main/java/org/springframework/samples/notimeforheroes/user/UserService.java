@@ -16,6 +16,7 @@
 package org.springframework.samples.notimeforheroes.user;
 
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,9 @@ public class UserService {
 	
 	public Optional<User> findUser(Integer id) {
 		return userRepository.findById(id);
+	}
+	
+	public Collection<User> findUsers(){
+		return (Collection<User>) userRepository.findAll();
 	}
 }
