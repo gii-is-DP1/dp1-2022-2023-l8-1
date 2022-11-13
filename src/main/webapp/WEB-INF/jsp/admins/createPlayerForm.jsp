@@ -7,19 +7,24 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="players">
+    
     <!-- <h2>
         <c:if test="${owner['new']}">New </c:if> Owner
     </h2> -->
     <form:form modelAttribute="player" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="Hero Type" name="hero"/>
+            <!-- <petclinic:inputField label="Hero Type" name="hero"/> -->
+            <petclinic:selectField name="hero" label="Hero Type" names="${types}" size="1"/>
             <petclinic:inputField label="Gold" name="gold"/>
             <petclinic:inputField label="Wounds" name="wounds"/>
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-            <label class="form-check-label" for="flexCheckChecked">
-              Enabled
-            </label>
+
             <petclinic:inputField label="Glory" name="glory"/>
+
+            
+            <input class="form-check-input" type="checkbox" value="" path="${evasion}"  id="flexCheckChecked" checked>
+            <label class="form-check-label" for="flexCheckChecked">
+              Evasion
+            </label>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

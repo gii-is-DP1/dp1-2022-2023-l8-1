@@ -16,6 +16,7 @@
             <petclinic:inputField label="Password" name="password" placeholder="*******"/>
             <petclinic:inputField label="Email" name="email" placeholder="example@example.com"/>
             <petclinic:inputField label="Birth Date" name="birthDate" placeholder="MM/DD/YYY"/>
+            
             <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
             <label class="form-check-label" for="flexCheckChecked">
               Enabled
