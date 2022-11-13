@@ -14,11 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.springframework.samples.notimeforheroes.card.ability.AbilityCard;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
-import org.springframework.samples.notimeforheroes.game.Game;
-import org.springframework.samples.notimeforheroes.model.BaseEntity;
 import org.springframework.samples.notimeforheroes.user.User;
 
 import lombok.Getter;
