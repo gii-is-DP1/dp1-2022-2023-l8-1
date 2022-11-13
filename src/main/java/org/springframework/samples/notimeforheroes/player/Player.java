@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCard;
+import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
 import org.springframework.samples.notimeforheroes.game.Game;
 import org.springframework.samples.notimeforheroes.model.BaseEntity;
@@ -49,14 +50,20 @@ public class Player{
     private User user;
 
     
-    @ManyToOne()
-    @JoinColumn(name = "game_id")
-    private Game game;
+    // @ManyToOne(targetEntity = Game.class)
+    // // @JoinColumn(name = "game_id")
+    // private Game game;
 
     @OneToMany()
     private List<MarketCardInGame> marketHand;
 
     @OneToMany()
-    private List<AbilityCard> abilityHand;
+    private List<AbilityCardInGame> abilityHand;
+
+    @OneToMany()
+    private List<AbilityCardInGame> abilityPile;
+
+    @OneToMany()
+    private List<AbilityCardInGame> discardPile;
     
 }

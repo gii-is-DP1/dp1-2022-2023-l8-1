@@ -15,7 +15,9 @@
  */
 package org.springframework.samples.notimeforheroes.user;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Juergen Hoeller
@@ -39,9 +42,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class UserController {
 
-	private static final String VIEWS_OWNER_CREATE_FORM = "users/createUserForm";
+	private static final String VIEWS_USER_CREATE_FORM = "admins/createUserForm";
+	private static final String VIEWS_USERS_LISTS = "admins/usersLists";
 
-	//private final OwnerService ownerService;
+
 	private final UserService userService;
 
 //	@Autowired
@@ -58,34 +62,34 @@ public class UserController {
 //		dataBinder.setDisallowedFields("id");
 //	}
 
-	@GetMapping(value = "/users/new")
-	public String initCreationForm(Map<String, Object> model) {
-//		Owner owner = new Owner();
-//		model.put("owner", owner);
-		User user = new User();
-		model.put("user", user);
-		return VIEWS_OWNER_CREATE_FORM;
-	}
+	// @GetMapping(value = "/users/new")
+	// public String initCreationForm(Map<String, Object> model) {
+	// 	User user = new User();
+	// 	model.put("user", user);
+	// 	return VIEWS_OWNER_CREATE_FORM;
+	// }
 
-	@PostMapping(value = "/users/new")
-	public String processCreationForm(@Valid User user, BindingResult result) {
-		if (result.hasErrors()) {
-			return VIEWS_OWNER_CREATE_FORM;
-		}
-		else {
-			//creating owner, user, and authority
-			//this.ownerService.saveOwner(owner);
-			this.userService.saveUser(user);
-			return "redirect:/";
-		}
-	}
+	// @PostMapping(value = "/users/new")
+	// public String processCreationForm(@Valid User user, BindingResult result) {
+	// 	if (result.hasErrors()) {
+	// 		return VIEWS_OWNER_CREATE_FORM;
+	// 	}
+	// 	else {
+	// 		//creating owner, user, and authority
+	// 		//this.ownerService.saveOwner(owner);
+	// 		this.userService.saveUser(user);
+	// 		return "redirect:/";
+	// 	}
+	// }
+
 	
 	@GetMapping(value = "/admins/users")
-	public String showUserList(Map<String, Object> model) {
+	public ModelAndView showUserList() {
+		ModelAndView mav = new ModelAndView(VIEWS_USERS_LISTS);
 		Users users = new Users();
 		users.getUserList().addAll(this.userService.findUsers());
-		model.put("users", users);
-		return "admins/usersLists";
+		mav.addObject("users", users);
+		return mav;
 	}
 	@GetMapping(value = "/admins/users.xml")
 	public @ResponseBody Users showResourcesUserList() {
@@ -93,6 +97,37 @@ public class UserController {
 		users.getUserList().addAll(this.userService.findUsers());
 		return users;
 	}
+
+	@GetMapping(value = "/admins/createUserForm")
+	public ModelAndView createUserView(){
+		ModelAndView mav = new ModelAndView(VIEWS_USER_CREATE_FORM);
+		User user = new User();
+		mav.addObject("user", user);
+		List<String> values = new ArrayList<>();
+		values.add("Si");
+		values.add("No");
+		mav.addObject("values", values);
+		return mav;
+
+	}
+
+	@PostMapping(value = "/admins/createUserForm")
+	public ModelAndView saveUser(@Valid User user,BindingResult br ){
+		ModelAndView mav = null;
+		if(br.hasErrors()){
+			mav = new ModelAndView(VIEWS_USER_CREATE_FORM);
+			mav.addAllObjects(br.getModel());
+		}else{
+			userService.saveUser(user);
+			mav = showUserList();
+			mav.addObject("message", "User saved correctly");
+		}
+
+		return mav;
+	}
+
+
+
 //	@GetMapping(value = { "/vets" })
 //	public String showVetList(Map<String, Object> model) {
 //		// Here we are returning an object of type 'Vets' rather than a collection of Vet

@@ -4,28 +4,36 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="admins/users">
-    <h2>Users</h2>
+<petclinic:layout pageName="admins/players">
+    <h2>Players</h2>
 
-    <table id="usersTable" class="table table-striped">
+    <table id="playersTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>BirthDate</th>
+            <th>Hero Type</th>
+            <th>Glory</th>
+            <th>Gold</th>
+            <th>Wounds</th>
+            <th>Evasion</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${users.userList}" var="user">
+        <c:forEach items="${players}" var="player">
             <tr>
                 <td>
-                    <c:out value="${user.username}"/>
+                    <c:out value="${player.hero}"/>
                 </td>
                 <td>
-                    <c:out value="${user.email}"/>
+                    <c:out value="${player.glory}"/>
                 </td>
                 <td>
-                    <c:out value="${user.birthDate}"/>
+                    <c:out value="${player.gold}"/>
+                </td>
+                <td>
+                    <c:out value="${player.wounds}"/>
+                </td>
+                <td>
+                    <c:out value="${player.evasion}"/>
                 </td>
             </tr>
         </c:forEach>
@@ -41,7 +49,7 @@
         </tr>
         <tr>
             <td>
-                <a class="btn btn-default" href='<spring:url value="/admins/createUserForm" htmlEscape="true"/>'>Add User</a>
+                <a class="btn btn-default" href='<spring:url value="/admins/createPlayerForm" htmlEscape="true"/>'>Add Player</a>
             </td>     
         </tr>
     </table>
