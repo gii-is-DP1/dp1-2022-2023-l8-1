@@ -16,6 +16,7 @@
 package org.springframework.samples.notimeforheroes.user;
 
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
 	private UserRepository userRepository;
+	@Autowired
+	private AuthoritiesService authoritiesService;
 
 	@Autowired
 	public UserService(UserRepository userRepository) {
@@ -41,11 +44,16 @@ public class UserService {
 
 	@Transactional
 	public void saveUser(User user) throws DataAccessException {
-		// user.setEnabled(true);
+		user.setEnabled(true);
 		userRepository.save(user);
+		authoritiesService.saveAuthorities(user.getId(), "user");
 	}
 	
-	public Optional<User> findUser(String username) {
-		return userRepository.findById(username);
+	public Optional<User> findUser(Integer id) {
+		return userRepository.findById(id);
+	}
+	
+	public Collection<User> findUsers(){
+		return (Collection<User>) userRepository.findAll();
 	}
 }
