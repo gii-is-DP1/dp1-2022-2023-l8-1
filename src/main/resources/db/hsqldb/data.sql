@@ -91,11 +91,14 @@
 
 INSERT INTO users(id,username, password, email, birth_date, enabled) VALUES --, birth_date
 (1,'admin', 'admin', 'admin@admin.com','2013-01-03', 1);--, '2013-01-03'
+
 INSERT INTO authorities(id,user_id,username,authority) VALUES (1,1,'admin', 'admin');
 
 INSERT INTO users(id,username, password, email, birth_date, enabled) VALUES 
 (2,'user', 'user', 'user@user.com','1950-01-09', 1);
+
 INSERT INTO authorities(id,user_id,username,authority) VALUES (2,2,'user', 'user');
+
 
 -- INSERT INTO proposals(id,user_id,sender_username,receiver_username,proposal_type) VALUES (1,2,'user', 'admin','PARTIDA'); Funciona
 
@@ -103,23 +106,24 @@ INSERT INTO authorities(id,user_id,username,authority) VALUES (2,2,'user', 'user
 
 INSERT INTO players(glory, gold, wounds, evasion, hero_type, user_id) VALUES (5, 10, 20, TRUE, 'MAGO_MASCULINO',1);
 
+INSERT INTO games(start_time, end_time, has_scenes, max_players,min_players, state, user_id, winner_id) VALUES
+('2022-11-10', '2022-11-10', 0, 4, 2, 'LOBBY', 1,1);
+
+INSERT INTO GAMES_PLAYERS(game_id, players_id) VALUES(1,1);
+
 INSERT INTO ability_cards(ability_type, damage, hero_type) VALUES ('COMPANERO_LOBO', 10, 'MAGO_MASCULINO');
 
 INSERT INTO ABILITY_CARD_IN_GAME(damage, ability_card_id, player_id) VALUES (10, 1, 1);
 
 INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(1,1);
 
-
-
 INSERT INTO enemies(endurance, glory, type) VALUES (10,10,'HONDERO');
 
 INSERT INTO enemy_in_game(endurance) VALUES (10);
 
-INSERT INTO games(start_time, end_time, has_scenes, max_players,min_players, state, user_id, winner_id ) VALUES
-('2022-11-10', '2022-11-10', 0, 4, 2, 'LOBBY', 1,1);
 
 
-INSERT INTO GAMES_PLAYERS(game_id, players_id) VALUES(1,1);
+
 
 INSERT INTO MARKET_CARD(price, profiency, type) VALUES(10, 10, 'DAGA_ELFICA');
 
@@ -129,5 +133,6 @@ INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,1);
 
 INSERT INTO PLAYERS_MARKET_HAND (players_id, market_hand_id) VALUES(1,1);
 
+INSERT INTO stats(wins, user_id) VALUES (1,1);
 
 

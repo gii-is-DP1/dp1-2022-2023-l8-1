@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,15 +28,15 @@ import lombok.Setter;
 public class User extends BaseEntity{
 
 	@Column(name="username")
-	@NotNull
+	@NotEmpty
 	private String username;
 	
 	@Column(name="password")
-	@NotNull
+	@NotEmpty
 	private String password;
 	
 	@Column(name="email")
-	@NotNull
+	@NotEmpty
 	@Email
 	private String email;
 	

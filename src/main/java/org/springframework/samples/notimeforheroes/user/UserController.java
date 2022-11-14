@@ -15,7 +15,9 @@
  */
 package org.springframework.samples.notimeforheroes.user;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -43,7 +45,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class UserController {
 
-	private static final String VIEWS_OWNER_CREATE_FORM = "users/createUserForm";
+	private static final String VIEWS_USER_CREATE_FORM = "admins/createUserForm";
+	private static final String VIEWS_USERS_LISTS = "admins/usersLists";
+
 
 	private final UserService userService;
 
@@ -58,31 +62,52 @@ public class UserController {
 //		dataBinder.setDisallowedFields("id");
 //	}
 
-	@GetMapping(value = "/users/new")
-	public String initCreationForm(Map<String, Object> model) {
+	// @GetMapping(value = "/users/new")
+	// public String initCreationForm(Map<String, Object> model) {
+	// 	User user = new User();
+	// 	model.put("user", user);
+	// 	return VIEWS_OWNER_CREATE_FORM;
+	// }
 
-		User user = new User();
-		model.put("user", user);
-		return VIEWS_OWNER_CREATE_FORM;
-	}
+	// @PostMapping(value = "/users/new")
+	// public String processCreationForm(@Valid User user, BindingResult result) {
+	// 	if (result.hasErrors()) {
+	// 		return VIEWS_OWNER_CREATE_FORM;
+	// 	}
+	// 	else {
+	// 		//creating owner, user, and authority
+	// 		//this.ownerService.saveOwner(owner);
+	// 		this.userService.saveUser(user);
+	// 		return "redirect:/";
+	// 	}
+	// }
 
-	@PostMapping(value = "/users/new")
-	public String processCreationForm(@Valid User user, BindingResult result) {
-		if (result.hasErrors()) {
-			return VIEWS_OWNER_CREATE_FORM;
-		}
-		else {
-			this.userService.saveUser(user);
-			return "redirect:/";
-		}
-	}
+// 	@GetMapping(value = "/users/new")
+// 	public String initCreationForm(Map<String, Object> model) {
+
+// 		User user = new User();
+// 		model.put("user", user);
+// 		return VIEWS_OWNER_CREATE_FORM;
+// 	}
+
+// 	@PostMapping(value = "/users/new")
+// 	public String processCreationForm(@Valid User user, BindingResult result) {
+// 		if (result.hasErrors()) {
+// 			return VIEWS_OWNER_CREATE_FORM;
+// 		}
+// 		else {
+// 			this.userService.saveUser(user);
+// 			return "redirect:/";
+// 		}
+// 	}
 	
 	@GetMapping(value = "/admins/users")
-	public String showUserList(Map<String, Object> model) {
+	public ModelAndView showUserList() {
+		ModelAndView mav = new ModelAndView(VIEWS_USERS_LISTS);
 		Users users = new Users();
 		users.getUserList().addAll(this.userService.findUsers());
-		model.put("users", users);
-		return "admins/usersLists";
+		mav.addObject("users", users);
+		return mav;
 	}
 //	@GetMapping(value = "/admins/users.xml") //no funciona así que lo dejo así por si lo necesitamos
 //	public @ResponseBody Users showResourcesUserList() {
@@ -96,6 +121,56 @@ public class UserController {
 		model.addObject(this.userService.findUser(userId).get());
 		return model;
 	}
+
+	@GetMapping(value = "/admins/createUserForm")
+	public ModelAndView createUserView(){
+		ModelAndView mav = new ModelAndView(VIEWS_USER_CREATE_FORM);
+		User user = new User();
+		mav.addObject("user", user);
+		List<String> values = new ArrayList<>();
+		values.add("Si");
+		values.add("No");
+		mav.addObject("values", values);
+		return mav;
+
+	}
+
+	@PostMapping(value = "/admins/createUserForm")
+	public ModelAndView saveUser(@Valid User user,BindingResult br ){
+		ModelAndView mav = null;
+		if(br.hasErrors()){
+			mav = new ModelAndView(VIEWS_USER_CREATE_FORM);
+			mav.addAllObjects(br.getModel());
+		}else{
+			userService.saveUser(user);
+			mav = showUserList();
+			mav.addObject("message", "User saved correctly");
+		}
+
+		return mav;
+	}
+
+
+
+//	@GetMapping(value = { "/vets" })
+//	public String showVetList(Map<String, Object> model) {
+//		// Here we are returning an object of type 'Vets' rather than a collection of Vet
+//		// objects
+//		// so it is simpler for Object-Xml mapping
+//		Vets vets = new Vets();
+//		vets.getVetList().addAll(this.vetService.findVets());
+//		model.put("vets", vets);
+//		return "vets/vetList";
+//	}
+
+//	@GetMapping(value = { "/vets.xml"})
+//	public @ResponseBody Vets showResourcesVetList() {
+//		// Here we are returning an object of type 'Vets' rather than a collection of Vet
+//		// objects
+//		// so it is simpler for JSon/Object mapping
+//		Vets vets = new Vets();
+//		vets.getVetList().addAll(this.vetService.findVets());
+//		return vets;
 	
 	@GetMapping(value="/admins/users/delete/{userId}")
 	public String deleteUser(@PathVariable("userId") int userId, ModelMap model) {
