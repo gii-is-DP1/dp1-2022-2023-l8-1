@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.notimeforheroes.game.Game;
 import org.springframework.samples.notimeforheroes.model.BaseEntity;
 import org.springframework.samples.notimeforheroes.player.Player;
@@ -25,20 +25,26 @@ import lombok.Setter;
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity{
-	
 
-	@NotBlank
+	@Column(name="username")
+	@NotNull
 	private String username;
-
-	@NotBlank
+	
+	@Column(name="password")
+	@NotNull
 	private String password;
-
-	@NotBlank
+	
+	@Column(name="email")
+	@NotNull
+	@Email
 	private String email;
-
-	@NotBlank
+	
+	@Column(name="birth_date")
+	@NotNull
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private LocalDate birthDate;
 
+	@Column(name="enabled")
 	private boolean enabled;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -50,12 +56,8 @@ public class User extends BaseEntity{
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Stats> stats;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Authorities> authorities;
-
-	// private Boolean setEnabled(){
-
-	// }
 
 	
 }

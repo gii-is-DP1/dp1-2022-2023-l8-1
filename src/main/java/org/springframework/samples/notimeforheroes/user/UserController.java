@@ -15,19 +15,24 @@
  */
 package org.springframework.samples.notimeforheroes.user;
 
+import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.owner.Owner;
-import org.springframework.samples.notimeforheroes.owner.OwnerService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Juergen Hoeller
@@ -38,37 +43,80 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class UserController {
 
-	private static final String VIEWS_OWNER_CREATE_FORM = "users/createOwnerForm";
+	private static final String VIEWS_OWNER_CREATE_FORM = "users/createUserForm";
 
-	private final OwnerService ownerService;
+	private final UserService userService;
+
 
 	@Autowired
-	public UserController(OwnerService clinicService) {
-		this.ownerService = clinicService;
+	public UserController(UserService userService, AuthoritiesService authoritiesService) {
+		this.userService = userService;
 	}
 
-	@InitBinder
-	public void setAllowedFields(WebDataBinder dataBinder) {
-		dataBinder.setDisallowedFields("id");
-	}
+//	@InitBinder
+//	public void setAllowedFields(WebDataBinder dataBinder) {
+//		dataBinder.setDisallowedFields("id");
+//	}
 
 	@GetMapping(value = "/users/new")
 	public String initCreationForm(Map<String, Object> model) {
-		Owner owner = new Owner();
-		model.put("owner", owner);
+
+		User user = new User();
+		model.put("user", user);
 		return VIEWS_OWNER_CREATE_FORM;
 	}
 
 	@PostMapping(value = "/users/new")
-	public String processCreationForm(@Valid Owner owner, BindingResult result) {
+	public String processCreationForm(@Valid User user, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_OWNER_CREATE_FORM;
 		}
 		else {
-			//creating owner, user, and authority
-			this.ownerService.saveOwner(owner);
+			this.userService.saveUser(user);
 			return "redirect:/";
 		}
 	}
-
+	
+	@GetMapping(value = "/admins/users")
+	public String showUserList(Map<String, Object> model) {
+		Users users = new Users();
+		users.getUserList().addAll(this.userService.findUsers());
+		model.put("users", users);
+		return "admins/usersLists";
+	}
+//	@GetMapping(value = "/admins/users.xml") //no funciona así que lo dejo así por si lo necesitamos
+//	public @ResponseBody Users showResourcesUserList() {
+//		Users users = new Users();
+//		users.getUserList().addAll(this.userService.findUsers());
+//		return users;
+//	} 
+	@GetMapping(value="/admins/users/{userId}")
+	public ModelAndView showUser(@PathVariable("userId")int userId) {
+		ModelAndView model = new ModelAndView("admins/userDetails");
+		model.addObject(this.userService.findUser(userId).get());
+		return model;
+	}
+	
+	@GetMapping(value="/admins/users/delete/{userId}")
+	public String deleteUser(@PathVariable("userId") int userId, ModelMap model) {
+		Optional<User> user = userService.findUser(userId);
+		if(user.isPresent()) {
+			userService.delete(user.get()); //También estaría bien añadir que aparezca botón de confirmación
+			model.addAttribute("message", "User successfully deleted");//no se muestra, no sé por qué
+		}else {
+			model.addAttribute("message", "User not found");
+		}
+		return "redirect:/admins/users";
+	}
+	
+//	@GetMapping("/admin/playerList/delete/{playerId}") //Testeado
+//	public String deletePlayer(@PathVariable("playerId") int playerId, ModelMap modelMap) {
+//		Optional<Player> player = playerService.findPlayerById(playerId);
+//		if(player.isPresent()) {
+//			playerService.delete(player.get());
+//			modelMap.addAttribute("message", "Player successfully deleted!");
+//		}
+//		else modelMap.addAttribute("message", "Player not found!");
+//		return "redirect:/admin/playersList";
+//	}
 }
