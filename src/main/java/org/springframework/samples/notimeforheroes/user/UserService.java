@@ -56,4 +56,8 @@ public class UserService {
 	public Collection<User> findUsers(){
 		return (Collection<User>) userRepository.findAll();
 	}
+	
+	public void delete(User user) {
+		userRepository.delete(user);
+	}
 }
