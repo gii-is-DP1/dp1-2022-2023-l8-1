@@ -17,18 +17,22 @@ package org.springframework.samples.notimeforheroes.user;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.owner.Owner;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Juergen Hoeller
@@ -41,13 +45,9 @@ public class UserController {
 
 	private static final String VIEWS_OWNER_CREATE_FORM = "users/createUserForm";
 
-	//private final OwnerService ownerService;
 	private final UserService userService;
 
-//	@Autowired
-//	public UserController(OwnerService clinicService) {
-//		this.ownerService = clinicService;
-//	}
+
 	@Autowired
 	public UserController(UserService userService, AuthoritiesService authoritiesService) {
 		this.userService = userService;
@@ -60,8 +60,7 @@ public class UserController {
 
 	@GetMapping(value = "/users/new")
 	public String initCreationForm(Map<String, Object> model) {
-//		Owner owner = new Owner();
-//		model.put("owner", owner);
+
 		User user = new User();
 		model.put("user", user);
 		return VIEWS_OWNER_CREATE_FORM;
@@ -73,8 +72,6 @@ public class UserController {
 			return VIEWS_OWNER_CREATE_FORM;
 		}
 		else {
-			//creating owner, user, and authority
-			//this.ownerService.saveOwner(owner);
 			this.userService.saveUser(user);
 			return "redirect:/";
 		}
@@ -87,31 +84,39 @@ public class UserController {
 		model.put("users", users);
 		return "admins/usersLists";
 	}
-	@GetMapping(value = "/admins/users.xml")
-	public @ResponseBody Users showResourcesUserList() {
-		Users users = new Users();
-		users.getUserList().addAll(this.userService.findUsers());
-		return users;
+//	@GetMapping(value = "/admins/users.xml") //no funciona así que lo dejo así por si lo necesitamos
+//	public @ResponseBody Users showResourcesUserList() {
+//		Users users = new Users();
+//		users.getUserList().addAll(this.userService.findUsers());
+//		return users;
+//	} 
+	@GetMapping(value="/admins/users/{userId}")
+	public ModelAndView showUser(@PathVariable("userId")int userId) {
+		ModelAndView model = new ModelAndView("admins/userDetails");
+		model.addObject(this.userService.findUser(userId).get());
+		return model;
 	}
-//	@GetMapping(value = { "/vets" })
-//	public String showVetList(Map<String, Object> model) {
-//		// Here we are returning an object of type 'Vets' rather than a collection of Vet
-//		// objects
-//		// so it is simpler for Object-Xml mapping
-//		Vets vets = new Vets();
-//		vets.getVetList().addAll(this.vetService.findVets());
-//		model.put("vets", vets);
-//		return "vets/vetList";
+	
+	@GetMapping(value="/admins/users/delete/{userId}")
+	public String deleteUser(@PathVariable("userId") int userId, ModelMap model) {
+		Optional<User> user = userService.findUser(userId);
+		if(user.isPresent()) {
+			userService.delete(user.get()); //También estaría bien añadir que aparezca botón de confirmación
+			model.addAttribute("message", "User successfully deleted");//no se muestra, no sé por qué
+		}else {
+			model.addAttribute("message", "User not found");
+		}
+		return "redirect:/admins/users";
+	}
+	
+//	@GetMapping("/admin/playerList/delete/{playerId}") //Testeado
+//	public String deletePlayer(@PathVariable("playerId") int playerId, ModelMap modelMap) {
+//		Optional<Player> player = playerService.findPlayerById(playerId);
+//		if(player.isPresent()) {
+//			playerService.delete(player.get());
+//			modelMap.addAttribute("message", "Player successfully deleted!");
+//		}
+//		else modelMap.addAttribute("message", "Player not found!");
+//		return "redirect:/admin/playersList";
 //	}
-
-//	@GetMapping(value = { "/vets.xml"})
-//	public @ResponseBody Vets showResourcesVetList() {
-//		// Here we are returning an object of type 'Vets' rather than a collection of Vet
-//		// objects
-//		// so it is simpler for JSon/Object mapping
-//		Vets vets = new Vets();
-//		vets.getVetList().addAll(this.vetService.findVets());
-//		return vets;
-//	}
-//
 }
