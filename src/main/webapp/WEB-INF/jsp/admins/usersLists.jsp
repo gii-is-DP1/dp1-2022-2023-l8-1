@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="admins/users">
@@ -19,7 +20,10 @@
         <c:forEach items="${users.userList}" var="user">
             <tr>
                 <td>
-                    <c:out value="${user.username}"/>
+                	<spring:url value="users/{userId}" var="userUrl">
+                        <spring:param name="userId" value="${user.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(userUrl)}"><c:out value="${user.username}"/></a>
                 </td>
                 <td>
                     <c:out value="${user.email}"/>
@@ -32,11 +36,11 @@
         </tbody>
     </table>
 
-    <table class="table-buttons">
+    <%-- <table class="table-buttons">
         <tr>
             <td>
-                <a href="<spring:url value="/users.xml" htmlEscape="true" />">View as XML</a>
+                <a href="<spring:url value="/admins/users.xml" htmlEscape="true" />">View as XML</a>
             </td>            
         </tr>
-    </table>
+    </table> --%>
 </petclinic:layout>
