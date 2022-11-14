@@ -39,15 +39,8 @@
     <%-- <table class="table-buttons">
         <tr>
             <td>
-                <a href="<spring:url value="/users.xml" htmlEscape="true" />">View as XML</a>
-            </td>   
-    
-        </tr>
-        <tr>
-            <td>
-                <a class="btn btn-default" href='<spring:url value="/admins/createUserForm" htmlEscape="true"/>'>Add User</a>
-            </td>     
-
+                <a href="<spring:url value="/admins/users.xml" htmlEscape="true" />">View as XML</a>
+            </td>            
         </tr>
     </table> --%>
 </petclinic:layout>
