@@ -19,16 +19,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.owner.Owner;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,10 +51,7 @@ public class UserController {
 
 	private final UserService userService;
 
-//	@Autowired
-//	public UserController(OwnerService clinicService) {
-//		this.ownerService = clinicService;
-//	}
+
 	@Autowired
 	public UserController(UserService userService, AuthoritiesService authoritiesService) {
 		this.userService = userService;
@@ -82,6 +82,24 @@ public class UserController {
 	// 	}
 	// }
 
+// 	@GetMapping(value = "/users/new")
+// 	public String initCreationForm(Map<String, Object> model) {
+
+// 		User user = new User();
+// 		model.put("user", user);
+// 		return VIEWS_OWNER_CREATE_FORM;
+// 	}
+
+// 	@PostMapping(value = "/users/new")
+// 	public String processCreationForm(@Valid User user, BindingResult result) {
+// 		if (result.hasErrors()) {
+// 			return VIEWS_OWNER_CREATE_FORM;
+// 		}
+// 		else {
+// 			this.userService.saveUser(user);
+// 			return "redirect:/";
+// 		}
+// 	}
 	
 	@GetMapping(value = "/admins/users")
 	public ModelAndView showUserList() {
@@ -91,11 +109,17 @@ public class UserController {
 		mav.addObject("users", users);
 		return mav;
 	}
-	@GetMapping(value = "/admins/users.xml")
-	public @ResponseBody Users showResourcesUserList() {
-		Users users = new Users();
-		users.getUserList().addAll(this.userService.findUsers());
-		return users;
+//	@GetMapping(value = "/admins/users.xml") //no funciona así que lo dejo así por si lo necesitamos
+//	public @ResponseBody Users showResourcesUserList() {
+//		Users users = new Users();
+//		users.getUserList().addAll(this.userService.findUsers());
+//		return users;
+//	} 
+	@GetMapping(value="/admins/users/{userId}")
+	public ModelAndView showUser(@PathVariable("userId")int userId) {
+		ModelAndView model = new ModelAndView("admins/userDetails");
+		model.addObject(this.userService.findUser(userId).get());
+		return model;
 	}
 
 	@GetMapping(value = "/admins/createUserForm")
@@ -147,6 +171,27 @@ public class UserController {
 //		Vets vets = new Vets();
 //		vets.getVetList().addAll(this.vetService.findVets());
 //		return vets;
+	
+	@GetMapping(value="/admins/users/delete/{userId}")
+	public String deleteUser(@PathVariable("userId") int userId, ModelMap model) {
+		Optional<User> user = userService.findUser(userId);
+		if(user.isPresent()) {
+			userService.delete(user.get()); //También estaría bien añadir que aparezca botón de confirmación
+			model.addAttribute("message", "User successfully deleted");//no se muestra, no sé por qué
+		}else {
+			model.addAttribute("message", "User not found");
+		}
+		return "redirect:/admins/users";
+	}
+	
+//	@GetMapping("/admin/playerList/delete/{playerId}") //Testeado
+//	public String deletePlayer(@PathVariable("playerId") int playerId, ModelMap modelMap) {
+//		Optional<Player> player = playerService.findPlayerById(playerId);
+//		if(player.isPresent()) {
+//			playerService.delete(player.get());
+//			modelMap.addAttribute("message", "Player successfully deleted!");
+//		}
+//		else modelMap.addAttribute("message", "Player not found!");
+//		return "redirect:/admin/playersList";
 //	}
-//
 }

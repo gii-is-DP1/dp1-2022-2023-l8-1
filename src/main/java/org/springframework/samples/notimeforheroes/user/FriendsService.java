@@ -16,7 +16,6 @@
 package org.springframework.samples.notimeforheroes.user;
 
 
-import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,33 +30,35 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Michael Isvy
  */
 @Service
-public class UserService {
+public class FriendsService {
 
-	private UserRepository userRepository;
-	@Autowired
-	private AuthoritiesService authoritiesService;
+	private FriendsRepository friendsRepository;
+	private UserService userService;
 
 	@Autowired
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
+	public FriendsService(FriendsRepository friendsRepository,UserService userService) {
+		this.friendsRepository = friendsRepository;
+		this.userService = userService;
 	}
 
 	@Transactional
-	public void saveUser(User user) throws DataAccessException {
-		user.setEnabled(true);
-		userRepository.save(user);
-		authoritiesService.saveAuthorities(user.getId(), "user");
+	public void saveAuthorities(Friends friends) throws DataAccessException {
+		friendsRepository.save(friends);
 	}
 	
-	public Optional<User> findUser(Integer id) {
-		return userRepository.findById(id);
+	@Transactional
+	public void saveFriends(Integer id, String friend_username) throws DataAccessException {
+		Friends friend = new Friends();
+		Optional<User> user = userService.findUser(id);
+		if(user.isPresent()) {
+			friend.setUser(user.get());
+			friend.setFriend_username(friend_username);
+			friend.setUsername(user.get().getUsername());
+			//user.get().getAuthorities().add(authority);
+			friendsRepository.save(friend);
+		}else
+			throw new DataAccessException("User '"+id+"' not found!") {};
 	}
-	
-	public Collection<User> findUsers(){
-		return (Collection<User>) userRepository.findAll();
-	}
-	
-	public void delete(User user) {
-		userRepository.delete(user);
-	}
+
+
 }
