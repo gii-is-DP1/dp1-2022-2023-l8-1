@@ -61,5 +61,7 @@ public class Player{
 
     @OneToMany()
     private List<AbilityCardInGame> abilityHand;
+
+    
     
 }

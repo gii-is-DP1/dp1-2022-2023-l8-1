@@ -14,16 +14,17 @@
             <th>Player Id</th>
             <td><b><c:out value="${player.id}"/></b></td>
         </tr>
-        <c:forEach var="abilityCard" items="{$player.abilityHand}">
+        <c:forEach items="${player.abilityHand}" var="cards">
             <tr>
                 <th>CardsInHand List</th>
-                <td><c:out value="${abilityCard.damage}"/></td>
+                <td><c:out value="${cards.id}"/></td>
+                <td><c:out value="${cards.damage}"/></td>
             </tr>
         </c:forEach>
-        <c:forEach var="marketCard" items="{player.marketHand}">
+        <c:forEach var="marketCard" items="${player.marketHand}">
             <tr>
                 <th>CardsInMarket List</th>
-                <%--<td><c:out value="${marketCard.id}"/></td>--%>
+                <td><c:out value="${marketCard.id}"/></td>
             </tr>
         </c:forEach>
     </table>

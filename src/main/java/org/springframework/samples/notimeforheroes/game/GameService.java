@@ -3,6 +3,9 @@ package org.springframework.samples.notimeforheroes.game;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.notimeforheroes.user.User;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,6 +25,8 @@ public class GameService {
 
     public void createGame(Game game){
         repo.save(game);
+        game.setState(GameState.LOBBY);
+        
     }
     
 }

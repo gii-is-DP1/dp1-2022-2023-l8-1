@@ -2,6 +2,7 @@ package org.springframework.samples.notimeforheroes.player;
 
 
 import java.util.Collection;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -12,21 +13,21 @@ import org.springframework.stereotype.Service;
 public class PlayerService {
     
 
-    private PlayerRepository repo;
+    private PlayerRepository playerRepository;
 
     @Autowired
-    public PlayerService(PlayerRepository repository){
-        this.repo = repository;
+    public PlayerService(PlayerRepository playerRepository){
+        this.playerRepository = playerRepository;
     }
 
     public Collection<Player> findPlayers(){
-        return repo.findAll();
+        return playerRepository.findAll();
     }
 
 
     @Transactional
     public void savePlayer(Player player){
-        repo.save(player);
+        playerRepository.save(player);
 
     }
     public Optional<Player> findPlayerById(Integer id) {

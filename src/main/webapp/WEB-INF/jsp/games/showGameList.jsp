@@ -16,6 +16,7 @@
             <th>Has scenes</th>
             <th>Max players</th>
             <th>Min Players</th>
+            <th>Current Players</th>
             <th>State</th>
             <th>User creation</th>
             <th>Winner</th>
@@ -39,6 +40,9 @@
                 </td>
                 <td>
                     <c:out value="${game.minPlayers}"/>
+                </td>
+                <td>
+                    <c:out value="${game.players}"/>
                 </td>
                 <td>
                     <c:out value="${game.state}"/>
