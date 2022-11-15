@@ -19,7 +19,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.samples.notimeforheroes.card.enemy.EnemyInGame;
+import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
 import org.springframework.samples.notimeforheroes.player.Player;
+import org.springframework.samples.notimeforheroes.turn.Turn;
 import org.springframework.samples.notimeforheroes.user.User;
 
 import lombok.Getter;
@@ -68,7 +71,20 @@ public class Game {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Player> players;
 
+    @OneToMany()
+    private List<MarketCardInGame> marketPile;
 
+    @OneToMany()
+    private List<MarketCardInGame> sale;
+
+    @OneToMany()
+    private List<EnemyInGame> monsterPile;
+
+    @OneToMany()
+    private List<EnemyInGame> monsterField;
+
+    @OneToMany()
+    private List<Turn> turn;
 
 
 

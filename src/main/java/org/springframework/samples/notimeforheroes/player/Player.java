@@ -62,6 +62,12 @@ public class Player{
     @OneToMany()
     private List<AbilityCardInGame> abilityHand;
 
+    @OneToMany()
+    private List<AbilityCardInGame> discardPile;
+
+    @OneToMany()
+    private List<AbilityCardInGame> abilityPile;
+
     
     
 }

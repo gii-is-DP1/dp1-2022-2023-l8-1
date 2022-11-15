@@ -24,11 +24,11 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "ability_cards")
-public class AbilityCard extends BaseEntity{
+public class AbilityCard {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY )
-//    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    private int id;
 
     private int damage;
 
