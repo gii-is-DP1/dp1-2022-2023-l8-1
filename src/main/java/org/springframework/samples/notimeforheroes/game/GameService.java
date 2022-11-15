@@ -3,6 +3,7 @@ package org.springframework.samples.notimeforheroes.game;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -43,6 +44,10 @@ public class GameService {
         newGame.setStartTime(new Date());
         gameRepository.save(newGame);
     }
+
+	public Optional<Game> findById(int id){
+		return gameRepository.findById(id);
+	}
     /*
     public void createGame(Game game){
 
@@ -56,12 +61,13 @@ public class GameService {
     	gameRepository.save(game);
     	
 
+<<<<<<< HEAD
+    }
+    public Optional<Game> findById(int id){
+    	return gameRepository.findById(id);
+    }
+=======
     } */
-
-
-
-
-
 
     
 }

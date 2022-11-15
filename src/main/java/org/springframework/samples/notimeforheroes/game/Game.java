@@ -2,6 +2,7 @@ package org.springframework.samples.notimeforheroes.game;
 
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -21,6 +21,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.samples.notimeforheroes.card.enemy.EnemyInGame;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
+
 import org.springframework.samples.notimeforheroes.player.Player;
 import org.springframework.samples.notimeforheroes.turn.Turn;
 import org.springframework.samples.notimeforheroes.user.User;
@@ -34,9 +35,9 @@ import lombok.Setter;
 @Table(name = "games")
 public class Game {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private int id;
     
     private Date startTime;
     private Date endTime;
@@ -55,8 +56,8 @@ public class Game {
     
     private String username;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    private Player winner;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private Player winner;
 
 
     @Enumerated(EnumType.STRING)
@@ -68,8 +69,8 @@ public class Game {
 
 
     @Size(min = 0, max = 4)
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Player> players;
+    @OneToMany(mappedBy="game", cascade = CascadeType.ALL)
+    private List<Player> player;
 
     @OneToMany()
     private List<MarketCardInGame> marketPile;
