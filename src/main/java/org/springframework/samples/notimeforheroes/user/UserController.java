@@ -103,14 +103,14 @@ public class UserController {
 		return "redirect:/admins/users";
 	}
 	
-//	@GetMapping("/admin/playerList/delete/{playerId}") //Testeado
-//	public String deletePlayer(@PathVariable("playerId") int playerId, ModelMap modelMap) {
-//		Optional<Player> player = playerService.findPlayerById(playerId);
-//		if(player.isPresent()) {
-//			playerService.delete(player.get());
-//			modelMap.addAttribute("message", "Player successfully deleted!");
-//		}
-//		else modelMap.addAttribute("message", "Player not found!");
-//		return "redirect:/admin/playersList";
-//	}
+	// @GetMapping("/admin/playerList/delete/{playerId}") //Testeado
+	// public String deletePlayer(@PathVariable("playerId") int playerId, ModelMap modelMap) {
+	// 	Optional<Player> player = playerService.findPlayerById(playerId);
+	// 	if(player.isPresent()) {
+	// 		playerService.delete(player.get());
+	// 		modelMap.addAttribute("message", "Player successfully deleted!");
+	// 	}
+	// 	else modelMap.addAttribute("message", "Player not found!");
+	// 	return "redirect:/admin/playersList";
+	// }
 }
