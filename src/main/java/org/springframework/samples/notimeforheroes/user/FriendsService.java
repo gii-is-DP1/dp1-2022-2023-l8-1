@@ -16,6 +16,7 @@
 package org.springframework.samples.notimeforheroes.user;
 
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +43,16 @@ public class FriendsService {
 	}
 
 	@Transactional
-	public void saveAuthorities(Friends friends) throws DataAccessException {
+	public void saveFriends(Friends friends) throws DataAccessException {
 		friendsRepository.save(friends);
+	}
+
+	public Collection<Friends> findFriends(){
+		return (Collection<Friends>) friendsRepository.findAll();
+	}
+
+	public Collection<Friends> findAllFriendsByUserName(String username){
+		return  (Collection<Friends>) friendsRepository.findAllByUserName(username);
 	}
 	
 	@Transactional
@@ -52,8 +61,8 @@ public class FriendsService {
 		Optional<User> user = userService.findUser(id);
 		if(user.isPresent()) {
 			friend.setUser(user.get());
-			friend.setFriend_username(friend_username);
-			friend.setUsername(user.get().getUsername());
+			friend.setFriendUsername(friend_username);
+			friend.setUserName(user.get().getUsername());
 			//user.get().getAuthorities().add(authority);
 			friendsRepository.save(friend);
 		}else

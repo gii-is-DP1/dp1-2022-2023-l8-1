@@ -24,20 +24,20 @@ public class Proposals extends BaseEntity{
 	@JoinColumn(name = "user_id")
 	User user;
 
-    @Column(name="sender_username")
+    @Column(name="senderUsername")
     @NotNull
-	private String sender_username;
+	private String senderUsername;
 
-    @Column(name="receiver_username")
+    @Column(name="receiverUsername")
     @NotNull
-    private String receiver_username;
+    private String receiverUsername;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="proposal_type")
+    @Column(name="proposalType")
     @NotNull
-    private ProposalType proposal_type;
+    private ProposalType proposalType;
 
-    @Column(name="game_id")
-    private Integer game_id;
+    @Column(name="gameId")
+    private Integer gameId;
 	
 }

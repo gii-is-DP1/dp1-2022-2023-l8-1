@@ -24,10 +24,10 @@ public class Friends extends BaseEntity{
 
 	@Column(name="username")
 	@NotNull
-	private String username;
+	private String userName;
 
-    @Column(name="friend_username")
+    @Column(name="friendUsername")
 	@NotNull
-    private String friend_username;	
+    private String friendUsername;	
 	
 }

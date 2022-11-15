@@ -52,8 +52,8 @@ public class ProposalsService {
 		Optional<User> user = userService.findUser(id);
 		if(user.isPresent()) {
 			proposal.setUser(user.get());
-			proposal.setReceiver_username(receiver_username);
-			proposal.setSender_username(user.get().getUsername());
+			proposal.setReceiverUsername(receiver_username);
+			proposal.setSenderUsername(user.get().getUsername());
 			//user.get().getAuthorities().add(authority);
 			proposalRepository.save(proposal);
 		}else
