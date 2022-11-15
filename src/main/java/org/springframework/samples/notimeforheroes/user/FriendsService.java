@@ -31,41 +31,43 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Michael Isvy
  */
 @Service
-public class UserService {
+public class FriendsService {
 
-	private UserRepository userRepository;
-
-	@Autowired
-	private AuthoritiesService authoritiesService;
+	private FriendsRepository friendsRepository;
+	private UserService userService;
 
 	@Autowired
-	private FriendsService friendsService;
-
-	@Autowired
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
+	public FriendsService(FriendsRepository friendsRepository,UserService userService) {
+		this.friendsRepository = friendsRepository;
+		this.userService = userService;
 	}
 
 	@Transactional
-	public void saveUser(User user) throws DataAccessException {
-		user.setEnabled(true);
-		userRepository.save(user);
-		authoritiesService.saveAuthorities(user.getId(), "user");
-	}
-	
-	public Optional<User> findUser(Integer id) {
-		return userRepository.findById(id);
-	}
-	
-	public Collection<User> findUsers(){
-		return (Collection<User>) userRepository.findAll();
-	}
-	
-	public Collection<Friends> findFriends(String userName){
-		return friendsService.findAllFriendsByUserName(userName);
+	public void saveFriends(Friends friends) throws DataAccessException {
+		friendsRepository.save(friends);
 	}
 
-	public void delete(User user) {
-		userRepository.delete(user);
+	public Collection<Friends> findFriends(){
+		return (Collection<Friends>) friendsRepository.findAll();
 	}
+
+	public Collection<Friends> findAllFriendsByUserName(String username){
+		return  (Collection<Friends>) friendsRepository.findAllByUserName(username);
+	}
+	
+	@Transactional
+	public void saveFriends(Integer id, String friend_username) throws DataAccessException {
+		Friends friend = new Friends();
+		Optional<User> user = userService.findUser(id);
+		if(user.isPresent()) {
+			friend.setUser(user.get());
+			friend.setFriendUsername(friend_username);
+			friend.setUserName(user.get().getUsername());
+			//user.get().getAuthorities().add(authority);
+			friendsRepository.save(friend);
+		}else
+			throw new DataAccessException("User '"+id+"' not found!") {};
+	}
+
+
 }

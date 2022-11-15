@@ -1,8 +1,15 @@
 package org.springframework.samples.notimeforheroes.player;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
+
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+
 public interface PlayerRepository extends CrudRepository<Player, Integer>{
+
+    List<Player> findAll();
+    
+
     
 }
+

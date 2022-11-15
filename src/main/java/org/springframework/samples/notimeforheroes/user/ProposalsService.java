@@ -16,7 +16,6 @@
 package org.springframework.samples.notimeforheroes.user;
 
 
-import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,41 +30,35 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Michael Isvy
  */
 @Service
-public class UserService {
+public class ProposalsService {
 
-	private UserRepository userRepository;
-
-	@Autowired
-	private AuthoritiesService authoritiesService;
+	private ProposalsRepository proposalRepository;
+	private UserService userService;
 
 	@Autowired
-	private FriendsService friendsService;
-
-	@Autowired
-	public UserService(UserRepository userRepository) {
-		this.userRepository = userRepository;
+	public ProposalsService(ProposalsRepository proposalRepository,UserService userService) {
+		this.proposalRepository = proposalRepository;
+		this.userService = userService;
 	}
 
 	@Transactional
-	public void saveUser(User user) throws DataAccessException {
-		user.setEnabled(true);
-		userRepository.save(user);
-		authoritiesService.saveAuthorities(user.getId(), "user");
+	public void saveProposals(Proposals proposals) throws DataAccessException {
+		proposalRepository.save(proposals);
 	}
 	
-	public Optional<User> findUser(Integer id) {
-		return userRepository.findById(id);
-	}
-	
-	public Collection<User> findUsers(){
-		return (Collection<User>) userRepository.findAll();
-	}
-	
-	public Collection<Friends> findFriends(String userName){
-		return friendsService.findAllFriendsByUserName(userName);
+	@Transactional
+	public void saveFriends(Integer id, String receiver_username) throws DataAccessException {
+		Proposals proposal = new Proposals();
+		Optional<User> user = userService.findUser(id);
+		if(user.isPresent()) {
+			proposal.setUser(user.get());
+			proposal.setReceiverUsername(receiver_username);
+			proposal.setSenderUsername(user.get().getUsername());
+			//user.get().getAuthorities().add(authority);
+			proposalRepository.save(proposal);
+		}else
+			throw new DataAccessException("User '"+id+"' not found!") {};
 	}
 
-	public void delete(User user) {
-		userRepository.delete(user);
-	}
+
 }

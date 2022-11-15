@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import org.springframework.samples.notimeforheroes.player.Player;
@@ -38,10 +40,13 @@ public class Game {
     private Date startTime;
     private Date endTime;
 
-    @Size(min = 0)
+    // @Size(min = 0, max = 4)
+    @Min(2)
+    @Max(4)
     private int minPlayers;
 
-    @Size(max = 4)
+    @Min(2)
+    @Max(4)
     private int maxPlayers;
 
     private boolean hasScenes;

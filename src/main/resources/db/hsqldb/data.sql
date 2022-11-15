@@ -97,6 +97,15 @@ INSERT INTO users(id,username, password, email, birth_date, enabled) VALUES
 (2,'user', 'user', 'user@user.com','1950-01-09', 1);
 INSERT INTO authorities(id,user_id,username,authority) VALUES (2,2,'user', 'user');
 
+INSERT INTO users(id,username, password, email, birth_date, enabled) VALUES 
+(3,'user2', 'user2', 'user2@user2.com','1951-01-09', 1);
+INSERT INTO authorities(id,user_id,username,authority) VALUES (3,3,'user', 'user');
+
+-- INSERT INTO proposals(id,user_id,sender_username,receiver_username,proposal_type) VALUES (1,2,'user', 'admin','PARTIDA'); Funciona
+
+INSERT INTO friends(id,user_id,username,friend_username) VALUES (1,2,'user', 'admin');
+INSERT INTO friends(id,user_id,username,friend_username) VALUES (2,2,'user', 'user2');
+
 INSERT INTO players(glory, gold, wounds, evasion, hero_type, user_id) VALUES (5, 10, 20, TRUE, 'MAGO_MASCULINO',1);
 
 INSERT INTO ability_cards(ability_type, damage, hero_type) VALUES ('COMPANERO_LOBO', 10, 'MAGO_MASCULINO');
