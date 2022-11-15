@@ -34,22 +34,28 @@
 					<span>Find owners</span>
 				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'admins'}" url="/admins/users"
+				<petclinic:menuItem active="${name eq 'admins'}" url="/admin"
 					title="Administration">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Administration</span>
 				</petclinic:menuItem>
 				
-				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
+				<%-- <petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
 					<span>Error</span>
-				</petclinic:menuItem>
+				</petclinic:menuItem> --%>
 
 				<petclinic:menuItem active="${name eq 'social'}" url="/social"
 					title="Social Menu">
 					<span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
 					<span>Social</span>
+				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'games'}" url="/games/"
+					title="Games">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span>Games</span>
 				</petclinic:menuItem>
 
 			</ul>
