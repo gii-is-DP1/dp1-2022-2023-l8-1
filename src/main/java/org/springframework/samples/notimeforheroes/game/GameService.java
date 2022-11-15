@@ -3,9 +3,11 @@ package org.springframework.samples.notimeforheroes.game;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,6 +26,9 @@ public class GameService {
     }
 
     public void createGame(Game game){
+
+        
+
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = (User) auth.getPrincipal();
 		String username = currentUser.getUsername();
@@ -31,6 +36,7 @@ public class GameService {
     	game.setState(GameState.LOBBY);
     	gameRepository.save(game);
     	
+
     }
     
 }
