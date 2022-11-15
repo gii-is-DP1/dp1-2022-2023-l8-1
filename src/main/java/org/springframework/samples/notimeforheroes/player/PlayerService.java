@@ -1,5 +1,6 @@
 package org.springframework.samples.notimeforheroes.player;
 
+
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -27,5 +28,8 @@ public class PlayerService {
     public void savePlayer(Player player){
         repo.save(player);
 
+    }
+    public Optional<Player> findPlayerById(Integer id) {
+        return  playerRepository.findById(id);
     }
 }

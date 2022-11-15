@@ -9,9 +9,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.samples.notimeforheroes.model.BaseEntity;
 import org.springframework.samples.notimeforheroes.player.HeroType;
+import org.springframework.samples.notimeforheroes.player.Player;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,11 +24,11 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "ability_cards")
-public class AbilityCard {
+public class AbilityCard extends BaseEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
-    private int id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY )
+//    private int id;
 
     private int damage;
 
@@ -38,8 +42,6 @@ public class AbilityCard {
 
     @OneToMany()
     private Set<AbilityCardInGame> abilityCardInGame;
-
-
 
     
 

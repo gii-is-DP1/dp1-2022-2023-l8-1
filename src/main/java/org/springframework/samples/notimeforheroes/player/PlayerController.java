@@ -1,5 +1,6 @@
 package org.springframework.samples.notimeforheroes.player;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -21,6 +22,7 @@ public class PlayerController {
 
     private static final String VIEWS_PLAYER_LISTS = "admins/playerLists";
     private static final String VIEWS_PLAYERS_CREATE_FORM = "admins/createPlayerForm";
+    private static final String VIEWS_PLAYER_CARDS_LIST = "players/cardsInHandList";
 
 
     private final PlayerService service;
@@ -28,6 +30,14 @@ public class PlayerController {
     @Autowired
     public PlayerController(PlayerService service){
         this.service = service;
+    }
+    
+        @GetMapping(value="/players/{playerId}")
+    public ModelAndView showCardList(@PathVariable("playerId")int playerId) {
+        ModelAndView model = new ModelAndView(VIEWS_PLAYER_CARDS_LIST);
+		model.addObject("player",this.playerService.findPlayerById(playerId).get());
+		return model;
+        
     }
 
     @GetMapping("/admins/players")
@@ -71,3 +81,5 @@ public class PlayerController {
 
     
 }
+
+
