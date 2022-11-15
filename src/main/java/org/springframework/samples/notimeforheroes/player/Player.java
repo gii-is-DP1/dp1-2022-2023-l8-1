@@ -2,7 +2,9 @@ package org.springframework.samples.notimeforheroes.player;
 
 
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCard;
+import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
 import org.springframework.samples.notimeforheroes.game.Game;
 import org.springframework.samples.notimeforheroes.model.BaseEntity;
@@ -57,6 +60,6 @@ public class Player{
     private List<MarketCardInGame> marketHand;
 
     @OneToMany()
-    private List<AbilityCard> abilityHand;
+    private List<AbilityCardInGame> abilityHand;
     
 }

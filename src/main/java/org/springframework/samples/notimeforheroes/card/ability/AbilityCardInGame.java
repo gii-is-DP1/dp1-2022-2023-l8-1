@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.springframework.samples.notimeforheroes.model.BaseEntity;
 import org.springframework.samples.notimeforheroes.player.Player;
 
 import lombok.Getter;
@@ -16,11 +17,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class AbilityCardInGame {
+public class AbilityCardInGame extends BaseEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private int id;
 
     private int damage;
 
