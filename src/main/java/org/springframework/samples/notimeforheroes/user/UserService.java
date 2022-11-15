@@ -21,6 +21,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.notimeforheroes.friends.Friends;
+import org.springframework.samples.notimeforheroes.friends.FriendsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
