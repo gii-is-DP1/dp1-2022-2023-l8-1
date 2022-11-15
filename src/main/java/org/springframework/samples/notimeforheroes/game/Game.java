@@ -50,7 +50,9 @@ public class Game {
     private int maxPlayers;
 
     private boolean hasScenes;
-
+    
+    private String username;
+    
     @OneToOne(cascade = CascadeType.ALL)
     private Player winner;
 

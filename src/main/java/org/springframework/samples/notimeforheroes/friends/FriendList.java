@@ -1,4 +1,4 @@
-package org.springframework.samples.notimeforheroes.user;
+package org.springframework.samples.notimeforheroes.friends;
 
 import java.util.ArrayList;
 import java.util.List;

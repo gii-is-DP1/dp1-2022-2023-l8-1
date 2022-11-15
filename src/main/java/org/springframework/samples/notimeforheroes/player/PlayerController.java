@@ -36,7 +36,8 @@ public class PlayerController {
         @GetMapping(value="/players/{playerId}")
         public ModelAndView showCardList(@PathVariable("playerId")int playerId) {
         ModelAndView model = new ModelAndView(VIEWS_PLAYER_CARDS_LIST);
-		model.addObject("player",this.playerService.findPlayerById(playerId).get());
+        Player player = this.playerService.findPlayerById(playerId).get();
+		model.addObject("player", player);
 		return model;
         
     }

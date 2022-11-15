@@ -1,4 +1,4 @@
-package org.springframework.samples.notimeforheroes.user;
+package org.springframework.samples.notimeforheroes.friends;
 
 import org.springframework.data.repository.CrudRepository;
 

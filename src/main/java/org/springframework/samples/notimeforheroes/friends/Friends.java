@@ -1,4 +1,4 @@
-package org.springframework.samples.notimeforheroes.user;
+package org.springframework.samples.notimeforheroes.friends;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +8,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.samples.notimeforheroes.model.BaseEntity;
+import org.springframework.samples.notimeforheroes.user.User;
 
 import lombok.Getter;
 import lombok.Setter;

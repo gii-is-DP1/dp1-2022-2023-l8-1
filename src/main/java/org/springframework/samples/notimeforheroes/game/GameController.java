@@ -3,6 +3,12 @@ package org.springframework.samples.notimeforheroes.game;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,25 +41,30 @@ public class GameController {
     @GetMapping("/new")
     public ModelAndView createGameView(){
         ModelAndView mav = new ModelAndView(VIEW_GAME_NEW);
-
+        
         Game game = new Game();
+
         mav.addObject("game", game);
         return mav;
     }
 
     @PostMapping("/new")
-    public ModelAndView createGame(@Valid Game game, BindingResult br){
+    public String createGame(@Valid Game game, BindingResult br){
         ModelAndView mav = null;
 		if(br.hasErrors()){
 			mav = new ModelAndView(VIEW_GAME_NEW);
 			mav.addAllObjects(br.getModel());
 		}else{
+            //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            //User currentUser = (User) auth.getPrincipal();
+            
 			service.createGame(game);
+            //game.setUser(currentUser);
 			mav = showGameList();
-			mav.addObject("message", "User saved correctly");
+			mav.addObject("message", "Game saved correctly");
 		}
 
-		return mav;
+		return "redirect:/games/";
     }
     
 }

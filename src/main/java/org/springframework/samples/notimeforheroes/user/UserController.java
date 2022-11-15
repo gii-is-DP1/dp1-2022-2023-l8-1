@@ -70,7 +70,11 @@ public class UserController {
 			return "redirect:/";
 		}
 	}
-	
+	@GetMapping("/admin")
+	public ModelAndView admin() {
+		ModelAndView mav = new ModelAndView("admins/admin");
+		return mav;
+	}
 	@GetMapping(value = "/admins/users")
 	public String showUserList(Map<String, Object> model) {
 		Users users = new Users();
@@ -102,15 +106,4 @@ public class UserController {
 		}
 		return "redirect:/admins/users";
 	}
-	
-	// @GetMapping("/admin/playerList/delete/{playerId}") //Testeado
-	// public String deletePlayer(@PathVariable("playerId") int playerId, ModelMap modelMap) {
-	// 	Optional<Player> player = playerService.findPlayerById(playerId);
-	// 	if(player.isPresent()) {
-	// 		playerService.delete(player.get());
-	// 		modelMap.addAttribute("message", "Player successfully deleted!");
-	// 	}
-	// 	else modelMap.addAttribute("message", "Player not found!");
-	// 	return "redirect:/admin/playersList";
-	// }
 }
