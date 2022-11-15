@@ -64,7 +64,7 @@ public class PlayerController {
 	}
 
 	@PostMapping(value = "/admins/createPlayerForm")
-	public ModelAndView savePlayer(@Valid Player player,BindingResult br ){
+	public String savePlayer(@Valid Player player,BindingResult br ){
 		ModelAndView mav = null;
 		if(br.hasErrors()){
 			mav = new ModelAndView(VIEWS_PLAYERS_CREATE_FORM);
@@ -75,7 +75,7 @@ public class PlayerController {
 			mav.addObject("message", "User saved correctly");
 		}
 
-		return mav;
+		return "redirect:/admins/players";
 	}
 
 
