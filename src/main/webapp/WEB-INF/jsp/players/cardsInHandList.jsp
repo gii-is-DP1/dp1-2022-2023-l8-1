@@ -17,7 +17,7 @@
         <c:forEach var="abilityCard" items="{$player.abilityHand}">
             <tr>
                 <th>CardsInHand List</th>
-                <td><c:out value="${abilityCard.damage}"/></td>
+                <td><c:out value="${abilityCard}"/></td>
             </tr>
         </c:forEach>
         <c:forEach var="marketCard" items="{player.marketHand}">

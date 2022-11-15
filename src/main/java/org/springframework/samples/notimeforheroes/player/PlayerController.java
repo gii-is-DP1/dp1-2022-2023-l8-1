@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,15 +26,15 @@ public class PlayerController {
     private static final String VIEWS_PLAYER_CARDS_LIST = "players/cardsInHandList";
 
 
-    private final PlayerService service;
+    private final PlayerService playerService;
 
     @Autowired
-    public PlayerController(PlayerService service){
-        this.service = service;
+    public PlayerController(PlayerService playerService){
+        this.playerService = playerService;
     }
     
         @GetMapping(value="/players/{playerId}")
-    public ModelAndView showCardList(@PathVariable("playerId")int playerId) {
+        public ModelAndView showCardList(@PathVariable("playerId")int playerId) {
         ModelAndView model = new ModelAndView(VIEWS_PLAYER_CARDS_LIST);
 		model.addObject("player",this.playerService.findPlayerById(playerId).get());
 		return model;
@@ -43,7 +44,7 @@ public class PlayerController {
     @GetMapping("/admins/players")
     public ModelAndView showPlayerList(){
         ModelAndView mav = new ModelAndView(VIEWS_PLAYER_LISTS);
-        mav.addObject("players", service.findPlayers());
+        mav.addObject("players", playerService.findPlayers());
         return mav;
     }
 
@@ -68,7 +69,7 @@ public class PlayerController {
 			mav = new ModelAndView(VIEWS_PLAYERS_CREATE_FORM);
 			mav.addAllObjects(br.getModel());
 		}else{
-			service.savePlayer(player);
+			playerService.savePlayer(player);
 			mav = showPlayerList();
 			mav.addObject("message", "User saved correctly");
 		}
