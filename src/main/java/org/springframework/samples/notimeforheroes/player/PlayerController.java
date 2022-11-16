@@ -30,6 +30,7 @@ public class PlayerController {
     private static final String VIEWS_PLAYER_LISTS = "admins/playerLists";
     private static final String VIEWS_PLAYERS_CREATE_FORM = "admins/createPlayerForm";
     private static final String VIEWS_PLAYER_CARDS_LIST = "players/cardsInHandList";
+	private static final String VIEW_HERO_CARD = "players/heroCard";
 
 
     private final PlayerService playerService;
@@ -53,6 +54,14 @@ public class PlayerController {
 		return model;
         
     }
+
+	@GetMapping(value="/players/heroCard/{playerId}")
+	public ModelAndView showHeroCard(@PathVariable("playerId")int playerId) {
+		ModelAndView model = new ModelAndView(VIEW_HERO_CARD);
+		Player player = this.playerService.findPlayerById(playerId).get();
+		model.addObject("player", player);
+		return model;
+	}
 
     @GetMapping("/admins/players")
     public ModelAndView showPlayerList(){
