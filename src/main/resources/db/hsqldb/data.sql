@@ -99,7 +99,7 @@ INSERT INTO authorities(id,user_id,username,authority) VALUES (2,2,'user', 'user
 
 INSERT INTO users(id,username, password, email, birth_date, enabled) VALUES 
 (3,'user2', 'user2', 'user2@user2.com','1951-01-09', 1);
-INSERT INTO authorities(id,user_id,username,authority) VALUES (3,3,'user2', 'user');
+INSERT INTO authorities(id,user_id,username,authority) VALUES (3,3,'user', 'user');
 
 -- INSERT INTO proposals(id,user_id,sender_username,receiver_username,proposal_type) VALUES (1,2,'user', 'admin','PARTIDA'); Funciona
 

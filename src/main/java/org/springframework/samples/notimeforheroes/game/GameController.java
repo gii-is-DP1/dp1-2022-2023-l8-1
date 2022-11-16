@@ -1,8 +1,5 @@
 package org.springframework.samples.notimeforheroes.game;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,24 +51,10 @@ public class GameController {
     @PostMapping("/new")
     public String createGame(@Valid Game game, BindingResult br){
         ModelAndView mav = null;
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = (User) auth.getPrincipal();
-        String username = currentUser.getUsername();
-        List<Game> gl = service.gameList();
-        boolean userHasAnUnfinishedGame = false;
-        for (int i = 0; i < gl.size(); i+=1) {
-            Game g = gl.get(i);
-            if(!g.getState().equals(GameState.TERMINADO) && g.getUsername().equals(username) && !currentUser.getAuthorities().toString().contains("admin")) {
-                i = gl.size();
-                userHasAnUnfinishedGame = true;
-            }
-        }
- 
-		if(br.hasErrors() || game.getMinPlayers() > game.getMaxPlayers() || userHasAnUnfinishedGame) {
+		if(br.hasErrors() || (game.getMinPlayers() > game.getMaxPlayers())){ //el juego no se crea
 			mav = new ModelAndView(VIEW_GAME_NEW);
 			mav.addAllObjects(br.getModel());
-        } else {
+		}else{
             //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             //User currentUser = (User) auth.getPrincipal();
             

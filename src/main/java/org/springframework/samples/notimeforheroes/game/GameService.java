@@ -39,4 +39,25 @@ public class GameService {
         newGame.setState(GameState.LOBBY);
         gameRepository.save(newGame);
     }
+    /*
+    public void createGame(Game game){
+
+        
+
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = (User) auth.getPrincipal();
+		String username = currentUser.getUsername();
+		game.setUsername(username);
+    	game.setState(GameState.LOBBY);
+    	gameRepository.save(game);
+    	
+
+    } */
+
+
+
+
+
+
+    
 }

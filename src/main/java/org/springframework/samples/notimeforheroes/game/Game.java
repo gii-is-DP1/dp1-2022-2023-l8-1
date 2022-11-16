@@ -53,7 +53,7 @@ public class Game {
     private String username;
     
     @OneToOne(cascade = CascadeType.ALL)
-    private User winner;
+    private Player winner;
 
 
     @Enumerated(EnumType.STRING)
