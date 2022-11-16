@@ -105,8 +105,9 @@ INSERT INTO authorities(id,user_id,username,authority) VALUES (3,3,'user', 'user
 
 -- INSERT INTO proposals(id,user_id,sender_username,receiver_username,proposal_type) VALUES (1,2,'user', 'admin','PARTIDA'); Funciona
 
-INSERT INTO friends(id,user_id,username,friend_username) VALUES (1,2,'user', 'admin');
-INSERT INTO friends(id,user_id,username,friend_username) VALUES (2,2,'user', 'user2');
+INSERT INTO friends(id,user1_id,user2_id,friend_state) VALUES (1,1,2,0);
+INSERT INTO friends(id,user1_id,user2_id,friend_state) VALUES (2,2,3,1);
+INSERT INTO friends(id,user1_id,user2_id,friend_state) VALUES (3,3,1,1);
 
 INSERT INTO games(start_time, end_time, has_scenes, max_players,min_players, state, username,user_id) VALUES --, winner_id 
 ('2022-11-10', '2022-11-10', 0, 4, 2, 'TERMINADO', 'admin',1); --,1
@@ -122,7 +123,7 @@ INSERT INTO ABILITY_CARD_IN_GAME(damage, ability_card_id, player_id) VALUES (10,
 
 INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(1,1);
 
-
+INSERT INTO PLAYERS_ABILITY_PILE(players_id, ability_pile_id) VALUES (1, 1);
 
 INSERT INTO enemies(endurance, glory, type) VALUES (10,10,'HONDERO');
 

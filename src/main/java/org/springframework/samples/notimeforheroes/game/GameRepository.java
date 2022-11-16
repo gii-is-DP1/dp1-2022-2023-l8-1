@@ -5,9 +5,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.samples.notimeforheroes.player.HeroType;
 import org.springframework.samples.notimeforheroes.player.Player;
-import org.springframework.samples.notimeforheroes.user.User;
 
 public interface GameRepository extends CrudRepository<Game, Integer>{
 

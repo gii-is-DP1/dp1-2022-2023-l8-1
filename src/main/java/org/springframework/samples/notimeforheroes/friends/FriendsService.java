@@ -22,7 +22,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.notimeforheroes.user.User;
-import org.springframework.samples.notimeforheroes.user.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,41 +35,36 @@ import org.springframework.transaction.annotation.Transactional;
 public class FriendsService {
 
 	private FriendsRepository friendsRepository;
-	@Autowired
-	private UserService userService;
 
 	@Autowired
-	public FriendsService(FriendsRepository friendsRepository,UserService userService) {
+	public FriendsService(FriendsRepository friendsRepository) {
 		this.friendsRepository = friendsRepository;
-		this.userService = userService;
 	}
 
 	@Transactional
-	public void saveFriends(Friends friends) throws DataAccessException {
+	public void saveFriend(Friends friends) throws DataAccessException {
 		friendsRepository.save(friends);
 	}
 
+	public void deleteFriend(Friends friend) {
+		friendsRepository.delete(friend);
+	}
+
+	@Transactional(readOnly = true)
+	public Optional<Friends> findFriend(Integer id) {
+		return friendsRepository.findById(id);
+	}
+
+	@Transactional
 	public Collection<Friends> findFriends(){
 		return (Collection<Friends>) friendsRepository.findAll();
 	}
 
-	public Collection<Friends> findAllFriendsByUserName(String username){
-		return  (Collection<Friends>) friendsRepository.findAllByUserName(username);
-	}
-	
-	@Transactional
-	public void saveFriends(Integer id, String friend_username) throws DataAccessException {
-		Friends friend = new Friends();
-		Optional<User> user = userService.findUser(id);
-		if(user.isPresent()) {
-			friend.setUser(user.get());
-			friend.setFriendUsername(friend_username);
-			friend.setUserName(user.get().getUsername());
-			//user.get().getAuthorities().add(authority);
-			friendsRepository.save(friend);
-		}else
-			throw new DataAccessException("User '"+id+"' not found!") {};
-	}
+	public Collection<Friends> findFriendByReceiver(User receiver) {
+        return friendsRepository.getByFriendRP(receiver);
+    }
 
-
+    public Collection<Friends> findFriendOfUser(User user) {
+        return friendsRepository.getByFriendA(user);
+    }
 }

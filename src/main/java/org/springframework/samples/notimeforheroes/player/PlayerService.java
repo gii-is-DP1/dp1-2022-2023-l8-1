@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.game.Game;
 import org.springframework.samples.notimeforheroes.user.User;
-import org.springframework.samples.notimeforheroes.user.UserService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,7 +16,6 @@ public class PlayerService {
     
 
     private PlayerRepository playerRepository;
-	private UserService userService;
 
     @Autowired
     public PlayerService(PlayerRepository playerRepository){

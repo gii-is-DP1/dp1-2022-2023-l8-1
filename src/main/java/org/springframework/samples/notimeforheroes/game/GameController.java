@@ -1,17 +1,12 @@
 package org.springframework.samples.notimeforheroes.game;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.player.Player;
 import org.springframework.samples.notimeforheroes.player.PlayerService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +33,7 @@ public class GameController {
     @Autowired
     public GameController(GameService gameService, PlayerService playerService){
         this.service = gameService;
-        this.playerService=playerService;
+        this.playerService = playerService;
     }
 
 

@@ -15,12 +15,17 @@
  */
 package org.springframework.samples.notimeforheroes.user;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -106,4 +111,32 @@ public class UserController {
 		}
 		return "redirect:/admins/users";
 	}
+
+	@GetMapping(value="/findUser")
+    public String findUsers(ModelMap modelMap, @PathParam("username") String username){
+        Authentication a = SecurityContextHolder.getContext().getAuthentication();
+        if(a!=null){
+            if(a.getPrincipal().toString() != "anonymousUser"){
+                System.out.println(a.getName());
+                User usuario = userService.getByUsername(a.getName());
+                System.out.println(usuario);
+                String vista = "users/findUser";
+                System.out.println(username);
+                if(username.length() == 0){
+                    modelMap.addAttribute("message", "Debe tener al menos un caracter para realizar la busqueda");
+                    return vista;
+                }
+                List<User> users = userService.findByUsernameContaining(username);
+                System.out.println(users);
+                if (users.size() == 0){
+                   modelMap.addAttribute("message", "No hay ningun jugador con ese nombre");
+                   return vista;
+                }else{
+                    modelMap.addAttribute("users", users);
+					modelMap.addAttribute("user", usuario);
+                return vista;
+                }
+            }
+        }return "redirect:/login";
+    }
 }
