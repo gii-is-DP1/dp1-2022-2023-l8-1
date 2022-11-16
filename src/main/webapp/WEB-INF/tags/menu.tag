@@ -35,16 +35,6 @@
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 					<span>Find owners</span>
 				</petclinic:menuItem>
-<<<<<<< HEAD
-				--%>
-				
-				<petclinic:menuItem active="${name eq 'admins'}" url="/admins/users"
-					title="Administration">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Administration</span>
-				</petclinic:menuItem>
-=======
->>>>>>> fdb1d717483d8d336dd43dafef0390773cd7ca50
 				
 				<%--  <sec:authorize access="hasRole(admin)">--%>
 					<petclinic:menuItem active="${name eq 'admins'}" url="/admin"
@@ -53,6 +43,7 @@
 						<span>Administration</span>
 					</petclinic:menuItem>
 				<%-- </sec:authorize> --%>
+				
 				<%-- <petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
