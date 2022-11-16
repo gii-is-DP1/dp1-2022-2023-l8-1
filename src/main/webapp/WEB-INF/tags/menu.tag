@@ -33,6 +33,7 @@
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 					<span>Find owners</span>
 				</petclinic:menuItem>
+				
 
 				<petclinic:menuItem active="${name eq 'admins'}" url="/admin"
 					title="Administration">

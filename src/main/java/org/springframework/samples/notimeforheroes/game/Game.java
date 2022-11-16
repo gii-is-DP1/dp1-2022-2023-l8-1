@@ -2,9 +2,6 @@ package org.springframework.samples.notimeforheroes.game;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Generated;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.samples.notimeforheroes.player.Player;
@@ -49,6 +47,7 @@ public class Game {
     @Max(4)
     private int maxPlayers;
 
+    @NotNull
     private boolean hasScenes;
     
     private String username;

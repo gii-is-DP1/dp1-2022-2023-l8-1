@@ -51,7 +51,7 @@ public class GameController {
     @PostMapping("/new")
     public String createGame(@Valid Game game, BindingResult br){
         ModelAndView mav = null;
-		if(br.hasErrors()){
+		if(br.hasErrors() || (game.getMinPlayers() > game.getMaxPlayers())){ //el juego no se crea
 			mav = new ModelAndView(VIEW_GAME_NEW);
 			mav.addAllObjects(br.getModel());
 		}else{
