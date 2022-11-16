@@ -99,7 +99,7 @@ INSERT INTO authorities(id,user_id,username,authority) VALUES (2,2,'user', 'user
 
 INSERT INTO users(id,username, password, email, birth_date, enabled) VALUES 
 (3,'user2', 'user2', 'user2@user2.com','1951-01-09', 1);
-INSERT INTO authorities(id,user_id,username,authority) VALUES (3,3,'user', 'user');
+INSERT INTO authorities(id,user_id,username,authority) VALUES (3,3,'user2', 'user');
 
 -- INSERT INTO proposals(id,user_id,sender_username,receiver_username,proposal_type) VALUES (1,2,'user', 'admin','PARTIDA'); Funciona
 
@@ -108,6 +108,8 @@ INSERT INTO friends(id,user_id,username,friend_username) VALUES (2,2,'user', 'us
 
 INSERT INTO games(start_time, end_time, has_scenes, max_players,min_players, state, username,user_id) VALUES --, winner_id 
 ('2022-11-10', '2022-11-10', 0, 4, 2, 'TERMINADO', 'admin',1); --,1
+--INSERT INTO games(start_time, end_time, has_scenes, max_players,min_players, state, username,user_id, winner_id ) VALUES
+--('2022-11-10', '2022-11-10', 0, 4, 2, 'TERMINADO', 'admin',1,1);
 
 INSERT INTO players(glory, gold, wounds, evasion, hero_type, user_id, game_id) VALUES (5, 10, 20, TRUE, 'MAGO_MASCULINO',1, 1);
 INSERT INTO players(glory, gold, wounds, evasion, hero_type, user_id, game_id) VALUES (4, 9, 20, TRUE, 'MAGO_MASCULINO',2, 1);

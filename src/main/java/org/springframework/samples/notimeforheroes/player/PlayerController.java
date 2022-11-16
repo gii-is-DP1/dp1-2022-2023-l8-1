@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.game.Game;
 import org.springframework.samples.notimeforheroes.game.GameService;
+import org.springframework.samples.notimeforheroes.game.GameState;
 import org.springframework.samples.notimeforheroes.user.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -88,19 +89,62 @@ public class PlayerController {
 
 		return "redirect:/admins/players";
 	}
+
+/* 
 	@GetMapping("/games/{gameId}/join")
 	public String joinGame(@PathVariable("gameId")int gameId) {
 		Optional<Game> game= gameService.findById(gameId);
 	  	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    User currentUser = (User) auth.getPrincipal();
-	    List<Player> players = game.get().getPlayer();
+	    List<Player> players = game.get().getPlayers();
 	    if(!players.stream().anyMatch(x->x.getUser()==userService.findByUsername(currentUser.getUsername()))) {//si el user ya está en la partida no se podrá unir
 			Player newPlayer = new Player();
 			org.springframework.samples.notimeforheroes.user.User user = userService.findByUsername(currentUser.getUsername());
 			playerService.createPlayer(newPlayer, game.get(), user);
 		}
 	    return "redirect:/games/";
+	}*/
+
+
+	@GetMapping("/games/{gameId}/join")
+	public String joinGame(@PathVariable("gameId")int gameId) {
+		Optional<Game> game = gameService.findById(gameId);
+	  	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    User currentUser = (User) auth.getPrincipal();
+
+
+		boolean userIsAnActivePlayer = false;
+		if(game.isPresent()) {
+
+			List<Game> gl = gameService.gameList();
+			for (int i = 0; i < gl.size(); i+=1) { //para cada game
+				Game g = gl.get(i);
+				if(!g.getState().equals(GameState.TERMINADO)) { //si el game no terminó
+					List<Player> pl = g.getPlayers(); //pl: lista de players en el game i (entre 2 y 4 players)
+					for(int j = 0; j < pl.size(); j+=1) {//para cada player dentro del game i
+						Player p = pl.get(j);
+						if(p.getUser().getUsername().equals(currentUser.getUsername())) { //si el usuario asociado al player es el mismo que el currentUser
+							j = pl.size();
+							i = gl.size();//finalizar los 2 bucles
+							userIsAnActivePlayer = true;
+						}
+					}
+				}
+			}
+
+		
+			if(!userIsAnActivePlayer) {
+				Player newPlayer = new Player();
+				org.springframework.samples.notimeforheroes.user.User user = userService.findByUsername(currentUser.getUsername());
+				playerService.createPlayer(newPlayer, game.get(), user);
+			}
+		}
+
+	    return "redirect:/games/";
+	
 	}
+
+
 
 
 

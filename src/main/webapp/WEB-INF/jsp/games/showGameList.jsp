@@ -20,6 +20,7 @@
             <th>State</th>
             <th>User creation</th>
             <th>Join</th>
+            <th>Winner</th>
         </tr>
         </thead>
         <tbody>
@@ -41,7 +42,6 @@
                             <c:out value="${'no'}"/>
                         </c:otherwise>
                     </c:choose>
-                    <!--<c:out value="${game.hasScenes}"/>-->
                 </td>
                 <td>
                     <c:out value="${game.maxPlayers}"/>
@@ -50,7 +50,7 @@
                     <c:out value="${game.minPlayers}"/>
                 </td>
                 <td>
-                    <c:out value="${fn:length(game.player)}"></c:out>
+                    <c:out value="${fn:length(game.players)}"></c:out>
                 </td>
                 <td>
                     <c:out value="${game.state}"/>
@@ -69,9 +69,15 @@
             </tr>
         </c:forEach>
         </tbody>
-
     </table>
 
+
+
+
+
+
+
+    
     <table class="table-buttons">
         <tr>
             <td>
@@ -79,4 +85,11 @@
             </td>
         </tr>
     </table>
+
+
+
+
+
+
+
 </petclinic:layout>
