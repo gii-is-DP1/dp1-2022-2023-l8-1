@@ -111,6 +111,8 @@ INSERT INTO friends(id,user_id,username,friend_username) VALUES (2,2,'user', 'us
 INSERT INTO games(start_time, end_time, has_scenes, max_players,min_players, state, username,user_id) VALUES --, winner_id 
 ('2022-11-10', '2022-11-10', 0, 4, 2, 'TERMINADO', 'admin',1); --,1
 
+
+
 INSERT INTO players(glory, gold, wounds, evasion, hero_type, user_id, game_id) VALUES (5, 10, 20, TRUE, 'MAGO_MASCULINO',1, 1);
 INSERT INTO players(glory, gold, wounds, evasion, hero_type, user_id, game_id) VALUES (4, 9, 20, TRUE, 'MAGO_MASCULINO',2, 1);
 
@@ -124,7 +126,13 @@ INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_
 
 INSERT INTO enemies(endurance, glory, type) VALUES (10,10,'HONDERO');
 
-INSERT INTO enemy_in_game(endurance) VALUES (10);
+
+
+
+INSERT INTO enemy_in_game(endurance, enemy_id, game_id) VALUES (10, 1,1);
+
+
+INSERT INTO GAMES_MONSTER_FIELD(game_id, monster_field_id) VALUES(1,1);
 
 
 
@@ -139,6 +147,7 @@ INSERT INTO MARKET_CARD_IN_GAME (player_id) VALUES (1);
 INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,1);
 
 INSERT INTO PLAYERS_MARKET_HAND (players_id, market_hand_id) VALUES(1,1);
+
 
 
 
