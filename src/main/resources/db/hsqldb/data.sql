@@ -103,8 +103,9 @@ INSERT INTO authorities(id,user_id,username,authority) VALUES (3,3,'user', 'user
 
 -- INSERT INTO proposals(id,user_id,sender_username,receiver_username,proposal_type) VALUES (1,2,'user', 'admin','PARTIDA'); Funciona
 
-INSERT INTO friends(id,user_id,username,friend_username) VALUES (1,2,'user', 'admin');
-INSERT INTO friends(id,user_id,username,friend_username) VALUES (2,2,'user', 'user2');
+INSERT INTO friends(id,user1_id,user2_id,friend_state) VALUES (1,1,2,0);
+INSERT INTO friends(id,user1_id,user2_id,friend_state) VALUES (2,2,3,1);
+INSERT INTO friends(id,user1_id,user2_id,friend_state) VALUES (3,3,1,1);
 
 INSERT INTO players(glory, gold, wounds, evasion, hero_type, user_id) VALUES (5, 10, 20, TRUE, 'MAGO_MASCULINO',1);
 

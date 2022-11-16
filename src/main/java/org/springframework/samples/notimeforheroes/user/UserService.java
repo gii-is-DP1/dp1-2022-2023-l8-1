@@ -17,12 +17,11 @@ package org.springframework.samples.notimeforheroes.user;
 
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.notimeforheroes.friends.Friends;
-import org.springframework.samples.notimeforheroes.friends.FriendsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,9 +40,6 @@ public class UserService {
 	private AuthoritiesService authoritiesService;
 
 	@Autowired
-	private FriendsService friendsService;
-
-	@Autowired
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
@@ -55,19 +51,30 @@ public class UserService {
 		authoritiesService.saveAuthorities(user.getId(), "user");
 	}
 	
-	public Optional<User> findUser(Integer id) {
+	@Transactional
+	public Optional<User> findUser(int id) {
 		return userRepository.findById(id);
+	}
+
+	@Transactional
+	public User findUserByUsername(String username) {
+		return userRepository.getByUsername(username);
 	}
 	
 	public Collection<User> findUsers(){
 		return (Collection<User>) userRepository.findAll();
 	}
-	
-	public Collection<Friends> findFriends(String userName){
-		return friendsService.findAllFriendsByUserName(userName);
-	}
 
 	public void delete(User user) {
 		userRepository.delete(user);
+	}
+	
+	@Transactional
+    public User getByUsername(String username) {
+        return userRepository.getByUsername(username);
+    }
+
+	public List<User> findByUsernameContaining(String username){
+		return userRepository.findByUsernameStartsWith(username);
 	}
 }
