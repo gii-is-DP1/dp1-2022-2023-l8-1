@@ -36,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class FriendsService {
 
 	private FriendsRepository friendsRepository;
+	@Autowired
 	private UserService userService;
 
 	@Autowired

@@ -97,6 +97,8 @@ INSERT INTO users(id,username, password, email, birth_date, enabled) VALUES
 (2,'user', 'user', 'user@user.com','1950-01-09', 1);
 INSERT INTO authorities(id,user_id,username,authority) VALUES (2,2,'user', 'user');
 
+
+
 INSERT INTO users(id,username, password, email, birth_date, enabled) VALUES 
 (3,'user2', 'user2', 'user2@user2.com','1951-01-09', 1);
 INSERT INTO authorities(id,user_id,username,authority) VALUES (3,3,'user2', 'user');

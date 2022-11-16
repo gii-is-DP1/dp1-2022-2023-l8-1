@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,6 +31,7 @@ public class PlayerController {
     private static final String VIEWS_PLAYER_LISTS = "admins/playerLists";
     private static final String VIEWS_PLAYERS_CREATE_FORM = "admins/createPlayerForm";
     private static final String VIEWS_PLAYER_CARDS_LIST = "players/cardsInHandList";
+	private static final String VIEW_HERO_CARD = "players/heroCard";
 
 
     private final PlayerService playerService;
@@ -54,6 +56,14 @@ public class PlayerController {
         
     }
 
+	@GetMapping(value="/players/heroCard/{playerId}")
+	public ModelAndView showHeroCard(@PathVariable("playerId")int playerId) {
+		ModelAndView model = new ModelAndView(VIEW_HERO_CARD);
+		Player player = this.playerService.findPlayerById(playerId).get();
+		model.addObject("player", player);
+		return model;
+	}
+
     @GetMapping("/admins/players")
     public ModelAndView showPlayerList(){
         ModelAndView mav = new ModelAndView(VIEWS_PLAYER_LISTS);
@@ -69,7 +79,9 @@ public class PlayerController {
     @GetMapping(value = "/admins/createPlayerForm")
 	public ModelAndView createPlayerView(){
 		ModelAndView mav = new ModelAndView(VIEWS_PLAYERS_CREATE_FORM);
+
         Player player = new Player();
+
 		mav.addObject("player", player);
 		return mav;
 
@@ -89,22 +101,6 @@ public class PlayerController {
 
 		return "redirect:/admins/players";
 	}
-
-/* 
-	@GetMapping("/games/{gameId}/join")
-	public String joinGame(@PathVariable("gameId")int gameId) {
-		Optional<Game> game= gameService.findById(gameId);
-	  	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    User currentUser = (User) auth.getPrincipal();
-	    List<Player> players = game.get().getPlayers();
-	    if(!players.stream().anyMatch(x->x.getUser()==userService.findByUsername(currentUser.getUsername()))) {//si el user ya está en la partida no se podrá unir
-			Player newPlayer = new Player();
-			org.springframework.samples.notimeforheroes.user.User user = userService.findByUsername(currentUser.getUsername());
-			playerService.createPlayer(newPlayer, game.get(), user);
-		}
-	    return "redirect:/games/";
-	}*/
-
 
 	@GetMapping("/games/{gameId}/join")
 	public String joinGame(@PathVariable("gameId")int gameId) {
@@ -140,10 +136,21 @@ public class PlayerController {
 			}
 		}
 
-	    return "redirect:/games/";
+	    return "redirect:/games/"+gameId+"/lobby";
 	
 	}
 
+	@GetMapping(value="/admins/players/delete/{playerId}")
+	public String deleteUser(@PathVariable("playerId") int playerId, ModelMap model) {
+		Optional<Player> player = playerService.findPlayerById(playerId);
+		if(player.isPresent()) {
+			model.addAttribute("message", "player successfully deleted");//no se muestra, no sé por qué
+			playerService.delete(player.get()); //También estaría bien añadir que aparezca botón de confirmación
+		}else {
+			model.addAttribute("message", "player not found");
+		}
+		return "redirect:/admins/players";
+	}
 
 
 

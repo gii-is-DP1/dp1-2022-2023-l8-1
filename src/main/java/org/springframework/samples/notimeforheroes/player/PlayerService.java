@@ -51,4 +51,7 @@ public class PlayerService {
     public Optional<Player> findPlayerById(Integer id) {
         return  playerRepository.findById(id);
     }
+    public void delete(Player player) {
+    	playerRepository.delete(player);
+    }
 }
