@@ -2,9 +2,7 @@ package org.springframework.samples.notimeforheroes.player;
 
 
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,12 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Min;
 
-import org.springframework.samples.notimeforheroes.card.ability.AbilityCard;
+
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
 import org.springframework.samples.notimeforheroes.game.Game;
-import org.springframework.samples.notimeforheroes.model.BaseEntity;
 import org.springframework.samples.notimeforheroes.user.User;
 
 import lombok.Getter;
@@ -36,8 +34,13 @@ public class Player{
     private int id;
 
 
+    @Min(0)
     private int glory;
+
+    @Min(0)
     private int gold;
+
+    @Min(0)
     private int wounds;
 
     private boolean evasion;
@@ -61,6 +64,14 @@ public class Player{
 
     @OneToMany()
     private List<AbilityCardInGame> abilityHand;
+
+
+    @OneToMany()
+    private List<AbilityCardInGame> discardPile;
+
+    @OneToMany()
+    private List<AbilityCardInGame> abilityPile;
+
 
     
     

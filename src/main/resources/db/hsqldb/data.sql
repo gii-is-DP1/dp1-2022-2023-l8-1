@@ -97,6 +97,8 @@ INSERT INTO users(id,username, password, email, birth_date, enabled) VALUES
 (2,'user', 'user', 'user@user.com','1950-01-09', 1);
 INSERT INTO authorities(id,user_id,username,authority) VALUES (2,2,'user', 'user');
 
+
+
 INSERT INTO users(id,username, password, email, birth_date, enabled) VALUES 
 (3,'user2', 'user2', 'user2@user2.com','1951-01-09', 1);
 INSERT INTO authorities(id,user_id,username,authority) VALUES (3,3,'user', 'user');
@@ -107,7 +109,13 @@ INSERT INTO friends(id,user1_id,user2_id,friend_state) VALUES (1,1,2,0);
 INSERT INTO friends(id,user1_id,user2_id,friend_state) VALUES (2,2,3,1);
 INSERT INTO friends(id,user1_id,user2_id,friend_state) VALUES (3,3,1,1);
 
-INSERT INTO players(glory, gold, wounds, evasion, hero_type, user_id) VALUES (5, 10, 20, TRUE, 'MAGO_MASCULINO',1);
+INSERT INTO games(start_time, end_time, has_scenes, max_players,min_players, state, username,user_id) VALUES --, winner_id 
+('2022-11-10', '2022-11-10', 0, 4, 2, 'TERMINADO', 'admin',1); --,1
+
+
+
+INSERT INTO players(glory, gold, wounds, evasion, hero_type, user_id, game_id) VALUES (5, 10, 20, TRUE, 'MAGO_MASCULINO',1, 1);
+INSERT INTO players(glory, gold, wounds, evasion, hero_type, user_id, game_id) VALUES (4, 9, 20, TRUE, 'MAGO_MASCULINO',2, 1);
 
 INSERT INTO ability_cards(ability_type, damage, hero_type) VALUES ('COMPANERO_LOBO', 10, 'MAGO_MASCULINO');
 
@@ -119,13 +127,19 @@ INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_
 
 INSERT INTO enemies(endurance, glory, type) VALUES (10,10,'HONDERO');
 
-INSERT INTO enemy_in_game(endurance) VALUES (10);
-
-INSERT INTO games(start_time, end_time, has_scenes, max_players,min_players, state, username,user_id, winner_id ) VALUES
-('2022-11-10', '2022-11-10', 0, 4, 2, 'LOBBY', 'admin',1,1);
 
 
-INSERT INTO GAMES_PLAYERS(game_id, players_id) VALUES(1,1);
+
+INSERT INTO enemy_in_game(endurance, enemy_id, game_id) VALUES (10, 1,1);
+
+
+INSERT INTO GAMES_MONSTER_FIELD(game_id, monster_field_id) VALUES(1,1);
+
+
+
+
+--INSERT INTO GAMES_PLAYERS(game_id, players_id) VALUES(1,1);
+--INSERT INTO GAMES_PLAYERS(game_id, players_id) VALUES(1,2);
 
 INSERT INTO MARKET_CARD(price, profiency, type) VALUES(10, 10, 'DAGA_ELFICA');
 
@@ -134,6 +148,7 @@ INSERT INTO MARKET_CARD_IN_GAME (player_id) VALUES (1);
 INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,1);
 
 INSERT INTO PLAYERS_MARKET_HAND (players_id, market_hand_id) VALUES(1,1);
+
 
 
 

@@ -7,6 +7,8 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.notimeforheroes.game.Game;
+import org.springframework.samples.notimeforheroes.user.User;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,7 +34,22 @@ public class PlayerService {
 
 
     }
+    public void createPlayer(Player player, Game game, User user){
+    	player.setEvasion(true);
+	      player.setGame(game);
+	      player.setGlory(0);
+	      player.setGold(0);
+	      //player.setHero(HeroType.GUERRERO_FEMENINO);//para probar si funciona, después él tendría que escoger el que quiera
+	      player.setWounds(0);
+	      player.setUser(user);
+    	playerRepository.save(player);
+
+
+    }
     public Optional<Player> findPlayerById(Integer id) {
         return  playerRepository.findById(id);
+    }
+    public void delete(Player player) {
+    	playerRepository.delete(player);
     }
 }

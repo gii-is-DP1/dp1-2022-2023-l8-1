@@ -28,7 +28,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button class = 'btn btn-default' type="submit">Add User</button>
+                <button class = 'btn btn-default' type="submit">Add Player</button>
                 <!-- <c:choose>
                     <c:when test="${owner['new']}">
                         <button class="btn btn-default" type="submit">Add Owner</button>

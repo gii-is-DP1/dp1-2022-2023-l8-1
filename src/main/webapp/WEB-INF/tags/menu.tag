@@ -35,6 +35,7 @@
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 					<span>Find owners</span>
 				</petclinic:menuItem>
+<<<<<<< HEAD
 				--%>
 				
 				<petclinic:menuItem active="${name eq 'admins'}" url="/admins/users"
@@ -42,17 +43,32 @@
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					<span>Administration</span>
 				</petclinic:menuItem>
+=======
+>>>>>>> fdb1d717483d8d336dd43dafef0390773cd7ca50
 				
-				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
+				<%--  <sec:authorize access="hasRole(admin)">--%>
+					<petclinic:menuItem active="${name eq 'admins'}" url="/admin"
+						title="Administration">
+						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+						<span>Administration</span>
+					</petclinic:menuItem>
+				<%-- </sec:authorize> --%>
+				<%-- <petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
 					<span>Error</span>
-				</petclinic:menuItem>
+				</petclinic:menuItem> --%>
 
 				<petclinic:menuItem active="${name eq 'social'}" url="/friendList"
 					title="Social Menu">
 					<span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
 					<span>Social</span>
+				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'games'}" url="/games/"
+					title="Games">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span>Games</span>
 				</petclinic:menuItem>
 
 				<li >
@@ -71,7 +87,7 @@
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>�
+						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>
 							<strong><sec:authentication property="name" /></strong> <span
 							class="glyphicon glyphicon-chevron-down"></span>
 					</a>

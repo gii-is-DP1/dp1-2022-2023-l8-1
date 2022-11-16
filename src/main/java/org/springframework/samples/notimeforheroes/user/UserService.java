@@ -25,6 +25,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.AllArgsConstructor;
+
 /**
  * Mostly used as a facade for all Petclinic controllers Also a placeholder
  * for @Transactional and @Cacheable annotations
@@ -32,12 +34,16 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Michael Isvy
  */
 @Service
+@AllArgsConstructor
 public class UserService {
 
 	private UserRepository userRepository;
 
 	@Autowired
 	private AuthoritiesService authoritiesService;
+
+//	@Autowired
+//	private FriendsService friendsService;
 
 	@Autowired
 	public UserService(UserRepository userRepository) {
@@ -61,9 +67,17 @@ public class UserService {
 		return userRepository.getByUsername(username);
 	}
 	
+	public User findByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+	
 	public Collection<User> findUsers(){
 		return (Collection<User>) userRepository.findAll();
 	}
+	
+//	public Collection<Friends> findFriends(String userName){
+//		return friendsService.findAllFriendsByUserName(userName);
+//	}
 
 	public void delete(User user) {
 		userRepository.delete(user);

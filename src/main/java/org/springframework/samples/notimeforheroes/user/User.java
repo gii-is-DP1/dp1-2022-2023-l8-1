@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.notimeforheroes.game.Game;
@@ -26,21 +26,21 @@ import lombok.Setter;
 @Table(name = "users")
 public class User extends BaseEntity{
 
-	@Column(name="username")
-	@NotNull
+	@Column(name="username", unique = true)
+	@NotEmpty
 	private String username;
 	
 	@Column(name="password")
-	@NotNull
+	@NotEmpty
 	private String password;
 	
-	@Column(name="email")
-	@NotNull
+	@Column(name="email", unique = true)
+	@NotEmpty
 	@Email
 	private String email;
 	
 	@Column(name="birth_date")
-	@NotNull
+	//@NotEmpty
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private LocalDate birthDate;
 

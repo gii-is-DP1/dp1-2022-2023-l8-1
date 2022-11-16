@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="admins/players">
@@ -15,6 +16,7 @@
             <th>Gold</th>
             <th>Wounds</th>
             <th>Evasion</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -35,6 +37,12 @@
                 <td>
                     <c:out value="${player.evasion}"/>
                 </td>
+                <td>
+                	<spring:url value="/admins/players/delete/{playerId}" var="deleteUrl">
+							<spring:param name="playerId" value="${player.id}"></spring:param>
+						</spring:url> <a href="${fn:escapeXml(deleteUrl)}"
+						class="btn btn-danger">Delete Player</a>
+					</td>
             </tr>
         </c:forEach>
         </tbody>

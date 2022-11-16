@@ -75,7 +75,11 @@ public class UserController {
 			return "redirect:/";
 		}
 	}
-	
+	@GetMapping("/admin")
+	public ModelAndView admin() {
+		ModelAndView mav = new ModelAndView("admins/admin");
+		return mav;
+	}
 	@GetMapping(value = "/admins/users")
 	public String showUserList(Map<String, Object> model) {
 		Users users = new Users();
