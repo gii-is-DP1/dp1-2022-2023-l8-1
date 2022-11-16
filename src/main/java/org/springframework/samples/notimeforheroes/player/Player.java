@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCard;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
@@ -61,6 +62,8 @@ public class Player{
 
     @OneToMany()
     private List<AbilityCardInGame> abilityHand;
+
+
 
     
     
