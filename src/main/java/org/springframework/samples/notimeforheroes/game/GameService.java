@@ -56,6 +56,10 @@ public class GameService {
 	public Optional<Game> findById(int id){
 		return gameRepository.findById(id);
 	}
+
+    public void saveGame(Game game){
+         gameRepository.save(game);
+    }
     
 
     

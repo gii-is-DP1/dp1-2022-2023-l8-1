@@ -1,10 +1,13 @@
 package org.springframework.samples.notimeforheroes.game;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.notimeforheroes.friends.Friends;
+import org.springframework.samples.notimeforheroes.friends.FriendsService;
 import org.springframework.samples.notimeforheroes.player.Player;
 import org.springframework.samples.notimeforheroes.player.PlayerService;
 import org.springframework.stereotype.Controller;
@@ -25,15 +28,17 @@ public class GameController {
 
     private static final String VIEW_ENEMIES_ACTIVES = "games/viewEnemyActives";
 
+    private final FriendsService friendsService;
 
     private final GameService service;
     @Autowired
     private final PlayerService playerService;
 
     @Autowired
-    public GameController(GameService gameService, PlayerService playerService){
+    public GameController(GameService gameService, PlayerService playerService, FriendsService fs){
         this.service = gameService;
         this.playerService = playerService;
+        this.friendsService = fs;
     }
 
 
@@ -48,10 +53,24 @@ public class GameController {
     public ModelAndView showLobby(@PathVariable("gameId") int gameId){
         ModelAndView mav = new ModelAndView(VIEW_GAME_LOBBY);
         List<Player> players = service.showPlayersInGame(gameId);
-        
+        Collection<Friends> friends = friendsService.findFriends();
+        mav.addObject("friends", friends);
         mav.addObject("players", players);
         return mav;
     }
+
+    @GetMapping("/{gameId}/start")
+    public ModelAndView startGame(@PathVariable("gameId") int gameId){
+        ModelAndView mav = new ModelAndView(VIEW_GAME_LOBBY);
+        Game game = service.findById(gameId).get();
+        System.out.println("==========================Estado del juego "+game.getState());
+        game.setState(GameState.ESCOGER_LIDER);
+        service.saveGame(game);
+        System.out.println("==========================Estado del juego "+game.getState());
+        mav.addObject("message", "Partida iniciada");
+        return mav;
+    }
+
 
     @GetMapping("/new")
     public ModelAndView createGameView(){
