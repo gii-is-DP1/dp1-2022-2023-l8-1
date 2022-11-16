@@ -72,14 +72,5 @@ public class GameController {
 
 		return "redirect:/games/";
     }
-//    @GetMapping("/games/{gameId}/join")
-//    public String joinGame(@PathVariable("gameId")int gameId) {
-//    	Optional<Game> game= service.findById(gameId);
-//    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User currentUser = (User) auth.getPrincipal();
-//        List<Player> players = game.get().getPlayers();
-//        Player player = new Player();
-//        
-//    	return "";
-//    }
+
 }

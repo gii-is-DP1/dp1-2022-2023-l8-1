@@ -89,21 +89,18 @@ public class PlayerController {
 		return "redirect:/admins/players";
 	}
 	@GetMapping("/games/{gameId}/join")
-	  public String joinGame(@PathVariable("gameId")int gameId) {//HAY QUE AÑADIR CONSTRAINT DE QUE UNJUGADOR NO SE PUEDE VOLVER A UNIR A LA MISMA PARTIDA
-	  	Optional<Game> game= gameService.findById(gameId);
+	public String joinGame(@PathVariable("gameId")int gameId) {
+		Optional<Game> game= gameService.findById(gameId);
 	  	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	      User currentUser = (User) auth.getPrincipal();
-	      Player player = new Player();
-	      player.setEvasion(true);
-	      player.setGame(game.get());
-	      player.setGlory(0);
-	      player.setGold(0);
-	      player.setHero(HeroType.GUERRERO_FEMENINO);//para probar si funciona, después él tendría que escoger el que quiera
-	      player.setWounds(0);
-	      player.setUser(userService.findByUsername(currentUser.getUsername()));
-	      playerService.savePlayer(player);
-	  	return "redirect:/games/";
-	  }
+	    User currentUser = (User) auth.getPrincipal();
+	    List<Player> players = game.get().getPlayer();
+	    if(!players.stream().anyMatch(x->x.getUser()==userService.findByUsername(currentUser.getUsername()))) {//si el user ya está en la partida no se podrá unir
+			Player newPlayer = new Player();
+			org.springframework.samples.notimeforheroes.user.User user = userService.findByUsername(currentUser.getUsername());
+			playerService.createPlayer(newPlayer, game.get(), user);
+		}
+	    return "redirect:/games/";
+	}
 
 
 
