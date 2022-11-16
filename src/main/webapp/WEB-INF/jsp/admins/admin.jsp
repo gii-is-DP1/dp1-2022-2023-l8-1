@@ -9,6 +9,8 @@
     <h2>Elige opción para administrar</h2>
     <ul><h3>Administrar Usuarios</h3></ul>
     <ul><a  href="${fn:escapeXml('/admins/users')}" class="btn btn-default">Administrar Usuarios</a></ul>
+    <ul><h3>Administrar Jugadores</h3></ul>
+    <ul><a  href="${fn:escapeXml('/admins/players')}" class="btn btn-default">Administrar Jugadores</a></ul>
     <!-- Aquí se añadiría cuando se pueda administrar otras cosas como partidas o jugadores -->
     
 </petclinic:layout>

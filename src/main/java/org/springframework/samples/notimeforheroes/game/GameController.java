@@ -1,17 +1,20 @@
 package org.springframework.samples.notimeforheroes.game;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-
+import org.springframework.samples.notimeforheroes.player.Player;
+import org.springframework.samples.notimeforheroes.player.PlayerService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,10 +27,13 @@ public class GameController {
     private static final String VIEW_GAME_NEW = "games/createGame";
 
     private final GameService service;
+    @Autowired
+    private final PlayerService playerService;
 
     @Autowired
-    public GameController(GameService gameService){
+    public GameController(GameService gameService, PlayerService playerService){
         this.service = gameService;
+        this.playerService=playerService;
     }
 
 
@@ -66,5 +72,5 @@ public class GameController {
 
 		return "redirect:/games/";
     }
-    
+
 }
