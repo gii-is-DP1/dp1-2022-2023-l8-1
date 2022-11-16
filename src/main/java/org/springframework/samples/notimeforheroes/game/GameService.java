@@ -1,5 +1,7 @@
 package org.springframework.samples.notimeforheroes.game;
 
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +33,7 @@ public class GameService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = (User) auth.getPrincipal();
         String username = currentUser.getUsername();
+
         
         Game newGame = new Game();
         newGame.setUsername(username);
@@ -38,6 +41,7 @@ public class GameService {
         newGame.setMinPlayers(game.getMinPlayers());
         newGame.setMaxPlayers(game.getMaxPlayers());
         newGame.setState(GameState.LOBBY);
+        newGame.setStartTime(new Date());
         gameRepository.save(newGame);
     }
 

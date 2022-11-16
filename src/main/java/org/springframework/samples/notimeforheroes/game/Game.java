@@ -8,6 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -16,8 +19,11 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.samples.notimeforheroes.model.BaseEntity;
+import org.springframework.samples.notimeforheroes.card.enemy.EnemyInGame;
+import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
+
 import org.springframework.samples.notimeforheroes.player.Player;
+import org.springframework.samples.notimeforheroes.turn.Turn;
 import org.springframework.samples.notimeforheroes.user.User;
 
 import lombok.Getter;
@@ -27,11 +33,11 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "games")
-public class Game extends BaseEntity{
+public class Game {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private int id;
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private int id;
     
     private Date startTime;
     private Date endTime;
@@ -66,7 +72,20 @@ public class Game extends BaseEntity{
     @OneToMany(mappedBy="game", cascade = CascadeType.ALL)
     private List<Player> player;
 
+    @OneToMany()
+    private List<MarketCardInGame> marketPile;
 
+    @OneToMany()
+    private List<MarketCardInGame> sale;
+
+    @OneToMany()
+    private List<EnemyInGame> monsterPile;
+
+    @OneToMany()
+    private List<EnemyInGame> monsterField;
+
+    @OneToMany()
+    private List<Turn> turn;
 
 
 
