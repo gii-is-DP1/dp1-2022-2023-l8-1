@@ -26,7 +26,7 @@ import lombok.Setter;
 @Table(name = "users")
 public class User extends BaseEntity{
 
-	@Column(name="username")
+	@Column(name="username", unique=true)
 	@NotNull
 	private String username;
 	
@@ -34,7 +34,7 @@ public class User extends BaseEntity{
 	@NotNull
 	private String password;
 	
-	@Column(name="email")
+	@Column(name="email", unique=true)
 	@NotNull
 	@Email
 	private String email;

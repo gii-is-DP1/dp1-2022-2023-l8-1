@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -101,7 +102,17 @@ public class PlayerController {
 		}
 	    return "redirect:/games/";
 	}
-
+	@GetMapping(value="/admins/players/delete/{playerId}")
+	public String deleteUser(@PathVariable("playerId") int playerId, ModelMap model) {
+		Optional<Player> player = playerService.findPlayerById(playerId);
+		if(player.isPresent()) {
+			model.addAttribute("message", "player successfully deleted");//no se muestra, no sé por qué
+			playerService.delete(player.get()); //También estaría bien añadir que aparezca botón de confirmación
+		}else {
+			model.addAttribute("message", "player not found");
+		}
+		return "redirect:/admins/players";
+	}
 
 
     
