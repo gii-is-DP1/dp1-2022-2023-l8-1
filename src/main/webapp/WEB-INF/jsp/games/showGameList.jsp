@@ -41,7 +41,6 @@
                             <c:out value="${'no'}"/>
                         </c:otherwise>
                     </c:choose>
-                    <!--<c:out value="${game.hasScenes}"/>-->
                 </td>
                 <td>
                     <c:out value="${game.maxPlayers}"/>
@@ -59,7 +58,7 @@
                     <c:out value="${game.username}"/>
                 </td>
                 <td>
-                    <c:out value="player ${game.winner.id}"/>
+                    <c:out value="${game.winner.username}"/>
                 </td>
                 
                 
