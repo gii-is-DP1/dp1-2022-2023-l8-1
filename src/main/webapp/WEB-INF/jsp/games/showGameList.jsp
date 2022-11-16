@@ -33,7 +33,15 @@
                     <c:out value="${game.endTime}"/>
                 </td>
                 <td>
-                    <c:out value="${game.hasScenes}"/>
+                    <c:choose>
+                        <c:when test="${game.hasScenes=='true'}">
+                            <c:out value="${'yes'}"></c:out>
+                        </c:when>
+                        <c:otherwise>
+                            <c:out value="${'no'}"/>
+                        </c:otherwise>
+                    </c:choose>
+                    <!--<c:out value="${game.hasScenes}"/>-->
                 </td>
                 <td>
                     <c:out value="${game.maxPlayers}"/>

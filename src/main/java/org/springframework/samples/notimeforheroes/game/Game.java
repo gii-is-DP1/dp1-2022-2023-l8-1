@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.samples.notimeforheroes.model.BaseEntity;
@@ -44,6 +45,7 @@ public class Game extends BaseEntity{
     @Max(4)
     private int maxPlayers;
 
+    @NotNull
     private boolean hasScenes;
     
     private String username;
