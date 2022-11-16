@@ -27,7 +27,9 @@ public class PlayerService {
 
     @Transactional
     public void savePlayer(Player player){
-        playerRepository.save(player);
+
+    	playerRepository.save(player);
+
 
     }
     public Optional<Player> findPlayerById(Integer id) {

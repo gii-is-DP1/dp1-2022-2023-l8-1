@@ -3,30 +3,40 @@ package org.springframework.samples.notimeforheroes.game;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.notimeforheroes.user.User;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class GameService {
 
-    private final GameRepository repo;
+    private final GameRepository gameRepository;
 
 
     @Autowired
     public GameService(GameRepository repository){
-        this.repo = repository;
+        this.gameRepository = repository;
     }
 
     public List<Game> gameList(){
-        return repo.findAll();
+        return gameRepository.findAll();
     }
 
     public void createGame(Game game){
-        repo.save(game);
-        game.setState(GameState.LOBBY);
+
         
+
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = (User) auth.getPrincipal();
+		String username = currentUser.getUsername();
+		game.setUsername(username);
+    	game.setState(GameState.LOBBY);
+    	gameRepository.save(game);
+    	
+
     }
     
 }

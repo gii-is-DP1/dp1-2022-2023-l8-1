@@ -48,7 +48,7 @@
                     <c:out value="${game.state}"/>
                 </td>
                 <td>
-                    <c:out value="${game.user.username}"/>
+                    <c:out value="${game.username}"/>
                 </td>
                 <td>
                     <c:out value="player ${game.winner.id}"/>
