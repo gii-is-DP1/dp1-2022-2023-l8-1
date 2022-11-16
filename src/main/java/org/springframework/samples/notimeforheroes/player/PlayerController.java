@@ -68,7 +68,9 @@ public class PlayerController {
     @GetMapping(value = "/admins/createPlayerForm")
 	public ModelAndView createPlayerView(){
 		ModelAndView mav = new ModelAndView(VIEWS_PLAYERS_CREATE_FORM);
+
         Player player = new Player();
+
 		mav.addObject("player", player);
 		return mav;
 
@@ -99,7 +101,7 @@ public class PlayerController {
 			org.springframework.samples.notimeforheroes.user.User user = userService.findByUsername(currentUser.getUsername());
 			playerService.createPlayer(newPlayer, game.get(), user);
 		}
-	    return "redirect:/games/";
+	    return "redirect:/games/"+gameId+"/lobby";
 	}
 
 

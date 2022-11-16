@@ -1,5 +1,6 @@
 package org.springframework.samples.notimeforheroes.game;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,8 @@ public class GameController {
 
     private static final String VIEW_GAME_LIST = "games/showGameList";
     private static final String VIEW_GAME_NEW = "games/createGame";
+    private static final String VIEW_GAME_LOBBY = "games/showGameLobby";
+
 
     private final GameService service;
     @Autowired
@@ -41,6 +44,15 @@ public class GameController {
     public ModelAndView showGameList(){
         ModelAndView mav = new ModelAndView(VIEW_GAME_LIST);
         mav.addObject("games", service.gameList());
+        return mav;
+    }
+
+    @GetMapping("/{gameId}/lobby")
+    public ModelAndView showLobby(@PathVariable("gameId") int gameId){
+        ModelAndView mav = new ModelAndView(VIEW_GAME_LOBBY);
+        List<Player> players = service.showPlayersInGame(gameId);
+        
+        mav.addObject("players", players);
         return mav;
     }
 
