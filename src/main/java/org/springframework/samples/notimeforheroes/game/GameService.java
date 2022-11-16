@@ -25,6 +25,21 @@ public class GameService {
         return gameRepository.findAll();
     }
 
+    public void createGame(Game game) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = (User) auth.getPrincipal();
+        String username = currentUser.getUsername();
+        
+        Game newGame = new Game();
+        newGame.setUsername(username);
+        newGame.setHasScenes(game.isHasScenes());
+        newGame.setMinPlayers(game.getMinPlayers());
+        newGame.setMaxPlayers(game.getMaxPlayers());
+        newGame.setState(GameState.LOBBY);
+        gameRepository.save(newGame);
+    }
+    /*
     public void createGame(Game game){
 
         
@@ -37,6 +52,12 @@ public class GameService {
     	gameRepository.save(game);
     	
 
-    }
+    } */
+
+
+
+
+
+
     
 }
