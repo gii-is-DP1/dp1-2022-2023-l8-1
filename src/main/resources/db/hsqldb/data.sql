@@ -122,7 +122,7 @@ INSERT INTO ABILITY_CARD_IN_GAME(damage, ability_card_id, player_id) VALUES (10,
 
 INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(1,1);
 
-
+INSERT INTO PLAYERS_ABILITY_PILE(players_id, ability_pile_id) VALUES (1, 1);
 
 INSERT INTO enemies(endurance, glory, type) VALUES (10,10,'HONDERO');
 
