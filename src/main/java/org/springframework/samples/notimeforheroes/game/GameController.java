@@ -32,6 +32,8 @@ public class GameController {
     private static final String VIEW_GAME_NEW = "games/createGame";
     private static final String VIEW_GAME_LOBBY = "games/showGameLobby";
 
+    private static final String VIEW_ENEMIES_ACTIVES = "games/viewEnemyActives";
+
 
     private final GameService service;
     @Autowired
@@ -118,6 +120,15 @@ public class GameController {
 		}
 
 		return "redirect:/games/";
+    }
+
+    @GetMapping(value = "/monsterField/{gameId}")
+    public ModelAndView showEnemiesList(@PathVariable("gameId") int gameId){
+        ModelAndView mav = new ModelAndView(VIEW_ENEMIES_ACTIVES);
+        Game game = service.findById(gameId).get();
+        mav.addObject("game", game);
+
+        return mav;
     }
 
 }
