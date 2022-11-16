@@ -13,13 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.notimeforheroes.user;
+package org.springframework.samples.notimeforheroes.friends;
 
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.notimeforheroes.user.User;
+import org.springframework.samples.notimeforheroes.user.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,32 +33,41 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Michael Isvy
  */
 @Service
-public class ProposalsService {
+public class FriendsService {
 
-	private ProposalsRepository proposalRepository;
+	private FriendsRepository friendsRepository;
+	@Autowired
 	private UserService userService;
 
 	@Autowired
-	public ProposalsService(ProposalsRepository proposalRepository,UserService userService) {
-		this.proposalRepository = proposalRepository;
+	public FriendsService(FriendsRepository friendsRepository,UserService userService) {
+		this.friendsRepository = friendsRepository;
 		this.userService = userService;
 	}
 
 	@Transactional
-	public void saveProposals(Proposals proposals) throws DataAccessException {
-		proposalRepository.save(proposals);
+	public void saveFriends(Friends friends) throws DataAccessException {
+		friendsRepository.save(friends);
+	}
+
+	public Collection<Friends> findFriends(){
+		return (Collection<Friends>) friendsRepository.findAll();
+	}
+
+	public Collection<Friends> findAllFriendsByUserName(String username){
+		return  (Collection<Friends>) friendsRepository.findAllByUserName(username);
 	}
 	
 	@Transactional
-	public void saveFriends(Integer id, String receiver_username) throws DataAccessException {
-		Proposals proposal = new Proposals();
+	public void saveFriends(Integer id, String friend_username) throws DataAccessException {
+		Friends friend = new Friends();
 		Optional<User> user = userService.findUser(id);
 		if(user.isPresent()) {
-			proposal.setUser(user.get());
-			proposal.setReceiverUsername(receiver_username);
-			proposal.setSenderUsername(user.get().getUsername());
+			friend.setUser(user.get());
+			friend.setFriendUsername(friend_username);
+			friend.setUserName(user.get().getUsername());
 			//user.get().getAuthorities().add(authority);
-			proposalRepository.save(proposal);
+			friendsRepository.save(friend);
 		}else
 			throw new DataAccessException("User '"+id+"' not found!") {};
 	}

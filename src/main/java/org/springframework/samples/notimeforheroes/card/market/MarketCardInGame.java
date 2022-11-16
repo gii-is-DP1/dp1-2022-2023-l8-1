@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.springframework.samples.notimeforheroes.game.Game;
 import org.springframework.samples.notimeforheroes.player.Player;
 
 import lombok.Getter;
@@ -24,5 +25,8 @@ public class MarketCardInGame {
 
     @ManyToOne(targetEntity = Player.class, cascade = CascadeType.ALL)
     private Player player;
+
+    @ManyToOne(targetEntity = Game.class)
+    private Game game;
     
 }

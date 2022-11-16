@@ -16,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Min;
+
 
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCard;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
@@ -37,8 +39,13 @@ public class Player{
     private int id;
 
 
+    @Min(0)
     private int glory;
+
+    @Min(0)
     private int gold;
+
+    @Min(0)
     private int wounds;
 
     private boolean evasion;
@@ -63,6 +70,12 @@ public class Player{
     @OneToMany()
     private List<AbilityCardInGame> abilityHand;
 
+
+    @OneToMany()
+    private List<AbilityCardInGame> discardPile;
+
+    @OneToMany()
+    private List<AbilityCardInGame> abilityPile;
 
 
     
