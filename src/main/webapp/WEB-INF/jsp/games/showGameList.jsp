@@ -19,7 +19,7 @@
             <th>Number of Players</th>
             <th>State</th>
             <th>User creation</th>
-            <th>Winner</th>
+            <th>Join</th>
         </tr>
         </thead>
         <tbody>
@@ -42,7 +42,7 @@
                     <c:out value="${game.minPlayers}"/>
                 </td>
                 <td>
-                    <c:out value="${fn:length(game.players)}"></c:out>
+                    <c:out value="${fn:length(game.player)}"></c:out>
                 </td>
                 <td>
                     <c:out value="${game.state}"/>
@@ -51,10 +51,13 @@
                     <c:out value="${game.username}"/>
                 </td>
                 <td>
-                    <c:out value="player ${game.winner.id}"/>
-                </td>
-                
-                
+                <c:if test="${game.state=='LOBBY'}">
+                    <spring:url value="/games/{gameId}/join" var="joinUrl">
+                        <spring:param name="gameId" value="${game.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(joinUrl)}">Join game</a>
+                </c:if>
+                </td> 
             </tr>
         </c:forEach>
         </tbody>

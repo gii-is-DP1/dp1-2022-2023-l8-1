@@ -1,6 +1,7 @@
 package org.springframework.samples.notimeforheroes.game;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -37,6 +38,9 @@ public class GameService {
     	gameRepository.save(game);
     	
 
+    }
+    public Optional<Game> findById(int id){
+    	return gameRepository.findById(id);
     }
     
 }
