@@ -12,14 +12,14 @@
     </h2>
     <form:form modelAttribute="user" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="Username" name="username"/>
-            <petclinic:inputField label="Password" name="password"/>
-            <petclinic:inputField label="Email" name="email"/>
-            <petclinic:inputField label="BirthDate" name="birthDate"/>
+            <petclinic:inputField label="Username" name="username" placeholder="Username"/>
+            <petclinic:inputField label="Password" name="password" placeholder="********" type="password"/>
+            <petclinic:inputField label="Email" name="email" placeholder="example@example.com"/>
+            <petclinic:inputField label="BirthDate" name="birthDate" placeholder="DD/MM/YYYY"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                   <button class="btn btn-default" type="submit">Add User</button>
+                   <button class="btn btn-default" type="submit">Create User</button>
             </div>
         </div>
     </form:form>
