@@ -41,7 +41,7 @@ public class User extends BaseEntity{
 	private String email;
 	
 	@Column(name="birth_date")
-	@NotEmpty
+	//@NotEmpty
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private LocalDate birthDate;
 
