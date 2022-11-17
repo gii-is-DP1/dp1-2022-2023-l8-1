@@ -1,0 +1,55 @@
+package org.springframework.samples.notimeforheroes.player;
+
+
+import java.util.Collection;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.notimeforheroes.game.Game;
+import org.springframework.samples.notimeforheroes.user.User;
+import org.springframework.stereotype.Service;
+
+@Service
+public class PlayerService {
+    
+
+    private PlayerRepository playerRepository;
+
+    @Autowired
+    public PlayerService(PlayerRepository playerRepository){
+        this.playerRepository = playerRepository;
+    }
+
+    public Collection<Player> findPlayers(){
+        return playerRepository.findAll();
+    }
+
+
+    @Transactional
+    public void savePlayer(Player player){
+
+    	playerRepository.save(player);
+
+
+    }
+    public void createPlayer(Player player, Game game, User user){
+    	player.setEvasion(true);
+	      player.setGame(game);
+	      player.setGlory(0);
+	      player.setGold(0);
+	      //player.setHero(HeroType.GUERRERO_FEMENINO);//para probar si funciona, después él tendría que escoger el que quiera
+	      player.setWounds(0);
+	      player.setUser(user);
+    	playerRepository.save(player);
+
+
+    }
+    public Optional<Player> findPlayerById(Integer id) {
+        return  playerRepository.findById(id);
+    }
+    public void delete(Player player) {
+    	playerRepository.delete(player);
+    }
+}
