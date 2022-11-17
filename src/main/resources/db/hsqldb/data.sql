@@ -103,6 +103,10 @@ INSERT INTO users(id,username, password, email, birth_date, enabled) VALUES
 (3,'user2', 'user2', 'user2@user2.com','1951-01-09', 1);
 INSERT INTO authorities(id,user_id,username,authority) VALUES (3,3,'user', 'user');
 
+INSERT INTO users(id,username, password, email, birth_date, enabled) VALUES 
+(4,'user3', 'user3', 'user3@user3.com','1952-01-09', 1);
+INSERT INTO authorities(id,user_id,username,authority) VALUES (4,4,'user', 'user');
+
 -- INSERT INTO proposals(id,user_id,sender_username,receiver_username,proposal_type) VALUES (1,2,'user', 'admin','PARTIDA'); Funciona
 
 INSERT INTO friends(id,user1_id,user2_id,friend_state) VALUES (1,1,2,0);
