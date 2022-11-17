@@ -63,10 +63,8 @@ public class GameController {
     public ModelAndView startGame(@PathVariable("gameId") int gameId){
         ModelAndView mav = new ModelAndView(VIEW_GAME_LOBBY);
         Game game = service.findById(gameId).get();
-        System.out.println("==========================Estado del juego "+game.getState());
         game.setState(GameState.ESCOGER_LIDER);
         service.saveGame(game);
-        System.out.println("==========================Estado del juego "+game.getState());
         mav.addObject("message", "Partida iniciada");
         return mav;
     }
