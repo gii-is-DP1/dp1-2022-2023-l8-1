@@ -28,5 +28,7 @@ public class MarketCardInGame {
 
     @ManyToOne(targetEntity = Game.class)
     private Game game;
+
+    
     
 }
