@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
@@ -36,29 +37,29 @@ public class UserServiceTest {
         assertNotEquals("No", user.getUsername());
     }
     
-    @Test
-    public void createUserPositive() {
-    	Integer n = userService.findUsers().size();
-    	User user = new User();
-    	user.setUsername("test");
-    	user.setPassword("test");
-    	user.setEmail("prueba@prueba.com");
-    	user.setBirthDate(LocalDate.of(2000, 01, 01));
-    	user.setEnabled(true);
-    	userService.saveUser(user);
-    	assertEquals(user.getUsername(), userService.findUser(n+1).get().getUsername());
-    }
-    
 //    @Test
-//    public void createUserNegativeUnique() {
+//    public void createUserPositive() {
+//    	Integer n = userService.findUsers().size();
 //    	User user = new User();
-//    	user.setUsername("user");
-//    	user.setPassword("user");
-//    	user.setEmail("prueba2@prueba.com");
+//    	user.setUsername("prueba");
+//    	user.setPassword("prueba");
+//    	user.setEmail("prueba@prueba.com");
 //    	user.setBirthDate(LocalDate.of(2000, 01, 01));
 //    	user.setEnabled(true);
-//    	assertThrows(DataIntegrityViolationException.class,() -> userService.saveUser(user), "is not unique");
+//    	userService.saveUser(user);
+//    	assertEquals(user.getUsername(), userService.findUser(n+1).get().getUsername());
 //    }
+    
+    @Test
+    public void createUserNegativeUnique() {
+    	User user = new User();
+    	user.setUsername("user");
+    	user.setPassword("user");
+    	user.setEmail("prueba2@prueba.com");
+    	user.setBirthDate(LocalDate.of(2000, 01, 01));
+    	user.setEnabled(true);
+    	assertThrows(DataIntegrityViolationException.class,() -> userService.saveUser(user), "is not unique");
+    }
     
     @Test
     public void createUserNegative() {
@@ -67,7 +68,7 @@ public class UserServiceTest {
     	user.setEmail("");
     	user.setBirthDate(LocalDate.of(2000, 01, 01));
     	user.setEnabled(true);
-    	assertThrows(ConstraintViolationException.class,() -> userService.saveUser(user), "Is null");
+    	assertThrows(ConstraintViolationException.class,() -> userService.saveUser(user), "Is not null");
     }
     
     @Test
@@ -87,11 +88,11 @@ public class UserServiceTest {
     	Collection<User> ls= userService.findUsers();
         assertNotNull(ls);
         assertFalse(ls.isEmpty());
-        assertEquals(3,ls.size());//modificar si metemos más users en los inserts
+        assertEquals(4,ls.size());//modificar si metemos más users en los inserts
     }
     
-    @Test
-    public void registerUserPositive() {
-    	
-    }
+//    @Test
+//    public void registerUserPositive() {
+//    	
+//    }
 }
