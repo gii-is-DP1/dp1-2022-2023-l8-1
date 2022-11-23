@@ -7,13 +7,27 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="lobby">
+
+
+
+
     
-    <h1 style="text-align:center">LOBBY</h1>
+    <h1 style="text-align:center">LOBBY ${gameId}</h1>
+
+	<h1>ELIGE TU H&EacuteROE</h1>
+
+	<c:forEach items="${heroTypes}" var="heroType">
+		<spring:url value="lobby/selectHero/{heroType}" var="selectHero">
+		<spring:param name="gameId" value="${gameId}"/>
+		<spring:param name="heroType" value="${heroType}"/>
+	</spring:url>
+	<a href="${fn:escapeXml(selectHero)}" class="btn btn-default">${heroType}</a>
+	</c:forEach>
 
     <h3>Lista de jugadores</h3>
 
     <c:forEach items="${players}" var="player">
-        <li>${player.user.username}</li>
+        <li>${player.user.username} - ${player.hero.toString().split("_")[0]} &nbsp ${player.hero.toString().split("_")[1]}</li>
     </c:forEach>
     <br>
     <h2>Invitaciones a jugar</h2>

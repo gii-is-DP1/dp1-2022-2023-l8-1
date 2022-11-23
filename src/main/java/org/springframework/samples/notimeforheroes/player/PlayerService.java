@@ -9,6 +9,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.game.Game;
 import org.springframework.samples.notimeforheroes.user.User;
+
+
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,6 +37,8 @@ public class PlayerService {
 
 
     }
+
+
     public void createPlayer(Player player, Game game, User user){
     	player.setEvasion(true);
 	      player.setGame(game);
