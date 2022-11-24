@@ -9,13 +9,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.springframework.samples.notimeforheroes.model.BaseEntity;
 import org.springframework.samples.notimeforheroes.player.HeroType;
-import org.springframework.samples.notimeforheroes.player.Player;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -42,8 +39,5 @@ public class AbilityCard {
 
     @OneToMany()
     private Set<AbilityCardInGame> abilityCardInGame;
-
-    
-
     
 }

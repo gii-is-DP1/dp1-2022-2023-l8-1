@@ -7,5 +7,6 @@ public enum Profiency {
     MELEE,
     DISTANCIA,
     PERICIA,
-    MAGIA   
+    MAGIA,
+    INCOMPATIBLE
 }
