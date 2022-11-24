@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.springframework.samples.notimeforheroes.player.HeroType;
 import org.springframework.samples.notimeforheroes.player.Player;
 
 import lombok.Getter;
@@ -24,7 +25,12 @@ public class MarketCard {
     private int id;
 
     private int price;
-    private int profiency;
+    private int damage;
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="profiency")
+    private HeroType profiency;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")

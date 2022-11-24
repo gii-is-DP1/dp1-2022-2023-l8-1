@@ -61,6 +61,8 @@ public class GameController {
         return mav;
     }
 
+    // Builder para la partida y comando para las cartas
+
     @GetMapping("/{gameId}/lobby")
     public ModelAndView showLobby(@PathVariable("gameId") int gameId){
         ModelAndView mav = new ModelAndView(VIEW_GAME_LOBBY);
