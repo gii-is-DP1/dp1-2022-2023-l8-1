@@ -19,6 +19,7 @@ public class GameService {
     private final GameRepository gameRepository;
 
 
+
     @Autowired
     public GameService(GameRepository repository){
         this.gameRepository = repository;
@@ -31,7 +32,6 @@ public class GameService {
     public List<Player> showPlayersInGame(Integer gameId){
         return gameRepository.findPlayersInGame(gameId);
     }
-
 
 
     public void createGame(Game game) {

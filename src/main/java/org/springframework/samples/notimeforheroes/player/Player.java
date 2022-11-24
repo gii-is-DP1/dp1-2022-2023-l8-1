@@ -1,6 +1,5 @@
 package org.springframework.samples.notimeforheroes.player;
 
-
 import java.util.List;
 
 import javax.persistence.Column;
@@ -14,7 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
-
+import javax.validation.constraints.NotNull;
 
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
@@ -33,18 +32,24 @@ public class Player{
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private int id;
 
-
+    @NotNull
     @Min(0)
     private int glory;
 
+    @NotNull
     @Min(0)
     private int gold;
 
+    @NotNull
     @Min(0)
     private int wounds;
 
+    @NotNull
     private boolean evasion;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name="profiency")
+    private Profiency profiency;
 
     @Enumerated(EnumType.STRING)
     @Column(name="heroType")
@@ -53,7 +58,6 @@ public class Player{
     @ManyToOne()
     @JoinColumn(name = "user_id")
     private User user;
-
     
     @ManyToOne()
     @JoinColumn(name = "game_id")
@@ -65,14 +69,10 @@ public class Player{
     @OneToMany()
     private List<AbilityCardInGame> abilityHand;
 
-
     @OneToMany()
     private List<AbilityCardInGame> discardPile;
 
     @OneToMany()
     private List<AbilityCardInGame> abilityPile;
 
-
-    
-    
 }
