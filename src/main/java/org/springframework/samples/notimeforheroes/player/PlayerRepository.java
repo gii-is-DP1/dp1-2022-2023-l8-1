@@ -9,12 +9,6 @@ public interface PlayerRepository extends CrudRepository<Player, Integer>{
 
     List<Player> findAll();
 
-
-
-
-
-
-
     
 }
 
