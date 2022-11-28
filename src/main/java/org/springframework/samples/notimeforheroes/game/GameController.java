@@ -96,4 +96,10 @@ public class GameController {
         return mav;
     }
 
+    @GetMapping(value = "/board")
+    public ModelAndView showBoard(){
+        ModelAndView mav = new ModelAndView("games/board");
+        return mav;
+    }
+
 }
