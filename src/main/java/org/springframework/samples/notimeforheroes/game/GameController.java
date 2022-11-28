@@ -35,6 +35,7 @@ public class GameController {
     private static final String VIEW_GAME_LOBBY = "games/showGameLobby";
 
     private static final String VIEW_ENEMIES_ACTIVES = "games/viewEnemyActives";
+    private static final String VIEW_MARKET = "games/viewMarket";
 
     private final FriendsService friendsService;
 
@@ -161,5 +162,13 @@ public class GameController {
 
         return mav;
     }
-
+    
+//    @GetMapping(value = "/market/{gameId}")
+//    public ModelAndView showmarketList(@PathVariable("gameId") int gameId){
+//        ModelAndView mav = new ModelAndView(VIEW_MARKET);
+//        Game game = service.findById(gameId).get();
+//        mav.addObject("game", game);
+//
+//        return mav;
+//    }
 }

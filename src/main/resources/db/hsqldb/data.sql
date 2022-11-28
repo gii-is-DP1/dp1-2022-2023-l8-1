@@ -119,7 +119,7 @@ INSERT INTO games(start_time, end_time, has_scenes, max_players,min_players, sta
 
 
 INSERT INTO players(glory, gold, wounds, evasion, hero_type, user_id, game_id) VALUES (5, 10, 20, TRUE, 'MAGO_MASCULINO',1, 1);
-INSERT INTO players(glory, gold, wounds, evasion, hero_type, user_id, game_id) VALUES (4, 9, 20, TRUE, 'MAGO_MASCULINO',2, 1);
+INSERT INTO players(glory, gold, wounds, evasion, hero_type, user_id, game_id) VALUES (4, 9, 20, TRUE, 'MAGO_FEMENINO',2, 1);
 
 INSERT INTO ability_cards(ability_type, damage, hero_type) VALUES ('COMPANERO_LOBO', 10, 'MAGO_MASCULINO');
 
@@ -145,14 +145,13 @@ INSERT INTO GAMES_MONSTER_FIELD(game_id, monster_field_id) VALUES(1,1);
 --INSERT INTO GAMES_PLAYERS(game_id, players_id) VALUES(1,1);
 --INSERT INTO GAMES_PLAYERS(game_id, players_id) VALUES(1,2);
 
-INSERT INTO MARKET_CARD(price, profiency, type, damage) VALUES(10, 'MELEE', 'DAGA_ELFICA', 10);
+INSERT INTO MARKET_CARD(price, profiency, type,damage) VALUES(10, 10, 'DAGA_ELFICA',2);
 
-INSERT INTO MARKET_CARD_IN_GAME (player_id) VALUES (1);
+INSERT INTO MARKET_CARD_IN_GAME (game_id, player_id) VALUES (1,1);
 
 INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,1);
 
 INSERT INTO PLAYERS_MARKET_HAND (players_id, market_hand_id) VALUES(1,1);
 
-
-
+--INSERT INTO GAMES_MARKET_PILE (game_id, market_pile_id) VALUES (1,1);
 
