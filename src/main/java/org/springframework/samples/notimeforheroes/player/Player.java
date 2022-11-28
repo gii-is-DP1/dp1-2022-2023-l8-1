@@ -45,6 +45,10 @@ public class Player{
 
     private boolean evasion;
 
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name="profiency")
+    private Profiency profiency;
 
     @Enumerated(EnumType.STRING)
     @Column(name="heroType")

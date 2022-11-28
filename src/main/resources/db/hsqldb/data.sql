@@ -145,7 +145,7 @@ INSERT INTO GAMES_MONSTER_FIELD(game_id, monster_field_id) VALUES(1,1);
 --INSERT INTO GAMES_PLAYERS(game_id, players_id) VALUES(1,1);
 --INSERT INTO GAMES_PLAYERS(game_id, players_id) VALUES(1,2);
 
-INSERT INTO MARKET_CARD(price, profiency, type) VALUES(10, 10, 'DAGA_ELFICA');
+INSERT INTO MARKET_CARD(price, profiency, type, damage) VALUES(10, 'MELEE', 'DAGA_ELFICA', 10);
 
 INSERT INTO MARKET_CARD_IN_GAME (player_id) VALUES (1);
 
