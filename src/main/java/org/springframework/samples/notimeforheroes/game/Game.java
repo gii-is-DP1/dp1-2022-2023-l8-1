@@ -42,6 +42,8 @@ public class Game {
     private Date startTime;
     private Date endTime;
 
+    
+
     // @Size(min = 0, max = 4)
     @Min(2)
     @Max(4)
