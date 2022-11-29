@@ -162,6 +162,7 @@ public class GameController {
 
         return mav;
     }
+
     
 //    @GetMapping(value = "/market/{gameId}")
 //    public ModelAndView showmarketList(@PathVariable("gameId") int gameId){
@@ -171,4 +172,12 @@ public class GameController {
 //
 //        return mav;
 //    }
+
+
+    @GetMapping(value = "/board")
+    public ModelAndView showBoard(){
+        ModelAndView mav = new ModelAndView("games/board");
+        return mav;
+    }
+
 }
