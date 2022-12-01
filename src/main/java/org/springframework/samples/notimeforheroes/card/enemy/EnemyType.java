@@ -9,5 +9,5 @@ public enum EnemyType{
     BERSEKER,
     GURDRUG,
     ROGHKILLER,
-    SHRIEKNIFER
+    SHRIEKKNIFER
 }

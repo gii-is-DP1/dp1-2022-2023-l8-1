@@ -72,7 +72,7 @@ public class Game {
     @OneToMany(mappedBy="game", cascade = CascadeType.ALL)
     private List<Player> player;
 
-    @OneToMany()
+    @OneToMany(mappedBy="game", cascade = CascadeType.ALL)
     private List<MarketCardInGame> marketPile;
 
     @OneToMany()

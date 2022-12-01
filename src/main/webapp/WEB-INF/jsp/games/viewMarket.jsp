@@ -19,14 +19,7 @@
                 <th>market card Id</th>
                 <td><b><c:out value="${market.id}"/></b></td>
             </tr>
-           <%--  <tr>
-                <th>Damage</th>
-                <td><b><c:out value="${market.damage}"/></b></td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td><b><c:out value="${market.price}"/></b></td>
-            </tr>  --%>
+           
         </c:forEach>
     </table>
 </petclinic:layout>

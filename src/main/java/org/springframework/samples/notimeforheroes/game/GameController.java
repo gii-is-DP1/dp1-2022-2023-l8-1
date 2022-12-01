@@ -164,14 +164,14 @@ public class GameController {
     }
 
     
-//    @GetMapping(value = "/market/{gameId}")
-//    public ModelAndView showmarketList(@PathVariable("gameId") int gameId){
-//        ModelAndView mav = new ModelAndView(VIEW_MARKET);
-//        Game game = service.findById(gameId).get();
-//        mav.addObject("game", game);
-//
-//        return mav;
-//    }
+    @GetMapping(value = "/market/{gameId}")
+    public ModelAndView showmarketList(@PathVariable("gameId") int gameId){
+        ModelAndView mav = new ModelAndView(VIEW_MARKET);
+        Game game = service.findById(gameId).get();
+        mav.addObject("game", game);
+
+        return mav;
+    }
 
 
     @GetMapping(value = "/board")
