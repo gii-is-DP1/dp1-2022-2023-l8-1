@@ -13,8 +13,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-
-import org.springframework.samples.notimeforheroes.player.HeroType;
+import org.springframework.samples.notimeforheroes.card.ConditionType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,6 +31,7 @@ public class MarketCard {
     @Min(1)
     private int price;
 
+    @NotNull
     private int damage;
 
     @Enumerated(EnumType.STRING)
@@ -49,6 +49,10 @@ public class MarketCard {
     @Enumerated(EnumType.STRING)
     @Column(name="profiency4")
     private Proficiency profiency4;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="conditionType")
+    private ConditionType condition;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")

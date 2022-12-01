@@ -20,9 +20,7 @@ public class EnemyInGame {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
-    private int endurance;
-
+    
     @ManyToOne(targetEntity = Game.class)
     private Game game;
 

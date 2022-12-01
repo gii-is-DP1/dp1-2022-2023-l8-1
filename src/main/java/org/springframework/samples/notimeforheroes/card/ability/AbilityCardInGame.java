@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.samples.notimeforheroes.player.Player;
 
@@ -25,8 +26,6 @@ public class AbilityCardInGame{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    private int damage;
 
     @ManyToOne(targetEntity = Player.class, cascade = CascadeType.ALL)
     private Player player;
