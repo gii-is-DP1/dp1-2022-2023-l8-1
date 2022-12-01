@@ -109,10 +109,10 @@ INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_
 INSERT INTO PLAYERS_ABILITY_PILE(players_id, ability_pile_id) VALUES (1, 1);
 
 INSERT INTO enemies(endurance, glory, type) VALUES (2,1,'HONDERO');
-INSERT INTO enemies(endurance, glory, type) VALUES (3,2,'PIQUERO');
-INSERT INTO enemies(endurance, glory, type) VALUES (3,1,'CHAMAN');
-INSERT INTO enemies(endurance, glory, type) VALUES (4,2,'GUERRERO');
-INSERT INTO enemies(endurance, glory, type) VALUES (5,3,'NIGROMANTE');
+INSERT INTO enemies(endurance, glory, type, condition_type) VALUES (3,2,'PIQUERO', 'REGENERACION');
+INSERT INTO enemies(endurance, glory, type, condition_type) VALUES (3,1,'CHAMAN', 'MAGO_1');
+INSERT INTO enemies(endurance, glory, type, condition_type) VALUES (4,2,'GUERRERO', 'BOTIN_EXTRA');
+INSERT INTO enemies(endurance, glory, type, condition_type) VALUES (5,3,'NIGROMANTE', 'MAGO_2');
 INSERT INTO enemies(endurance, glory, type) VALUES (6,4,'BERSEKER');
 INSERT INTO enemies(endurance, glory, type) VALUES (8,8,'GURDRUG');
 INSERT INTO enemies(endurance, glory, type) VALUES (9,9,'ROGHKILLER');
