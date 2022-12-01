@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.springframework.samples.notimeforheroes.game.Game;
@@ -27,8 +28,11 @@ public class MarketCardInGame {
     private Player player;
 
     @ManyToOne(targetEntity = Game.class)
+    @JoinColumn(name="game_id")
     private Game game;
 
-    
+    @ManyToOne(targetEntity=MarketCard.class, cascade = CascadeType.ALL)
+    @JoinColumn(name="market_card_id")
+    private MarketCard marketCard;
     
 }
