@@ -12,8 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
@@ -74,5 +76,11 @@ public class Player{
 
     @OneToMany()
     private List<AbilityCardInGame> abilityPile;
+
+
+    // TODO: Hay que añadirlo al UML
+    @Size(max = 2, min = 0)
+    @OneToMany()
+    private List<AbilityCardInGame> cartasPuja;
 
 }

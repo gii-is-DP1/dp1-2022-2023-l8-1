@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.friends.Friends;
 import org.springframework.samples.notimeforheroes.friends.FriendsService;
 import org.springframework.samples.notimeforheroes.player.HeroType;
@@ -36,6 +37,8 @@ public class GameController {
 
     private static final String VIEW_ENEMIES_ACTIVES = "games/viewEnemyActives";
     private static final String VIEW_MARKET = "games/viewMarket";
+    private static final String VIEW_CHOOSE_LEADER = "games/chooseLeader";
+
 
     private final FriendsService friendsService;
 
@@ -124,6 +127,52 @@ public class GameController {
         return mav;
     }
 
+    @GetMapping("{gameId}/chooseLeader")
+    public ModelAndView showPuja(@PathVariable("gameId") int gameId){
+        ModelAndView mav = new ModelAndView(VIEW_CHOOSE_LEADER);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.getByUsername(auth.getName());
+
+        List<AbilityCardInGame> cardInGames = List.of();
+
+        List<Player> players = service.findById(gameId).get().getPlayer();
+        for(Player p : players){
+            if(p.getUser().getUsername() == currentUser.getUsername()){
+                cardInGames = playerService.showHandToChooseLeader(p);
+
+            }
+        }
+        mav.addObject("cardInGames", cardInGames);
+        mav.addObject("players", players);
+        return mav;
+    }
+
+    @GetMapping("{gameId}/chooseLeader/{cardId}")
+    public ModelAndView pujarCarta(@PathVariable("gameId") int gameId, @PathVariable("cardId") int cardId){
+        ModelAndView mav = new ModelAndView(VIEW_CHOOSE_LEADER);
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.getByUsername(auth.getName());
+        Player currentPlayer = new Player();
+        
+        
+        List<Player> players = service.findById(gameId).get().getPlayer();
+        for(Player p : players){
+            if(p.getUser().getUsername() == currentUser.getUsername()){
+                currentPlayer = p;
+                playerService.pujarCarta(p, cardId);
+                // cartasPuja = p.getCartasPuja();
+            }
+        }
+        System.out.println("=================================Cartas en la puja" + currentPlayer.getCartasPuja());
+        mav.addObject("cartasPuja", currentPlayer.getCartasPuja());
+        return mav;
+
+    }
+
+    
+
 
     @GetMapping("/new")
     public ModelAndView createGameView(){
@@ -179,5 +228,7 @@ public class GameController {
         ModelAndView mav = new ModelAndView("games/board");
         return mav;
     }
+
+
 
 }

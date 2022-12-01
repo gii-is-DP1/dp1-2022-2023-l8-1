@@ -108,8 +108,64 @@ INSERT INTO ability_cards(ability_type, damage, hero_type) VALUES ('SAQUEO', 1, 
 INSERT INTO ability_cards(ability_type, damage, hero_type) VALUES ('TRAMPA', 0, 'PICARO_FEMENINO');
 
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (1, 1);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (2, 1);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (3, 1);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (4, 1);
+
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (15, 2);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (16, 2);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (17, 2);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (18, 2);
+
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (31, 3);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (32, 3);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (33, 3);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (34, 3);
+
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (49, 4);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (50, 4);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (51, 4);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (52, 4);
+
 
 INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(1,1);
+INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(2,2);
+INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(3,3);
+INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(4,4);
+INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(15,5);
+INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(16,6);
+INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(17,7);
+INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(18,8);
+INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(31,9);
+INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(32,10);
+INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(33,11);
+INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(34,12);
+INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(49,13);
+INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(50,14);
+INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(51,15);
+INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(52,16);
+
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,1);
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,2);
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,3);
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,4);
+
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(2,5);
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(2,6);
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(2,7);
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(2,8);
+
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(3,9);
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(3,10);
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(3,11);
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(3,12);
+
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(4,13);
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(4,14);
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(4,15);
+INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(4,16);
+
+
 
 INSERT INTO PLAYERS_ABILITY_PILE(players_id, ability_pile_id) VALUES (1, 1);
 
@@ -155,7 +211,6 @@ INSERT INTO MARKET_CARD_IN_GAME (game_id, player_id,market_card_id) VALUES (1,1,
 INSERT INTO MARKET_CARD_IN_GAME (game_id, player_id,market_card_id) VALUES (1,1,2);
 INSERT INTO MARKET_CARD_IN_GAME (game_id, player_id,market_card_id) VALUES (1,1,3);
 
-INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,1);
 
 INSERT INTO PLAYERS_MARKET_HAND (players_id, market_hand_id) VALUES(1,1);
 

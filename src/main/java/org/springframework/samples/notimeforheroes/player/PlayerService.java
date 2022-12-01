@@ -1,12 +1,16 @@
 package org.springframework.samples.notimeforheroes.player;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.notimeforheroes.card.ability.AbilityCard;
+import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.game.Game;
 import org.springframework.samples.notimeforheroes.user.User;
 
@@ -38,7 +42,6 @@ public class PlayerService {
 
     }
 
-
     public void createPlayer(Player player, Game game, User user){
     	player.setEvasion(true);
 	      player.setGame(game);
@@ -56,5 +59,32 @@ public class PlayerService {
     }
     public void delete(Player player) {
     	playerRepository.delete(player);
+    }
+
+    public List<AbilityCardInGame> showHandToChooseLeader(Player p){
+        return p.getAbilityHand(); 
+    }
+
+    public List<AbilityCardInGame> pujarCarta(Player p, int cardId){
+        List<AbilityCardInGame> cartasAPujar = p.getCartasPuja();
+
+        for(AbilityCardInGame card : p.getAbilityHand()){
+            if(p.getCartasPuja().size() < 2){
+                if(card.getId() == cardId){
+                    cartasAPujar.add(card);
+                    
+                }
+            }else{
+
+                // ? El usuario ya ha pujado sus 2 cartas por lo que ya no puede pujar mas
+            }
+        }
+
+        p.setCartasPuja(cartasAPujar);
+        p.getAbilityHand().removeAll(cartasAPujar);
+        savePlayer(p);
+
+        return cartasAPujar;
+
     }
 }
