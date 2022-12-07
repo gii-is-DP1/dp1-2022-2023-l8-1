@@ -21,9 +21,7 @@ public class EnemyInGame {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
-    private int endurance;
-
+    
     @ManyToOne(targetEntity = Game.class)
     @JoinColumn(name="game_id")
     private Game game;

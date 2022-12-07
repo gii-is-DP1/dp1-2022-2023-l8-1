@@ -19,7 +19,7 @@
 			<c:forEach items="${game.monsterField}" var="enemy">
 					<div class="enemy">
 						<img src="<spring:url value="/resources/images/no-time-for-heroes.png" htmlEscape="true" />">
-						<h4>Endurance: <c:out value=" ${enemy.endurance}"/></h4>
+						<h4>Endurance: <c:out value=" ${enemy.enemy.endurance}"/></h4>
 					</div>
 				</c:forEach>
 			</div>
@@ -49,7 +49,7 @@
 				<c:forEach items="${player.abilityHand}" var="cards">
 				<div class="myCard">
 					<img src="<spring:url value="/resources/images/no-time-for-heroes.png" htmlEscape="true" />">
-					<h4 class="cardplayer">Damage:<c:out value=" ${cards.damage}"/></h4>
+					<h4 class="cardplayer">Damage:<c:out value=" ${cards.abilityCard.damage}"/></h4>
 				</div>
 				</c:forEach>
 				<%-- <div class="myCard">
