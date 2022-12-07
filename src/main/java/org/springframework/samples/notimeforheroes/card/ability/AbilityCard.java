@@ -37,7 +37,6 @@ public class AbilityCard {
     @Column(name = "abilityType")
     private AbilityType abilityType;
 
-    @OneToMany()
+    @OneToMany(mappedBy="abilityCard")
     private Set<AbilityCardInGame> abilityCardInGame;
-    
 }

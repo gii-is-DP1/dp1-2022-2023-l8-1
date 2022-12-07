@@ -25,6 +25,7 @@ public class MarketCardInGame {
     private int id;
 
     @ManyToOne(targetEntity = Player.class, cascade = CascadeType.ALL)
+    @JoinColumn(name="player_id")
     private Player player;
 
     @ManyToOne(targetEntity = Game.class)

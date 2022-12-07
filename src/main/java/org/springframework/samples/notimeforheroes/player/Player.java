@@ -63,16 +63,16 @@ public class Player{
     @JoinColumn(name = "game_id")
     private Game game;
 
-    @OneToMany()
+    @OneToMany(mappedBy="player")
     private List<MarketCardInGame> marketHand;
 
-    @OneToMany()
+    @OneToMany(mappedBy="player")
     private List<AbilityCardInGame> abilityHand;
 
-    @OneToMany()
+    @OneToMany(mappedBy="player")
     private List<AbilityCardInGame> discardPile;
 
-    @OneToMany()
+    @OneToMany(mappedBy="player")
     private List<AbilityCardInGame> abilityPile;
 
 }
