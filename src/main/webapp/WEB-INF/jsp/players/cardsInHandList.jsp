@@ -19,7 +19,7 @@
                 <th>CardsInHand List</th>
 
                 <td><c:out value="${cards.id}"/></td>
-                <td><c:out value="${cards.damage}"/></td>
+                <td><c:out value="${cards.abilityCard.damage}"/></td>
 
             </tr>
         </c:forEach>

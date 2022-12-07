@@ -174,9 +174,18 @@ public class GameController {
     }
 
 
-    @GetMapping(value = "/board")
-    public ModelAndView showBoard(){
+    @GetMapping(value = "/board/{gameId}")
+    public ModelAndView showBoard(@PathVariable("gameId") int gameId){
         ModelAndView mav = new ModelAndView("games/board");
+        Game game =service.findById(gameId).get();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String currentUserName = auth.getName();
+	    User currentUser = userService.findByUsername(currentUserName);
+	    List<Player> players = game.getPlayer();
+	    Player player = players.stream().filter(x->x.getUser().equals(currentUser)).findFirst().get();
+	    
+	    mav.addObject("game",game);
+	    mav.addObject("player",player);
         return mav;
     }
 
