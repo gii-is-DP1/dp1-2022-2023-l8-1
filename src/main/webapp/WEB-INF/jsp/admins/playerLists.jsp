@@ -11,6 +11,7 @@
     <table id="playersTable" class="table table-striped">
         <thead>
         <tr>
+        	<th>Game id</th>
             <th>Hero Type</th>
             <th>Glory</th>
             <th>Gold</th>
@@ -22,6 +23,9 @@
         <tbody>
         <c:forEach items="${players}" var="player">
             <tr>
+            	<td>
+                    <c:out value="${player.game.id}"/>
+                </td>
                 <td>
                     <c:out value="${player.hero}"/>
                 </td>
