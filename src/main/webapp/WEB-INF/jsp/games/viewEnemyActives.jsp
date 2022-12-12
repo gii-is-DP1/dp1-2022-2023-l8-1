@@ -21,7 +21,7 @@
             </tr>
             <tr>
                 <th>Endurance</th>
-                <td><b><c:out value="${enemies.endurance}"/></b></td>
+                <td><b><c:out value="${enemies.enemy.endurance}"/></b></td>
             </tr>
         </c:forEach>
     </table>

@@ -29,20 +29,20 @@
 					<span>Home</span>
 				</petclinic:menuItem>
 				
-				<%--
-				<petclinic:menuItem active="${name eq 'owners'}" url="/owners/find"
+				
+				<%-- <petclinic:menuItem active="${name eq 'owners'}" url="/owners/find"
 					title="find owners">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 					<span>Find owners</span>
-				</petclinic:menuItem>
+				</petclinic:menuItem> --%>
 				
-				<%--  <sec:authorize access="hasRole(admin)">--%>
+				<sec:authorize access="hasAuthority('admin')">
 					<petclinic:menuItem active="${name eq 'admins'}" url="/admin"
 						title="Administration">
 						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 						<span>Administration</span>
 					</petclinic:menuItem>
-				<%-- </sec:authorize> --%>
+				</sec:authorize>
 				
 				<%-- <petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">

@@ -21,7 +21,7 @@
             </tr>
             <tr>
                 <th>Card damage</th>
-                <td><b><c:out value="${pile.damage}"/></b></td>
+                <td><b><c:out value="${pile.abilityCard.damage}"/></b></td>
             </tr>
            
         </c:forEach>
