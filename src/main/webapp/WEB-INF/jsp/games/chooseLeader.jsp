@@ -14,28 +14,49 @@
             <h4>Elige una o dos cartas para determinar quien ser&aacute el l&iacuteder de la partida</h4>
         </div>
 
+        <c:if test="${bestBet > 0}">El jugador con mayor puja es: ${bestPlayerBet.user.username} con una apuesta de ${bestBet} puntos</c:if>
 
         
         <c:forEach items="${players}" var="player">
             <h4 class="cardplayer">Card(s) ${player.user.username}</h4>
+
+            <c:if test = "${player.user.username == currentPlayer.user.username}">
+                
+            <c:forEach items="${cartasPuja}" var="cartaPuja">
+                ${cartaPuja.abilityCard.abilityType} -> ${cartaPuja.abilityCard.damage}<br>
+                
+            </c:forEach>
+            </c:if>
+
+
 
         </c:forEach>
         <div class="baraja">
             <h4 class="baraja"><strong>Mi baraja</strong></h4>
             <c:forEach items="${cardInGames}" var="card">
                 <div >
-                    <spring:url value="chooseLeader/{card}" var="selectCard">
+                    <spring:url value="{card}" var="selectCard">
                         <spring:param name="card" value="${card.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(selectCard)}" class="btn btn-default">${card.abilityCard.abilityType} -> ${card.abilityCard.damage}</a>
                 </div>
             </c:forEach>
-            <c:forEach items="${cartasPuja}" var="cartaPuja">
-                ${cartaPuja.abilityCard.abilityType}
-                
-            </c:forEach>
+
         </div>
         <br>
+
+        <c:choose>
+            <c:when test="${bestBet > 0}">
+                
+                <a href="#" class="btn btn-default">Ir al tablero</a>
+            </c:when>
+            <c:otherwise>
+                <a href="compare" class="btn btn-default">Terminar puja</a>
+
+            </c:otherwise>
+        </c:choose>
+
+
 
     </div>
 </petclinic:layoutInGame>

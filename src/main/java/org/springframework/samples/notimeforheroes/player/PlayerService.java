@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.notimeforheroes.card.ability.AbilityCard;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.game.Game;
 import org.springframework.samples.notimeforheroes.user.User;
@@ -52,6 +53,9 @@ public class PlayerService {
 
 
     }
+
+    
+
     public Optional<Player> findPlayerById(Integer id) {
         return  playerRepository.findById(id);
     }
@@ -59,7 +63,7 @@ public class PlayerService {
     	playerRepository.delete(player);
     }
 
-    public List<AbilityCardInGame> showHandToChooseLeader(Player p){
+    public List<AbilityCardInGame> showHand(Player p){
         return p.getAbilityHand(); 
     }
 
@@ -79,10 +83,14 @@ public class PlayerService {
         }
 
         p.setCartasPuja(cartasAPujar);
-        p.getAbilityHand().removeAll(cartasAPujar);
+        List<AbilityCardInGame> cartasABorrar = p.getAbilityHand();
+        cartasABorrar.removeAll(cartasAPujar);
+        p.setAbilityHand(cartasABorrar);
         savePlayer(p);
 
         return cartasAPujar;
 
     }
+
+
 }

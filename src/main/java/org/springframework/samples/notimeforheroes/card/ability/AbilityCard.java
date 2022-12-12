@@ -50,4 +50,8 @@ public class AbilityCard {
 
     @OneToMany(mappedBy="abilityCard")
     private Set<AbilityCardInGame> abilityCardInGame;
+
+    public String toString(){
+        return abilityType.toString();
+    }
 }

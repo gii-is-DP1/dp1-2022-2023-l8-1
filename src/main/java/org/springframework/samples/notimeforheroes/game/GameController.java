@@ -117,15 +117,15 @@ public class GameController {
         }
 
 
-    @GetMapping("/{gameId}/start")
-    public ModelAndView startGame(@PathVariable("gameId") int gameId){
-        ModelAndView mav = new ModelAndView(VIEW_GAME_LOBBY);
-        Game game = service.findById(gameId).get();
-        game.setState(GameState.ESCOGER_LIDER);
-        service.saveGame(game);
-        mav.addObject("message", "Partida iniciada");
-        return mav;
-    }
+    // @GetMapping("/{gameId}/start")
+    // public ModelAndView startGame(@PathVariable("gameId") int gameId){
+    //     ModelAndView mav = new ModelAndView(VIEW_GAME_LOBBY);
+    //     Game game = service.findById(gameId).get();
+    //     game.setState(GameState.ESCOGER_LIDER);
+    //     service.saveGame(game);
+    //     mav.addObject("message", "Partida iniciada");
+    //     return mav;
+    // }
 
     @GetMapping("{gameId}/chooseLeader")
     public ModelAndView showPuja(@PathVariable("gameId") int gameId){
@@ -134,16 +134,22 @@ public class GameController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.getByUsername(auth.getName());
 
-        List<AbilityCardInGame> cardInGames = List.of();
+        Player currentPlayer = new Player();
+
+        // Establecer la partida en escoger líder
+        Game currentGame = service.findById(gameId).get();
+        currentGame.setState(GameState.ESCOGER_LIDER);
+        service.saveGame(currentGame);
+
 
         List<Player> players = service.findById(gameId).get().getPlayer();
         for(Player p : players){
             if(p.getUser().getUsername() == currentUser.getUsername()){
-                cardInGames = playerService.showHandToChooseLeader(p);
+                currentPlayer = p;
 
             }
         }
-        mav.addObject("cardInGames", cardInGames);
+        mav.addObject("cardInGames", currentPlayer.getAbilityHand());
         mav.addObject("players", players);
         return mav;
     }
@@ -165,10 +171,48 @@ public class GameController {
                 // cartasPuja = p.getCartasPuja();
             }
         }
-        System.out.println("=================================Cartas en la puja" + currentPlayer.getCartasPuja());
+        System.out.println("=================================Cartas en la puja " + currentPlayer.getCartasPuja());
+        System.out.println("=================================Cartas en la mano " + currentPlayer.getAbilityHand());
+        System.out.println("=================================Jugador actual " + currentPlayer.getUser().getUsername());
+        // System.out.println("=================================Errores " + currentPlayer.getUser().getUsername());
+
+
+
         mav.addObject("cartasPuja", currentPlayer.getCartasPuja());
+        mav.addObject("cardInGames", currentPlayer.getAbilityHand());
+        mav.addObject("players", players);
+        mav.addObject("currentPlayer", currentPlayer);
+
+
         return mav;
 
+    }
+
+    @GetMapping("{gameId}/chooseLeader/compare")
+    public ModelAndView compareCardsToSelectLeader(@PathVariable("gameId") int gameId){
+        ModelAndView mav = new ModelAndView(VIEW_CHOOSE_LEADER);
+
+        Player bestPlayerBet = service.compareBet(gameId);
+
+        int bet = 0;
+
+        for(AbilityCardInGame card : bestPlayerBet.getCartasPuja()){
+            bet += card.getAbilityCard().getDamage();
+        }
+
+        Game currentGame = service.findById(gameId).get();
+        currentGame.setState(GameState.EN_CURSO);
+        service.saveGame(currentGame);
+
+
+        mav.addObject("bestPlayerBet", bestPlayerBet);
+        mav.addObject("bestBet", bet);
+        // mav.addObject("gameId", gameId);
+
+
+
+        
+        return mav;
     }
 
     
