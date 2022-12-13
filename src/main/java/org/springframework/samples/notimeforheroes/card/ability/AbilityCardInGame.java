@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.samples.notimeforheroes.player.Player;
 
@@ -36,6 +35,8 @@ public class AbilityCardInGame{
     @JoinColumn(name="ability_card_id")
     private AbilityCard abilityCard;
 
-
+    public String toString(){
+        return abilityCard.getAbilityType().toString();
+    }
     
 }

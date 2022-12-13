@@ -7,11 +7,15 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.friends.Friends;
 import org.springframework.samples.notimeforheroes.friends.FriendsService;
 import org.springframework.samples.notimeforheroes.player.HeroType;
 import org.springframework.samples.notimeforheroes.player.Player;
 import org.springframework.samples.notimeforheroes.player.PlayerService;
+import org.springframework.samples.notimeforheroes.turn.PhaseType;
+import org.springframework.samples.notimeforheroes.turn.Turn;
+import org.springframework.samples.notimeforheroes.turn.TurnService;
 import org.springframework.samples.notimeforheroes.user.User;
 import org.springframework.samples.notimeforheroes.user.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,23 +40,29 @@ public class GameController {
 
     private static final String VIEW_ENEMIES_ACTIVES = "games/viewEnemyActives";
     private static final String VIEW_MARKET = "games/viewMarket";
+    private static final String VIEW_CHOOSE_LEADER = "games/chooseLeader";
+
 
     private final FriendsService friendsService;
 
     private final GameService service;
 
     private final UserService userService;
+    private final TurnService turnService;
 
     @Autowired
     private final PlayerService playerService;
 
     @Autowired
-    public GameController(GameService gameService, PlayerService playerService, FriendsService fs, UserService uService){
+    public GameController(GameService gameService, PlayerService playerService, FriendsService fs, UserService uService, TurnService tService){
         this.service = gameService;
         this.playerService = playerService;
         this.friendsService = fs;
         this.userService = uService;
+        this.turnService = tService;
     }
+
+    // @GetMapping('/')
 
 
     @GetMapping("/")
@@ -114,15 +124,105 @@ public class GameController {
         }
 
 
-    @GetMapping("/{gameId}/start")
-    public ModelAndView startGame(@PathVariable("gameId") int gameId){
-        ModelAndView mav = new ModelAndView(VIEW_GAME_LOBBY);
-        Game game = service.findById(gameId).get();
-        game.setState(GameState.ESCOGER_LIDER);
-        service.saveGame(game);
-        mav.addObject("message", "Partida iniciada");
+    // @GetMapping("/{gameId}/start")
+    // public ModelAndView startGame(@PathVariable("gameId") int gameId){
+    //     ModelAndView mav = new ModelAndView(VIEW_GAME_LOBBY);
+    //     Game game = service.findById(gameId).get();
+    //     game.setState(GameState.ESCOGER_LIDER);
+    //     service.saveGame(game);
+    //     mav.addObject("message", "Partida iniciada");
+    //     return mav;
+    // }
+
+    @GetMapping("{gameId}/chooseLeader")
+    public ModelAndView showPuja(@PathVariable("gameId") int gameId){
+        ModelAndView mav = new ModelAndView(VIEW_CHOOSE_LEADER);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.getByUsername(auth.getName());
+
+        Player currentPlayer = new Player();
+
+        // Establecer la partida en escoger líder
+        Game currentGame = service.findById(gameId).get();
+        currentGame.setState(GameState.ESCOGER_LIDER);
+        service.saveGame(currentGame);
+
+
+        List<Player> players = service.findById(gameId).get().getPlayer();
+        for(Player p : players){
+            if(p.getUser().getUsername() == currentUser.getUsername()){
+                currentPlayer = p;
+
+            }
+        }
+        mav.addObject("cardInGames", currentPlayer.getAbilityHand());
+        mav.addObject("players", players);
         return mav;
     }
+
+    @GetMapping("{gameId}/chooseLeader/{cardId}")
+    public ModelAndView pujarCarta(@PathVariable("gameId") int gameId, @PathVariable("cardId") int cardId){
+        ModelAndView mav = new ModelAndView(VIEW_CHOOSE_LEADER);
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.getByUsername(auth.getName());
+        Player currentPlayer = new Player();
+        
+        
+        List<Player> players = service.findById(gameId).get().getPlayer();
+        for(Player p : players){
+            if(p.getUser().getUsername() == currentUser.getUsername()){
+                currentPlayer = p;
+                playerService.pujarCarta(p, cardId);
+                // cartasPuja = p.getCartasPuja();
+            }
+        }
+        System.out.println("=================================Cartas en la puja " + currentPlayer.getCartasPuja());
+        System.out.println("=================================Cartas en la mano " + currentPlayer.getAbilityHand());
+        System.out.println("=================================Jugador actual " + currentPlayer.getUser().getUsername());
+        // System.out.println("=================================Errores " + currentPlayer.getUser().getUsername());
+
+
+
+        mav.addObject("cartasPuja", currentPlayer.getCartasPuja());
+        mav.addObject("cardInGames", currentPlayer.getAbilityHand());
+        mav.addObject("players", players);
+        mav.addObject("currentPlayer", currentPlayer);
+
+
+        return mav;
+
+    }
+
+    @GetMapping("{gameId}/chooseLeader/compare")
+    public ModelAndView compareCardsToSelectLeader(@PathVariable("gameId") int gameId){
+        ModelAndView mav = new ModelAndView(VIEW_CHOOSE_LEADER);
+
+        Player bestPlayerBet = service.compareBet(gameId);
+
+        int bet = 0;
+
+        for(AbilityCardInGame card : bestPlayerBet.getCartasPuja()){
+            bet += card.getAbilityCard().getDamage();
+        }
+
+        Game currentGame = service.findById(gameId).get();
+        currentGame.setState(GameState.EN_CURSO);
+        service.saveGame(currentGame);
+
+
+        mav.addObject("bestPlayerBet", bestPlayerBet);
+        mav.addObject("bestBet", bet);
+        // mav.addObject("gameId", gameId);
+
+
+
+        
+        return mav;
+    }
+
+    
 
 
     @GetMapping("/new")
@@ -183,10 +283,61 @@ public class GameController {
 	    User currentUser = userService.findByUsername(currentUserName);
 	    List<Player> players = game.getPlayer();
 	    Player player = players.stream().filter(x->x.getUser().equals(currentUser)).findFirst().get();
+
+        turnService.newTurn(game, player, PhaseType.RESTABLECIMIENTO);
+
+        
+        Turn rawTurn = game.getTurn().get(game.getTurn().size()-1); // Accedo al ultimo elemento de la lista de turnos
+        
+        // System.out.println("Turno - "+turno + " de: "+player.getUser().getUsername());
+
 	    
 	    mav.addObject("game",game);
 	    mav.addObject("player",player);
+        mav.addObject("turn", rawTurn);
         return mav;
     }
+
+
+    @GetMapping("/board/{gameId}/next")
+    public ModelAndView nextTurnOrPhase(@PathVariable("gameId") int gameId){
+        ModelAndView mav = new ModelAndView("games/board");
+        Game currentGame = service.findById(gameId).get();
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String currentUserName = auth.getName();
+	    User currentUser = userService.findByUsername(currentUserName);
+	    List<Player> players = currentGame.getPlayer();
+	    Player player = players.stream().filter(x->x.getUser().equals(currentUser)).findFirst().get();
+
+        Turn currentTurn = currentGame.getTurn().get(currentGame.getTurn().size()-1); // Jugador que esta jugando actualmente
+
+        Player turnPlayer = currentTurn.getPlayer();
+
+        System.out.println("======================Jugador jugando actualmente: " + turnPlayer.getUser().getUsername() + " en turno de " + currentTurn.getType().toString());
+
+        Player nextPlayer = new Player();
+        try{
+            nextPlayer = currentGame.getPlayer().get(currentGame.getPlayer().indexOf(turnPlayer)+1);
+
+        }catch (Exception e){
+            nextPlayer = currentGame.getPlayer().get(0);
+        }
+
+        if(currentTurn.getType() == PhaseType.ATAQUE){
+            turnService.newTurn(currentGame, turnPlayer, PhaseType.MERCADO);
+        }else if(currentTurn.getType() == PhaseType.MERCADO){
+            turnService.newTurn(currentGame, turnPlayer, PhaseType.RESTABLECIMIENTO);
+        }else{
+            turnService.newTurn(currentGame, nextPlayer, PhaseType.ATAQUE);
+        }
+
+        mav.addObject("game",currentGame);
+	    mav.addObject("player", player);
+        mav.addObject("turn", currentTurn);
+
+        return mav;
+    }
+
 
 }

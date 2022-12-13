@@ -63,10 +63,10 @@
 		        </tbody>
 		    </table>
 		</div>
-    <spring:url value="start" var="startUrl">
+    <!-- <spring:url value="chooseLeader" var="startUrl">
         <spring:param name="gameId" value="${game.id}"/>
-    </spring:url>
+    </spring:url> -->
     <!-- ${message} -->
-    <ul style="text-align:center"><a href="${fn:escapeXml(startUrl)}" class="btn btn-default">Empezar partida</a></ul>
+    <ul style="text-align:center"><a href="chooseLeader/" class="btn btn-default">Empezar partida</a></ul>
 
 </petclinic:layout>
