@@ -11,7 +11,8 @@
 		<div class="board">
 			<div class="phase">
 				<h1 class="fase">FASE ACTUAL</h1>
-				<h1 class="fase_actual">ATAQUE</h1>
+				<h1 class="fase_actual">${turn.type}</h1>
+				<h1 >Turno de ${turn.player.user.username}</h1>
 				<!--Aquí iria el nombre de la fase en la que estamos (Ataque, mercado, reabastecimiento, espera)-->
 			</div>
 
@@ -39,8 +40,8 @@
 			</div>
 
 			<div class="nextTurn">
-				<button class="nextPhase btn btn-primary">SIGUIENTE
-					FASE/TURNO</button>
+				<a href="next" class="button btn btn-primary">SIGUIENTE
+					FASE/TURNO</a>
 				<!--Aquí iria el boton para pasar fase o turno-->
 			</div>
 

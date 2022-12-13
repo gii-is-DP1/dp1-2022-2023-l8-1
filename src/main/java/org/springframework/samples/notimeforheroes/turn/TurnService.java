@@ -3,6 +3,7 @@ package org.springframework.samples.notimeforheroes.turn;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.notimeforheroes.game.Game;
 import org.springframework.samples.notimeforheroes.game.GameRepository;
 import org.springframework.samples.notimeforheroes.player.Player;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,19 @@ public class TurnService {
         return players;
 
 
+    }
+
+    public void newTurn(Game game, Player player, PhaseType phaseType){
+        Turn turn = new Turn();
+        turn.setGame(game);
+        turn.setPlayer(player);
+        turn.setType(phaseType);
+        save(turn);
+
+    }
+
+    public void save(Turn turn){
+        repo.save(turn);
     }
 
 }

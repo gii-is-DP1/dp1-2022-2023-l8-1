@@ -8,13 +8,11 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.notimeforheroes.card.ability.AbilityCard;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.game.Game;
+import org.springframework.samples.notimeforheroes.game.GameRepository;
+import org.springframework.samples.notimeforheroes.game.GameService;
 import org.springframework.samples.notimeforheroes.user.User;
-
-
-
 import org.springframework.stereotype.Service;
 
 @Service
@@ -91,6 +89,7 @@ public class PlayerService {
         return cartasAPujar;
 
     }
+
 
 
 }

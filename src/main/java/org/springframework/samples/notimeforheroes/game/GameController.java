@@ -13,6 +13,9 @@ import org.springframework.samples.notimeforheroes.friends.FriendsService;
 import org.springframework.samples.notimeforheroes.player.HeroType;
 import org.springframework.samples.notimeforheroes.player.Player;
 import org.springframework.samples.notimeforheroes.player.PlayerService;
+import org.springframework.samples.notimeforheroes.turn.PhaseType;
+import org.springframework.samples.notimeforheroes.turn.Turn;
+import org.springframework.samples.notimeforheroes.turn.TurnService;
 import org.springframework.samples.notimeforheroes.user.User;
 import org.springframework.samples.notimeforheroes.user.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,17 +48,21 @@ public class GameController {
     private final GameService service;
 
     private final UserService userService;
+    private final TurnService turnService;
 
     @Autowired
     private final PlayerService playerService;
 
     @Autowired
-    public GameController(GameService gameService, PlayerService playerService, FriendsService fs, UserService uService){
+    public GameController(GameService gameService, PlayerService playerService, FriendsService fs, UserService uService, TurnService tService){
         this.service = gameService;
         this.playerService = playerService;
         this.friendsService = fs;
         this.userService = uService;
+        this.turnService = tService;
     }
+
+    // @GetMapping('/')
 
 
     @GetMapping("/")
@@ -276,12 +283,61 @@ public class GameController {
 	    User currentUser = userService.findByUsername(currentUserName);
 	    List<Player> players = game.getPlayer();
 	    Player player = players.stream().filter(x->x.getUser().equals(currentUser)).findFirst().get();
+
+        turnService.newTurn(game, player, PhaseType.RESTABLECIMIENTO);
+
+        
+        Turn rawTurn = game.getTurn().get(game.getTurn().size()-1); // Accedo al ultimo elemento de la lista de turnos
+        
+        // System.out.println("Turno - "+turno + " de: "+player.getUser().getUsername());
+
 	    
 	    mav.addObject("game",game);
 	    mav.addObject("player",player);
+        mav.addObject("turn", rawTurn);
         return mav;
     }
 
+
+    @GetMapping("/board/{gameId}/next")
+    public ModelAndView nextTurnOrPhase(@PathVariable("gameId") int gameId){
+        ModelAndView mav = new ModelAndView("games/board");
+        Game currentGame = service.findById(gameId).get();
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String currentUserName = auth.getName();
+	    User currentUser = userService.findByUsername(currentUserName);
+	    List<Player> players = currentGame.getPlayer();
+	    Player player = players.stream().filter(x->x.getUser().equals(currentUser)).findFirst().get();
+
+        Turn currentTurn = currentGame.getTurn().get(currentGame.getTurn().size()-1); // Jugador que esta jugando actualmente
+
+        Player turnPlayer = currentTurn.getPlayer();
+
+        System.out.println("======================Jugador jugando actualmente: " + turnPlayer.getUser().getUsername() + " en turno de " + currentTurn.getType().toString());
+
+        Player nextPlayer = new Player();
+        try{
+            nextPlayer = currentGame.getPlayer().get(currentGame.getPlayer().indexOf(turnPlayer)+1);
+
+        }catch (Exception e){
+            nextPlayer = currentGame.getPlayer().get(0);
+        }
+
+        if(currentTurn.getType() == PhaseType.ATAQUE){
+            turnService.newTurn(currentGame, turnPlayer, PhaseType.MERCADO);
+        }else if(currentTurn.getType() == PhaseType.MERCADO){
+            turnService.newTurn(currentGame, turnPlayer, PhaseType.RESTABLECIMIENTO);
+        }else{
+            turnService.newTurn(currentGame, nextPlayer, PhaseType.ATAQUE);
+        }
+
+        mav.addObject("game",currentGame);
+	    mav.addObject("player", player);
+        mav.addObject("turn", currentTurn);
+
+        return mav;
+    }
 
 
 }

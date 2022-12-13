@@ -33,5 +33,11 @@ public class Turn {
 
     @ManyToOne(targetEntity = Game.class)
     private Game game;
+
+    // public Turn(Game game, Player player, PhaseType type){
+    //     this.game = game;
+    //     this.player = player;
+    //     this.type = type;
+    // }
     
 }
