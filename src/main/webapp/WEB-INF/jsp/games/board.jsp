@@ -59,14 +59,20 @@
 					<spring:param name="gameId" value="${game.id}"></spring:param>
 				</spring:url>
 
-				<c:if test="${isMyTurn}">
-					<a href="${fn:escapeXml(nextTurn)}" class="nextPhase btn btn-primary">SIGUIENTE
-						FASE/TURNO</a>
-				</c:if>
-				<c:if test="${!isMyTurn}">
-					<a href="${fn:escapeXml(nextTurn)}" class="nextPhase btn btn-primary" style="pointer-events: none;">SIGUIENTE
-						FASE/TURNO</a>
-				</c:if>
+				<c:choose>
+
+					<c:when test="${isMyTurn}">
+						<a href="${fn:escapeXml(nextTurn)}" class="nextPhase btn btn-primary">SIGUIENTE
+							FASE/TURNO</a>
+					</c:when>
+					<c:otherwise>
+						<a href="${fn:escapeXml(nextTurn)}" class="nextPhase btn btn-primary" style="pointer-events: none;">SIGUIENTE
+							FASE/TURNO</a>
+					</c:otherwise>
+
+				</c:choose>
+
+
 				
 			</div>
 			<div class="yourCards">
