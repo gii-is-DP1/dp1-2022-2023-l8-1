@@ -38,7 +38,7 @@ public class GameService {
     public void createGame(Game game) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = (User) auth.getPrincipal();
+        org.springframework.security.core.userdetails.User currentUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
         String username = currentUser.getUsername();
 
         // gameRepository.findById(game.getId());
