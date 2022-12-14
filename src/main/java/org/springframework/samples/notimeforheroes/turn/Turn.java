@@ -39,5 +39,9 @@ public class Turn {
     //     this.player = player;
     //     this.type = type;
     // }
+
+    public String toString(){
+        return type.toString();
+    }
     
 }

@@ -58,8 +58,16 @@
 				<spring:url value="/games/board/{gameId}/next" var="nextTurn">
 					<spring:param name="gameId" value="${game.id}"></spring:param>
 				</spring:url>
-				<a href="${fn:escapeXml(nextTurn)}" class="nextPhase btn btn-primary">SIGUIENTE
-					FASE/TURNO</a>
+
+				<c:if test="${isMyTurn}">
+					<a href="${fn:escapeXml(nextTurn)}" class="nextPhase btn btn-primary">SIGUIENTE
+						FASE/TURNO</a>
+				</c:if>
+				<c:if test="${!isMyTurn}">
+					<a href="${fn:escapeXml(nextTurn)}" class="nextPhase btn btn-primary" style="pointer-events: none;">SIGUIENTE
+						FASE/TURNO</a>
+				</c:if>
+				
 			</div>
 			<div class="yourCards">
 				<div class="myCard pilaDesgaste">

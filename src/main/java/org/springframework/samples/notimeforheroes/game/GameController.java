@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -276,7 +277,9 @@ public class GameController {
 
 
     @GetMapping(value = "/board/{gameId}")
-    public ModelAndView showBoard(@PathVariable("gameId") int gameId){
+    public ModelAndView showBoard(@PathVariable("gameId") int gameId, HttpServletResponse response){
+        // response.addHeader("Refresh", "1"); // Autorefresco
+
         ModelAndView mav = new ModelAndView("games/board");
         Game game =service.findById(gameId).get();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -285,60 +288,57 @@ public class GameController {
 	    List<Player> players = game.getPlayer();
 	    Player player = players.stream().filter(x->x.getUser().equals(currentUser)).findFirst().get();
 
-        turnService.newTurn(game, player, PhaseType.RESTABLECIMIENTO);
+        // turnService.newTurn(game, player, PhaseType.RESTABLECIMIENTO);
 
         
-        Turn rawTurn = game.getTurn().get(game.getTurn().size()-1); // Accedo al ultimo elemento de la lista de turnos
+        Turn currentTurn = game.getTurn().get(game.getTurn().size()-1); // Accedo al ultimo elemento de la lista de turnos
         
         // System.out.println("Turno - "+turno + " de: "+player.getUser().getUsername());
+
+
+        Boolean isMyTurn = false;
+        Player myPlayer = service.getCurrentPlayer(currentUser, gameId);
+
+        if(currentTurn.getPlayer() == myPlayer){ // Esto se hace para saber si es mi turno y poder pasar de turno.
+            isMyTurn = true;
+        }
 
 	    
 	    mav.addObject("game",game);
 	    mav.addObject("player",player);
-        mav.addObject("turn", rawTurn);
+        mav.addObject("turn", currentTurn);
+        mav.addObject("isMyTurn", isMyTurn);
+
         return mav;
     }
-
 
     @GetMapping("/board/{gameId}/next")
-    public ModelAndView nextTurnOrPhase(@PathVariable("gameId") int gameId){
-        ModelAndView mav = new ModelAndView("games/board");
+    public String nextTurnOrPhase(@PathVariable("gameId") int gameId,  ModelMap modelMap){
         Game currentGame = service.findById(gameId).get();
+        Turn currentTurn = currentGame.getTurn().get(currentGame.getTurn().size()-1);
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    String currentUserName = auth.getName();
-	    User currentUser = userService.findByUsername(currentUserName);
-	    List<Player> players = currentGame.getPlayer();
-	    Player player = players.stream().filter(x->x.getUser().equals(currentUser)).findFirst().get();
+        Player currentPlayerGaming = currentTurn.getPlayer();
+        Player nextPlayerToGame = new Player();
 
-        Turn currentTurn = currentGame.getTurn().get(currentGame.getTurn().size()-1); // Jugador que esta jugando actualmente
-
-        Player turnPlayer = currentTurn.getPlayer();
-
-        System.out.println("======================Jugador jugando actualmente: " + turnPlayer.getUser().getUsername() + " en turno de " + currentTurn.getType().toString());
-
-        Player nextPlayer = new Player();
         try{
-            nextPlayer = currentGame.getPlayer().get(currentGame.getPlayer().indexOf(turnPlayer)+1);
+            nextPlayerToGame = currentGame.getPlayer().get(currentGame.getPlayer().indexOf(currentPlayerGaming)+1);
 
         }catch (Exception e){
-            nextPlayer = currentGame.getPlayer().get(0);
+            nextPlayerToGame = currentGame.getPlayer().get(0);
         }
-
+        
         if(currentTurn.getType() == PhaseType.ATAQUE){
-            turnService.newTurn(currentGame, turnPlayer, PhaseType.MERCADO);
+            turnService.newTurn(currentGame, currentPlayerGaming, PhaseType.MERCADO);
         }else if(currentTurn.getType() == PhaseType.MERCADO){
-            turnService.newTurn(currentGame, turnPlayer, PhaseType.RESTABLECIMIENTO);
+            turnService.newTurn(currentGame, currentPlayerGaming, PhaseType.RESTABLECIMIENTO);
         }else{
-            turnService.newTurn(currentGame, nextPlayer, PhaseType.ATAQUE);
+            turnService.newTurn(currentGame, nextPlayerToGame, PhaseType.ATAQUE);
         }
 
-        mav.addObject("game",currentGame);
-	    mav.addObject("player", player);
-        mav.addObject("turn", currentTurn);
-
-        return mav;
+        return "redirect:/games/board/"+gameId;
     }
+
+
 
 
 }
