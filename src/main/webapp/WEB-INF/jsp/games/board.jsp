@@ -75,6 +75,23 @@
 
 				
 			</div>
+			<div class="nextTurn">
+				<spring:url value="/games/board/{gameId}/evasion" var="evasion">
+					<spring:param name="gameId" value="${game.id}"></spring:param>
+				</spring:url>
+
+				<c:if test="${isMyTurn}">
+					<c:if test="${player.evasion }">
+						<a href="${fn:escapeXml(evasion)}" class="nextPhase btn btn-primary">Evasion</a>
+					</c:if>
+				</c:if>
+				<c:if test="${!isMyTurn}">
+					<c:if test="${player.evasion }">
+						<a href="${fn:escapeXml(evasion)}" class="nextPhase btn btn-primary" style="pointer-events: none;">Evasion</a>
+					</c:if>
+				</c:if>
+				
+			</div>
 			<div class="yourCards">
 				<div class="myCard pilaDesgaste">
 					<img

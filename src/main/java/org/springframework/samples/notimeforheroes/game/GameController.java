@@ -337,7 +337,26 @@ public class GameController {
 
         return "redirect:/games/board/"+gameId;
     }
+    
+    @GetMapping("/board/{gameId}/evasion")
+    public String userEvasion(@PathVariable("gameId") int gameId,  ModelMap modelMap){
+        Game currentGame = service.findById(gameId).get();
+        Turn currentTurn = currentGame.getTurn().get(currentGame.getTurn().size()-1);
 
+        Player currentPlayerGaming = currentTurn.getPlayer();
+        Player nextPlayerToGame = new Player();
+
+        try{
+            nextPlayerToGame = currentGame.getPlayer().get(currentGame.getPlayer().indexOf(currentPlayerGaming)+1);
+
+        }catch (Exception e){
+            nextPlayerToGame = currentGame.getPlayer().get(0);
+        }
+        
+        turnService.newTurn(currentGame, nextPlayerToGame, PhaseType.ATAQUE);
+        
+        return "redirect:/games/board/"+gameId;
+    }
 
 
 
