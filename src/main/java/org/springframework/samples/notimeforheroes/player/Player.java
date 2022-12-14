@@ -82,4 +82,9 @@ public class Player{
     @OneToMany()
     private List<AbilityCardInGame> cartasPuja;
 
+
+    public String toString(){
+        return user.getUsername();
+    }
+
 }
