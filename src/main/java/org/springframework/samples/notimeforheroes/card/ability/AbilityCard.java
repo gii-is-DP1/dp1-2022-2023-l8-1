@@ -11,7 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
+import org.springframework.samples.notimeforheroes.card.ConditionType;
 import org.springframework.samples.notimeforheroes.player.HeroType;
 
 import lombok.Getter;
@@ -27,17 +29,29 @@ public class AbilityCard {
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private int id;
 
+    @NotNull
     private int damage;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name="heroType")
     private HeroType hero;
 
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name="conditionType")
+    private ConditionType condition;
+
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "abilityType")
     private AbilityType abilityType;
 
-    @OneToMany()
+
+    @OneToMany(mappedBy="abilityCard")
     private Set<AbilityCardInGame> abilityCardInGame;
-    
+
+    public String toString(){
+        return abilityType.toString();
+    }
 }

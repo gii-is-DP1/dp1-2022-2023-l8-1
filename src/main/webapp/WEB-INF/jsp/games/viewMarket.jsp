@@ -14,15 +14,12 @@
             <th>Game Id</th>
             <td><b><c:out value="${game.id}"/></b></td>
         </tr>
-        <c:forEach items="${game.monsterField}" var="enemies">
+        <c:forEach items="${game.marketPile}" var="market">
             <tr>
-                <th>Enemy Id</th>
-                <td><b><c:out value="${enemies.id}"/></b></td>
+                <th>market card Id</th>
+                <td><b><c:out value="${market.id}"/></b></td>
             </tr>
-            <tr>
-                <th>Endurance</th>
-                <td><b><c:out value="${enemies.enemy.endurance}"/></b></td>
-            </tr>
+           
         </c:forEach>
     </table>
 </petclinic:layout>

@@ -42,6 +42,8 @@ public class Game {
     private Date startTime;
     private Date endTime;
 
+    
+
     // @Size(min = 0, max = 4)
     @Min(2)
     @Max(4)
@@ -72,19 +74,19 @@ public class Game {
     @OneToMany(mappedBy="game", cascade = CascadeType.ALL)
     private List<Player> player;
 
-    @OneToMany()
+    @OneToMany(mappedBy="game", cascade = CascadeType.ALL)
     private List<MarketCardInGame> marketPile;
 
-    @OneToMany()
+    @OneToMany(mappedBy="game", cascade = CascadeType.ALL)
     private List<MarketCardInGame> sale;
 
     @OneToMany()
     private List<EnemyInGame> monsterPile;
 
-    @OneToMany()
+    @OneToMany(mappedBy="game", cascade = CascadeType.ALL)
     private List<EnemyInGame> monsterField;
 
-    @OneToMany()
+    @OneToMany(mappedBy="game", cascade = CascadeType.ALL)
     private List<Turn> turn;
 
 

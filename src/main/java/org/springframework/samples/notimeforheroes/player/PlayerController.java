@@ -32,7 +32,7 @@ public class PlayerController {
     private static final String VIEWS_PLAYER_CARDS_LIST = "players/cardsInHandList";
 	private static final String VIEW_HERO_CARD = "players/heroCard";
 	private static final String VIEW_ABILITY_PILE = "players/abilityPile";
-
+	private static final String VIEW_MARKET_HAND = "players/marketHand";
 
     private final PlayerService playerService;
     
@@ -67,6 +67,14 @@ public class PlayerController {
 	@GetMapping(value="/players/abilityPile/{playerId}")
 	public ModelAndView showAbilityPile(@PathVariable("playerId")int playerId) {
 		ModelAndView model = new ModelAndView(VIEW_ABILITY_PILE);
+		Player player = this.playerService.findPlayerById(playerId).get();
+		model.addObject("player", player);
+		return model;
+	}
+	
+	@GetMapping(value="/players/marketHand/{playerId}")
+	public ModelAndView showMarketHand(@PathVariable("playerId")int playerId) {
+		ModelAndView model = new ModelAndView(VIEW_MARKET_HAND);
 		Player player = this.playerService.findPlayerById(playerId).get();
 		model.addObject("player", player);
 		return model;

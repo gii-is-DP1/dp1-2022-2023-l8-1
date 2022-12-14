@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.springframework.samples.notimeforheroes.game.Game;
@@ -20,10 +21,9 @@ public class EnemyInGame {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
-    private int endurance;
-
+    
     @ManyToOne(targetEntity = Game.class)
+    @JoinColumn(name="game_id")
     private Game game;
 
     @ManyToOne(targetEntity = Enemy.class)

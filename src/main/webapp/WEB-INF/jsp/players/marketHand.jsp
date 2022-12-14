@@ -6,7 +6,7 @@
 
 <petclinic:layout pageName="players">
 
-    <h2>Player Cards List</h2>
+    <h2>Ability Pile Information</h2>
 
 
     <table class="table table-striped">
@@ -14,21 +14,24 @@
             <th>Player Id</th>
             <td><b><c:out value="${player.id}"/></b></td>
         </tr>
-        <c:forEach items="${player.abilityHand}" var="cards">
+        <c:forEach items="${player.marketHand}" var="hand">
             <tr>
-                <th>CardsInHand List</th>
-
-                <td><c:out value="${cards.id}"/></td>
-                <td><c:out value="${cards.abilityCard.damage}"/></td>
-
+                <th>Card Id</th>
+                <td><b><c:out value="${hand.id}"/></b></td>
             </tr>
-        </c:forEach>
-        <c:forEach var="marketCard" items="${player.marketHand}">
             <tr>
-                <th>CardsInMarket List</th>
-                <td><c:out value="${marketCard.id}"/></td>
+                <th>Card damage</th>
+                <td><b><c:out value="${hand.marketCard.damage}"/></b></td>
             </tr>
+            <tr>
+                <th>Card profiency1</th>
+                <td><b><c:out value="${hand.marketCard.profiency1}"/></b></td>
+            </tr>
+           
         </c:forEach>
+        <tr>
+            <th>Cards left</th>
+            <td><c:out value="${fn:length(player.marketHand)}"></c:out></td>
+        </tr>
     </table>
-
 </petclinic:layout>
