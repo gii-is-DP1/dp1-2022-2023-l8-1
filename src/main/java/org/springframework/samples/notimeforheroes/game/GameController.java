@@ -157,6 +157,7 @@ public class GameController {
             }
         }
         mav.addObject("cardInGames", currentPlayer.getAbilityHand());
+        mav.addObject("game", currentGame);
         mav.addObject("players", players);
         return mav;
     }
@@ -168,7 +169,7 @@ public class GameController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.getByUsername(auth.getName());
         Player currentPlayer = new Player();
-        
+        Game currentGame = service.findById(gameId).get();
         
         List<Player> players = service.findById(gameId).get().getPlayer();
         for(Player p : players){
@@ -188,8 +189,8 @@ public class GameController {
         mav.addObject("cartasPuja", currentPlayer.getCartasPuja());
         mav.addObject("cardInGames", currentPlayer.getAbilityHand());
         mav.addObject("players", players);
+        mav.addObject("game", currentGame);
         mav.addObject("currentPlayer", currentPlayer);
-
 
         return mav;
 
@@ -214,7 +215,7 @@ public class GameController {
 
         mav.addObject("bestPlayerBet", bestPlayerBet);
         mav.addObject("bestBet", bet);
-        // mav.addObject("gameId", gameId);
+        mav.addObject("game", currentGame);
 
 
 

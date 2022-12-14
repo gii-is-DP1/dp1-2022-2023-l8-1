@@ -39,12 +39,6 @@
 				</div> --%>
 			</div>
 
-			<div class="nextTurn">
-				<a href="next" class="button btn btn-primary">SIGUIENTE
-					FASE/TURNO</a>
-				<!--Aquí iria el boton para pasar fase o turno-->
-			</div>
-
 			<div class="yourCards">
 				<!--Panel de informacion personal, aparece abajo de la interfaz y todos los elementos aparecen en la misma linea-->
 				<c:forEach items="${player.abilityHand}" var="cards">
@@ -59,6 +53,13 @@
 					<h4 class="cardplayer">CardPlayer1</h4>
 				</div> --%>
 
+			</div>
+			<div class="nextTurn">
+				<spring:url value="/games/board/{gameId}/next" var="nextTurn">
+					<spring:param name="gameId" value="${game.id}"></spring:param>
+				</spring:url>
+				<a href="${fn:escapeXml(nextTurn)}" class="nextPhase btn btn-primary">SIGUIENTE
+					FASE/TURNO</a>
 			</div>
 			<div class="yourCards">
 				<div class="myCard pilaDesgaste">

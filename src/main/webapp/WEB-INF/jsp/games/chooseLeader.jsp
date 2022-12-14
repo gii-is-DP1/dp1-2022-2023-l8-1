@@ -35,8 +35,9 @@
             <h4 class="baraja"><strong>Mi baraja</strong></h4>
             <c:forEach items="${cardInGames}" var="card">
                 <div >
-                    <spring:url value="{card}" var="selectCard">
-                        <spring:param name="card" value="${card.id}"/>
+                    <spring:url value="/games/{gameId}/chooseLeader/{cardId}" var="selectCard">
+                    	<spring:param name="gameId" value="${game.id}"/>
+                        <spring:param name="cardId" value="${card.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(selectCard)}" class="btn btn-default">${card.abilityCard.abilityType} -> ${card.abilityCard.damage}</a>
                 </div>
@@ -47,11 +48,16 @@
 
         <c:choose>
             <c:when test="${bestBet > 0}">
-                
-                <a href="#" class="btn btn-default">Ir al tablero</a>
+                <spring:url value="/games/board/{gameId}" var="tablero">
+                    	<spring:param name="gameId" value="${game.id}"/>
+                   </spring:url>
+                <a href="${fn:escapeXml(tablero)}" class="btn btn-default">Ir al tablero</a>
             </c:when>
             <c:otherwise>
-                <a href="compare" class="btn btn-default">Terminar puja</a>
+            	<spring:url value="/games/{gameId}/chooseLeader/compare" var="compare">
+                    <spring:param name="gameId" value="${game.id}"/>
+                </spring:url>
+                <a href="${fn:escapeXml(compare)}" class="btn btn-default">Terminar puja</a>
 
             </c:otherwise>
         </c:choose>
