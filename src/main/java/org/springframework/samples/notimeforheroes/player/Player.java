@@ -70,10 +70,10 @@ public class Player{
     @OneToMany(mappedBy="player")
     private List<AbilityCardInGame> abilityHand;
 
-    @OneToMany(mappedBy="player")
+    @OneToMany(mappedBy="playerDiscard")
     private List<AbilityCardInGame> discardPile;
 
-    @OneToMany(mappedBy="player")
+    @OneToMany(mappedBy="playerPile")
     private List<AbilityCardInGame> abilityPile;
 
 

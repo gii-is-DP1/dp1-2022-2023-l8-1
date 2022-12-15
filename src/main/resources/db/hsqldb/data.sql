@@ -182,7 +182,7 @@ INSERT INTO enemies(endurance, glory, type) VALUES (8,8,'GURDRUG');
 INSERT INTO enemies(endurance, glory, type) VALUES (9,9,'ROGHKILLER');
 INSERT INTO enemies(endurance, glory, type) VALUES (10,10,'SHRIEKKNIFER');
 
-INSERT INTO enemy_in_game(enemy_id, game_id) VALUES (1,1);
+INSERT INTO enemy_in_game(enemy_id, game_field_id) VALUES (1,1);
 
 --INSERT INTO GAMES_MONSTER_FIELD(game_id, monster_field_id) VALUES(1,1);
 
@@ -207,8 +207,8 @@ INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, t
                     VALUES(5, 'INCOMPATIBLE', 'DISTANCIA', 'INCOMPATIBLE','INCOMPATIBLE', 'ARCO_COMPUESTO', 4);
 
 
-INSERT INTO MARKET_CARD_IN_GAME (game_id, player_id,market_card_id) VALUES (1,1,1);
-INSERT INTO MARKET_CARD_IN_GAME (game_id, player_id,market_card_id) VALUES (1,1,2);
+INSERT INTO MARKET_CARD_IN_GAME (game_sale_id, player_id,market_card_id) VALUES (1,1,1);
+INSERT INTO MARKET_CARD_IN_GAME (game_sale_id, player_id,market_card_id) VALUES (1,1,2);
 
 --INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,1);NO HACE FALTA SI HACES BIEN LA RELACIÓN(YA ESTÁ CORRGIDA)
 
@@ -237,25 +237,28 @@ INSERT INTO players(glory, gold, wounds, evasion, profiency, hero_type, user_id,
 (4, 9, 0, TRUE, 'DISTANCIA', 'EXPLORADOR_MASCULINO',7, 2);
 
 --player user4 ->userId=5 playerId=3
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (31, 3);
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (32, 3);
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (33, 3);
-INSERT INTO MARKET_CARD_IN_GAME (game_id, player_id,market_card_id) VALUES (2,3,1);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (31, 5);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (32, 5);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (33, 5);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_discard_id) VALUES (34, 5);
+INSERT INTO MARKET_CARD_IN_GAME (game_id, player_id,market_card_id) VALUES (2,5,1);
 --player user5 ->userID=6 playerId=4
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (15, 4);
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (16, 4);
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (17, 4);
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (18, 4);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (15, 6);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (16, 6);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (17, 6);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (18, 6);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_discard_id) VALUES (19, 6);
 --player user6 ->userID=7 playerId=5
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (1, 5);
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (2, 5);
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (3, 5);
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (4, 5);
-
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (1, 7);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (2, 7);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (3, 7);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (4, 7);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_discard_id) VALUES (5, 7);
 --ENEMIGOS DE GAME 2
-INSERT INTO ENEMY_IN_GAME(enemy_id, game_id) VALUES (1,2);
-INSERT INTO ENEMY_IN_GAME(enemy_id, game_id) VALUES (2,2);
-INSERT INTO ENEMY_IN_GAME(enemy_id, game_id) VALUES (3,2);
+INSERT INTO ENEMY_IN_GAME(enemy_id, game_field_id) VALUES (1,2);
+INSERT INTO ENEMY_IN_GAME(enemy_id, game_field_id) VALUES (2,2);
+INSERT INTO ENEMY_IN_GAME(enemy_id, game_field_id) VALUES (3,2);
+INSERT INTO ENEMY_IN_GAME(enemy_id, game_id) VALUES (4,2);
 --INSERT INTO GAMES_MONSTER_FIELD(game_id, monster_field_id) VALUES(2,2);
 
 --CARTAS DE MERCADO A LA VENTA
@@ -266,6 +269,7 @@ INSERT INTO MARKET_CARD_IN_GAME (game_id,market_card_id) VALUES (2,5);
 INSERT INTO MARKET_CARD_IN_GAME (game_id,market_card_id) VALUES (2,6);
 
 INSERT INTO TURN(type, game_id, player_id) VALUES ('ATAQUE', 1, 1);
+INSERT INTO TURN(type, game_id, player_id) VALUES ('ATAQUE', 2, 5);
 -- INSERT INTO TURN(type, game_id, player_id) VALUES ('MERCADO', 1, 2);
 -- INSERT INTO TURN(type, game_id, player_id) VALUES ('RESTABLECIMIENTO', 1, 3);
 -- INSERT INTO TURN(type, game_id, player_id) VALUES ('ATAQUE', 1, 4);
