@@ -77,13 +77,13 @@ public class Game {
     @OneToMany(mappedBy="game", cascade = CascadeType.ALL)
     private List<MarketCardInGame> marketPile;
 
-    @OneToMany(mappedBy="game", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="gameOnSale", cascade = CascadeType.ALL)
     private List<MarketCardInGame> sale;
 
-    @OneToMany()
+    @OneToMany(mappedBy="game", cascade = CascadeType.ALL)
     private List<EnemyInGame> monsterPile;
 
-    @OneToMany(mappedBy="game", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="gameField", cascade = CascadeType.ALL)
     private List<EnemyInGame> monsterField;
 
     @OneToMany(mappedBy="game", cascade = CascadeType.ALL)

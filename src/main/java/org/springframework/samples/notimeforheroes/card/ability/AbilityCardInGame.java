@@ -30,6 +30,14 @@ public class AbilityCardInGame{
     @ManyToOne(targetEntity = Player.class, cascade = CascadeType.ALL)
     @JoinColumn(name="player_id")
     private Player player;
+    
+    @ManyToOne(targetEntity = Player.class, cascade = CascadeType.ALL)
+    @JoinColumn(name="player_discard_id")
+    private Player playerDiscard;
+    
+    @ManyToOne(targetEntity = Player.class, cascade = CascadeType.ALL)
+    @JoinColumn(name="player_pile_id")
+    private Player playerPile;
 
     @ManyToOne(targetEntity = AbilityCard.class, cascade = CascadeType.ALL)
     @JoinColumn(name="ability_card_id")
