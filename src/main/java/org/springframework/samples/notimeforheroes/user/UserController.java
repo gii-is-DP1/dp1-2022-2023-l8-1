@@ -15,15 +15,20 @@
  */
 package org.springframework.samples.notimeforheroes.user;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -81,12 +86,68 @@ public class UserController {
 		return mav;
 	}
 	@GetMapping(value = "/admins/users")
-	public String showUserList(Map<String, Object> model) {
+	public String showUserList(Map<String, Object> model, HttpSession session) {
 		Users users = new Users();
 		users.getUserList().addAll(this.userService.findUsers());
-		model.put("users", users);
+
+		int usersSize = users.getUserList().size();
+
+		Pageable pageRequest = PageRequest.of(0, 4);
+
+		Page<User> pages = userService.getAll(pageRequest);
+		session.setAttribute("pages", pages);
+
+
+		List<User> ls = pages.toList();
+		int size = pages.getTotalPages();
+		Integer currentPage = pages.getNumber();
+
+
+
+		model.put("users", ls);
+		model.put("size", size);
+		model.put("currentPage", currentPage+1);
+
 		return "admins/usersLists";
 	}
+
+	@GetMapping("/admins/users/next")
+	public String nextPage(Map<String, Object> model,  HttpSession session){
+
+		Page<User> pages = (Page<User>) session.getAttribute("pages");
+		pages = userService.getAll(pages.nextOrLastPageable());
+
+		List<User> ls = pages.toList();
+		int size = pages.getTotalPages();
+		int currentPage = pages.getNumber();
+
+
+		model.put("users", ls);
+		model.put("size", size);
+		model.put("currentPage", currentPage+1);
+
+		return "admins/usersLists";
+	}
+
+	@GetMapping("/admins/users/previous")
+	public String previousPage(Map<String, Object> model, HttpSession session){
+		Page<User> pages = (Page<User>) session.getAttribute("pages");
+		pages = userService.getAll(pages.previousOrFirstPageable());
+
+		List<User> ls = pages.toList();
+		int size = pages.getTotalPages();
+		Integer currentPage = pages.getNumber();
+
+
+		model.put("users", ls);
+		model.put("size", size);
+		model.put("currentPage", currentPage+1);
+
+		return "admins/usersLists";
+
+	}
+
+
 //	@GetMapping(value = "/admins/users.xml") //no funciona así que lo dejo así por si lo necesitamos
 //	public @ResponseBody Users showResourcesUserList() {
 //		Users users = new Users();
