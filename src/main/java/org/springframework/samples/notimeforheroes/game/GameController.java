@@ -244,11 +244,7 @@ public class GameController {
 			mav = new ModelAndView(VIEW_GAME_NEW);
 			mav.addAllObjects(br.getModel());
 		}else{
-            //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            //User currentUser = (User) auth.getPrincipal();
-            
 			service.createGame(game);
-            //game.setUser(currentUser);
 			mav = showGameList();
 			mav.addObject("message", "Game saved correctly");
 		}

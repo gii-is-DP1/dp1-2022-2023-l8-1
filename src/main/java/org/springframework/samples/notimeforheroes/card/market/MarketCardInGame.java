@@ -40,4 +40,10 @@ public class MarketCardInGame {
     @JoinColumn(name="market_card_id")
     private MarketCard marketCard;
     
+    public static MarketCardInGame createInGame(Game game, MarketCard card) {
+    	MarketCardInGame cardIG = new MarketCardInGame();
+    	cardIG.setGame(game);
+    	cardIG.setMarketCard(card);
+    	return cardIG;
+    }
 }
