@@ -1,6 +1,7 @@
 package org.springframework.samples.notimeforheroes.card.market;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.game.Game;
@@ -19,7 +20,7 @@ public class MarketService {
 	}
 	@Transactional()
 	public List<MarketCardInGame> addMarket(Game game){
-		List<MarketCardInGame> market = findAll().stream().map(card -> MarketCardInGame.createInGame(game, card)).toList();
+		List<MarketCardInGame> market = findAll().stream().map(card -> MarketCardInGame.createInGame(game, card)).collect(Collectors.toList());
 		for (MarketCardInGame card:market) {
 			saveMarketCardInGame(card);
 		}
