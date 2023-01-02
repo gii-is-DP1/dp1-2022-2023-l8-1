@@ -43,6 +43,10 @@ public class Enemy {
     @Column(name="conditionType")
     private ConditionType condition;
 
+    @NotNull
+    @Column(name = "asset")
+    private String asset;
+
     @OneToMany()
     private List<EnemyInGame> enemyInGame;
 
