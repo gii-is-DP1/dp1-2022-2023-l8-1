@@ -33,6 +33,11 @@ public class EnemyInGame {
     @ManyToOne(targetEntity = Enemy.class)
     private Enemy enemy;
 
-
+    public static EnemyInGame createEnemyInGame(Enemy enemy, Game game) {
+    	EnemyInGame enemyIG = new EnemyInGame();
+    	enemyIG.setEnemy(enemy);
+    	enemyIG.setGame(game);
+		return enemyIG;
+    }
     
 }

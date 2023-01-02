@@ -21,18 +21,23 @@ import javax.validation.constraints.Size;
 
 import org.springframework.samples.notimeforheroes.card.enemy.EnemyInGame;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
-
 import org.springframework.samples.notimeforheroes.player.Player;
 import org.springframework.samples.notimeforheroes.turn.Turn;
 import org.springframework.samples.notimeforheroes.user.User;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
 @Entity
 @Table(name = "games")
+@Builder(toBuilder=true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Game {
 
    @Id
@@ -42,9 +47,6 @@ public class Game {
     private Date startTime;
     private Date endTime;
 
-    
-
-    // @Size(min = 0, max = 4)
     @Min(2)
     @Max(4)
     private int minPlayers;
@@ -69,7 +71,6 @@ public class Game {
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
-
     @Size(min = 0, max = 4)
     @OneToMany(mappedBy="game", cascade = CascadeType.ALL)
     private List<Player> player;
@@ -88,11 +89,5 @@ public class Game {
 
     @OneToMany(mappedBy="game", cascade = CascadeType.ALL)
     private List<Turn> turn;
-
-
-
-    
-
-
 
 }

@@ -7,20 +7,24 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
+import org.springframework.samples.notimeforheroes.card.enemy.EnemyService;
+import org.springframework.samples.notimeforheroes.card.market.MarketService;
 import org.springframework.samples.notimeforheroes.player.Player;
 import org.springframework.samples.notimeforheroes.user.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class GameService {
 
     private final GameRepository gameRepository;
-
-
-
+    @Autowired
+    private EnemyService enemyService;
+    @Autowired
+    private MarketService marketService;
+    
     @Autowired
     public GameService(GameRepository repository){
         this.gameRepository = repository;
@@ -34,26 +38,23 @@ public class GameService {
         return gameRepository.findPlayersInGame(gameId);
     }
 
-
+    @Transactional()
     public void createGame(Game game) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         org.springframework.security.core.userdetails.User currentUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
         String username = currentUser.getUsername();
 
-        // gameRepository.findById(game.getId());
-
-
-        Game newGame = new Game();
-        newGame.setUsername(username);
-        newGame.setHasScenes(game.isHasScenes());
-        newGame.setMinPlayers(game.getMinPlayers());
-        newGame.setMaxPlayers(game.getMaxPlayers());
-        newGame.setState(GameState.LOBBY);
-        newGame.setStartTime(new Date());
+        Game newGame = Game.builder().username(username).hasScenes(game.isHasScenes()).minPlayers(game.getMinPlayers()).maxPlayers(game.getMaxPlayers())
+        		.state(GameState.LOBBY).startTime(new Date()).build();
+        newGame.setMarketPile(marketService.addMarket(newGame));
         gameRepository.save(newGame);
     }
-
+    public void insertMonsterPile() {
+    	int lastId = gameList().size();
+    	Game last = gameRepository.findById(lastId).get();
+    	last.setMonsterPile(enemyService.addEnemies(last));
+    }
 	public Optional<Game> findById(int id){
 		return gameRepository.findById(id);
 	}
