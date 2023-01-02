@@ -245,6 +245,7 @@ public class GameController {
 			mav.addAllObjects(br.getModel());
 		}else{
 			service.createGame(game);
+			service.insertMonsterPile();
 			mav = showGameList();
 			mav.addObject("message", "Game saved correctly");
 		}

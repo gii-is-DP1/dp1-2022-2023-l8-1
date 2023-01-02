@@ -45,20 +45,16 @@ public class GameService {
         org.springframework.security.core.userdetails.User currentUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
         String username = currentUser.getUsername();
 
-        Game newGame = new Game();
-        newGame.setUsername(username);
-        newGame.setHasScenes(game.isHasScenes());
-        newGame.setMinPlayers(game.getMinPlayers());
-        newGame.setMaxPlayers(game.getMaxPlayers());
-        newGame.setState(GameState.LOBBY);
-        newGame.setStartTime(new Date());
-        //newGame.setMarketPile(marketService.addMarket(newGame));
-        newGame.setMonsterPile(enemyService.addEnemies(newGame));
-        
+        Game newGame = Game.builder().username(username).hasScenes(game.isHasScenes()).minPlayers(game.getMinPlayers()).maxPlayers(game.getMaxPlayers())
+        		.state(GameState.LOBBY).startTime(new Date()).build();
+        newGame.setMarketPile(marketService.addMarket(newGame));
         gameRepository.save(newGame);
-        
     }
-
+    public void insertMonsterPile() {
+    	int lastId = gameList().size();
+    	Game last = gameRepository.findById(lastId).get();
+    	last.setMonsterPile(enemyService.addEnemies(last));
+    }
 	public Optional<Game> findById(int id){
 		return gameRepository.findById(id);
 	}
