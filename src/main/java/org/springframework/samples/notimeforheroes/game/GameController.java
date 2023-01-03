@@ -300,11 +300,17 @@ public class GameController {
             isMyTurn = true;
         }
 
+        Boolean faseMercado = false;
+        if(currentTurn.getType().equals(PhaseType.MERCADO)){
+            faseMercado = true;
+        }
+
 	    
 	    mav.addObject("game",game);
 	    mav.addObject("player",player);
         mav.addObject("turn", currentTurn);
         mav.addObject("isMyTurn", isMyTurn);
+        mav.addObject("faseMercado", faseMercado);
 
         return mav;
     }
@@ -316,6 +322,9 @@ public class GameController {
 
         Player currentPlayerGaming = currentTurn.getPlayer();
         Player nextPlayerToGame = new Player();
+
+        
+        
 
         try{
             nextPlayerToGame = currentGame.getPlayer().get(currentGame.getPlayer().indexOf(currentPlayerGaming)+1);
@@ -334,6 +343,8 @@ public class GameController {
 
         return "redirect:/games/board/"+gameId;
     }
+
+
     
     @GetMapping("/board/{gameId}/evasion")
     public String userEvasion(@PathVariable("gameId") int gameId,  ModelMap modelMap){
@@ -355,6 +366,20 @@ public class GameController {
         return "redirect:/games/board/"+gameId;
     }
 
+
+    @GetMapping("/board/{gameId}/buy/{marketCardId}")
+    public String buyCard(@PathVariable("gameId") int gameId, @PathVariable("marketCardId") int marketCardId, ModelMap modelMap){
+        Game currentGame = service.findById(gameId).get();
+        Turn currentTurn = currentGame.getTurn().get(currentGame.getTurn().size()-1);
+
+
+
+
+
+
+
+        return "";
+    }
 
 
 }
