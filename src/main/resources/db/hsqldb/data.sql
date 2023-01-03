@@ -212,10 +212,10 @@ INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, t
                     VALUES(5, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA' , 'VIAL_DE_CONJURACION', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Vial-de-Conjuracion.jpg');
 
 
-INSERT INTO MARKET_CARD_IN_GAME (game_sale_id, player_id,market_card_id) VALUES (1,1,1);
-INSERT INTO MARKET_CARD_IN_GAME (game_sale_id, player_id,market_card_id) VALUES (1,1,2);
-INSERT INTO MARKET_CARD_IN_GAME (game_sale_id, player_id,market_card_id) VALUES (1,1,3);
-INSERT INTO MARKET_CARD_IN_GAME (game_sale_id, player_id,market_card_id) VALUES (1,1,4);
+INSERT INTO MARKET_CARD_IN_GAME (game_id, game_sale_id, player_id,market_card_id) VALUES (1,1,1,1);
+INSERT INTO MARKET_CARD_IN_GAME (game_sale_id ,market_card_id) VALUES (1,2);
+INSERT INTO MARKET_CARD_IN_GAME (game_sale_id,market_card_id) VALUES (1,3);
+INSERT INTO MARKET_CARD_IN_GAME (game_sale_id,market_card_id) VALUES (1,4);
 --INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,1);NO HACE FALTA SI HACES BIEN LA RELACIÓN(YA ESTÁ CORRGIDA)
 
 --INSERT INTO PLAYERS_MARKET_HAND (players_id, market_hand_id) VALUES(1,1);NO HACE FALTA SI HACES BIEN LA RELACIÓN(YA ESTÁ CORRGIDA)

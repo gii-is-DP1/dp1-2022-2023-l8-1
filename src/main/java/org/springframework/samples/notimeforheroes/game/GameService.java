@@ -8,8 +8,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.card.enemy.EnemyService;
+import org.springframework.samples.notimeforheroes.card.market.MarketCard;
+import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
 import org.springframework.samples.notimeforheroes.card.market.MarketService;
 import org.springframework.samples.notimeforheroes.player.Player;
+import org.springframework.samples.notimeforheroes.player.PlayerService;
 import org.springframework.samples.notimeforheroes.user.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +27,8 @@ public class GameService {
     private EnemyService enemyService;
     @Autowired
     private MarketService marketService;
+    @Autowired
+    private PlayerService playerService;
     
     @Autowired
     public GameService(GameRepository repository){
@@ -99,6 +104,27 @@ public class GameService {
 	    Player player = players.stream().filter(x->x.getUser().equals(user)).findFirst().get();
 
         return player;
+
+    }
+
+    public void buyCard(User user, int gameId, int marketCardId){
+
+        Player currentPlayer = getCurrentPlayer(user, gameId);
+
+        List<MarketCardInGame> marketHand = currentPlayer.getMarketHand();
+        
+        MarketCardInGame currentMarketCard = marketService.findById(marketCardId);
+        System.out.println("Current market "+findById(gameId).get().getMarketPile() );
+
+
+        marketHand.add(currentMarketCard); // Compramos la carta
+        marketService.addCardToMarket(currentMarketCard, gameId);
+        
+
+        currentPlayer.setMarketHand(marketHand);
+        playerService.savePlayer(currentPlayer);
+
+
 
     }
     
