@@ -32,12 +32,24 @@ public class MarketService {
 
 	public void addCardToMarket(MarketCardInGame card, int gameId){
 
-		// Lo primero es eliminar la carta que se compra de la lista de cartas de mercado
 		Game currentGame = gameService.findById(gameId).get();
-		List<MarketCardInGame> currentMarketPile = currentGame.getMarketPile();
-		currentMarketPile.remove(card);
+		List<MarketCardInGame> currentMarketSale = currentGame.getSale();
 
-		// Ahora añadimos una carta nueva al mercado
+
+		List<MarketCard> marketCards = findAll(); // Obtenemos las cartas del mercado
+		for(MarketCardInGame mk: currentMarketSale){ // Eliminamos las cartas para no añadir cartas repetidas
+			marketCards.remove(mk.getMarketCard());
+		}
+		try{
+
+			// Añadimos la siguiente carta al mercado
+			MarketCardInGame mk =  MarketCardInGame.createInGame(currentGame, marketCards.get(0));
+			mk.setGameOnSale(currentGame);
+			
+			saveMarketCardInGame(mk);
+		}catch(Exception e){ // Cuando no hay más elementos en la lista de cartas de mercado
+			return;
+		}
 		
 
 	}

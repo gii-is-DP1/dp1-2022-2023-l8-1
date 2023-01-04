@@ -370,12 +370,12 @@ public class GameController {
     @GetMapping("/board/{gameId}/buy/{marketCardId}")
     public String buyCard(@PathVariable("gameId") int gameId, @PathVariable("marketCardId") int marketCardId, ModelMap modelMap){
         Game currentGame = service.findById(gameId).get();
+        
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String currentUserName = auth.getName();
 	    User currentUser = userService.findByUsername(currentUserName);
 
         service.buyCard(currentUser, gameId, marketCardId);
-
 
         return "redirect:/games/board/"+gameId;
     }

@@ -10,7 +10,7 @@
     <body class="background">
 		<div class="board">
 			<div class="phase">
-				<h1 class="fase">FASE ACTUAL</h1>
+				<h1 class="fase">FASE ACTUAL ${message}</h1>
 				<h1 class="fase_actual">${turn.type}</h1>
 				<h1 >Turno de ${turn.player.user.username}</h1>
 				<!--Aquí iria el nombre de la fase en la que estamos (Ataque, mercado, reabastecimiento, espera)-->
@@ -24,45 +24,58 @@
 					</div>
 			</c:forEach>
 			</div>
-
+			
 			<div class="market">
-				MARKET
+				<h3>MERCADO</h3>
 				<c:forEach items="${game.sale}" var="marketCardInGame">
 					<spring:url value="/games/board/{gameId}/buy/{marketCardId}" var="buyCard">
-					<spring:param name="marketCardId" value="${marketCardInGame.id}"></spring:param>
+						<spring:param name="marketCardId" value="${marketCardInGame.id}"></spring:param>
 
-					<spring:param name="gameId" value="${game.id}"></spring:param>
+						<spring:param name="gameId" value="${game.id}"></spring:param>
 
-				</spring:url>
-					<div class="marketcardInGame">
-						<c:choose >
+					</spring:url>
+					<c:if test="${marketCardInGame.player == null}">
+						<div class="marketcardInGame">
+							<c:choose >
 
-							<c:when test="${faseMercado}">
-								<a href="${fn:escapeXml(buyCard)}">
+								<c:when test="${faseMercado && isMyTurn}">
+									
+									<a href="${fn:escapeXml(buyCard)}">
+										<img src="${marketCardInGame.marketCard.asset.split('static', '')[1]}" width="150" />
+									</a>
+								</c:when>
+								<c:otherwise>
 									<img src="${marketCardInGame.marketCard.asset.split('static', '')[1]}" width="150" />
-								</a>
-							</c:when>
-							<c:otherwise>
-								<img src="${marketCardInGame.marketCard.asset.split('static', '')[1]}" width="150" />
+	
+								</c:otherwise>
+							</c:choose>
+	
+							
+							<h4 class="marketcardInGame">Price:<c:out value=" ${marketCardInGame.marketCard.price}"/></h4>
+						</div>
+					</c:if>
 
-							</c:otherwise>
-						</c:choose>
-
-						
-						<h4 class="marketcardInGame">Price:<c:out value=" ${marketCardInGame.marketCard.price}"/></h4>
-					</div>
 				</c:forEach>
 
+			</div>
+
+			<div class="totalGold">
+				<h2>ORO: ${player.gold}</h2>
 			</div>
 
 			<div class="yourCards">
 				<!--Panel de informacion personal, aparece abajo de la interfaz y todos los elementos aparecen en la misma linea-->
 				<c:forEach items="${player.abilityHand}" var="cardsInGame">
-				<div class="myCard">
-					<img src="${cardsInGame.abilityCard.asset.split('static', '')[1]}"/>
-					<h4 class="cardplayer">Damage:<c:out value=" ${cardsInGame.abilityCard.damage}"/></h4>
-				</div>
+					
+						<div class="myCard">
+							<img src="${cardsInGame.abilityCard.asset.split('static', '')[1]}"/>
+							<h4 class="cardplayer">Damage:<c:out value=" ${cardsInGame.abilityCard.damage}"/></h4>
+						</div>
 				</c:forEach>
+				<c:forEach items="${player.marketHand}" var="marketCard">
+					<img src="${marketCard.marketCard.asset.split('static', '')[1]}" width="100"/>
+				</c:forEach>
+
 
 
 			</div>
