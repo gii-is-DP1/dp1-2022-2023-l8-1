@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.game.Game;
+import org.springframework.samples.notimeforheroes.game.GameService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +15,9 @@ public class MarketService {
 	private MarketCardRepository marketRepository;
 	@Autowired
 	private MarketCardInGameRepository marketCardInGameRepository;
-	
+	@Autowired
+	private GameService gameService;
+
 	public List<MarketCard> findAll(){
 		return (List<MarketCard>) marketRepository.findAll();
 	}
@@ -26,8 +29,37 @@ public class MarketService {
 		}
 		return market;
 	}
+
+	public void addCardToMarket(MarketCardInGame card, int gameId){
+
+		Game currentGame = gameService.findById(gameId).get();
+		List<MarketCardInGame> currentMarketSale = currentGame.getSale();
+
+
+		List<MarketCard> marketCards = findAll(); // Obtenemos las cartas del mercado
+		for(MarketCardInGame mk: currentMarketSale){ // Eliminamos las cartas para no añadir cartas repetidas
+			marketCards.remove(mk.getMarketCard());
+		}
+		try{
+
+			// Añadimos la siguiente carta al mercado
+			MarketCardInGame mk =  MarketCardInGame.createInGame(currentGame, marketCards.get(0));
+			mk.setGameOnSale(currentGame);
+			
+			saveMarketCardInGame(mk);
+		}catch(Exception e){ // Cuando no hay más elementos en la lista de cartas de mercado
+			return;
+		}
+		
+
+	}
+
 	
 	public void saveMarketCardInGame(MarketCardInGame card) {
 		marketCardInGameRepository.save(card);
+	}
+
+	public MarketCardInGame findById(int marketCardId){
+		return marketCardInGameRepository.findById(marketCardId).get();
 	}
 }
