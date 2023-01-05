@@ -19,7 +19,7 @@
 			<div class="enemies">
 			<c:forEach items="${game.monsterField}" var="enemyInGame">
 					<div class="enemy">
-						<img src="${enemyInGame.enemy.asset.split('static', '')[1]}" width="200" />
+						<img src="/resources/images/Cards/Enemies/${enemyInGame.enemy.type}.jpg" width="200" />
 						<h4>Endurance: <c:out value=" ${enemyInGame.enemy.endurance}"/></h4>
 					</div>
 			</c:forEach>
@@ -41,11 +41,11 @@
 								<c:when test="${faseMercado && isMyTurn}">
 									
 									<a href="${fn:escapeXml(buyCard)}">
-										<img src="${marketCardInGame.marketCard.asset.split('static', '')[1]}" width="150" />
+										<img src="/resources/images/Cards/Shop/${marketCard.marketCard.type}.jpg" width="150" />
 									</a>
 								</c:when>
 								<c:otherwise>
-									<img src="${marketCardInGame.marketCard.asset.split('static', '')[1]}" width="150" />
+									<img src="/resources/images/Cards/Shop/${marketCard.marketCard.type}.jpg" width="150" />
 	
 								</c:otherwise>
 							</c:choose>
@@ -68,12 +68,12 @@
 				<c:forEach items="${player.abilityHand}" var="cardsInGame">
 					
 						<div class="myCard">
-							<img src="${cardsInGame.abilityCard.asset.split('static', '')[1]}"/>
+							<img src= "/resources/images/Cards/Abilities/${cardsInGame.abilityCard.abilityType}.jpg" width="100"/>
 							<h4 class="cardplayer">Damage:<c:out value=" ${cardsInGame.abilityCard.damage}"/></h4>
 						</div>
 				</c:forEach>
 				<c:forEach items="${player.marketHand}" var="marketCard">
-					<img src="${marketCard.marketCard.asset.split('static', '')[1]}" width="100"/>
+					<img src="/resources/images/Cards/Shop/${marketCard.marketCard.type}.jpg" width="100"/>
 				</c:forEach>
 
 

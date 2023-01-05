@@ -47,10 +47,6 @@ public class AbilityCard {
     @Column(name = "abilityType")
     private AbilityType abilityType;
 
-    @NotNull
-    @Column(name = "asset")
-    private String asset;
-
 
     @OneToMany(mappedBy="abilityCard")
     private Set<AbilityCardInGame> abilityCardInGame;

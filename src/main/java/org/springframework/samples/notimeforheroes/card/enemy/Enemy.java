@@ -43,11 +43,8 @@ public class Enemy {
 
     @Enumerated(EnumType.STRING)
     @Column(name="conditionType")
-    private ConditionType condition;
 
-    @NotNull
-    @Column(name = "asset")
-    private String asset;
+    private ConditionType condition;
 
     @OneToMany()
     private List<EnemyInGame> enemyInGame;

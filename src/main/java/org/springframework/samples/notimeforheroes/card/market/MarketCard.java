@@ -59,10 +59,6 @@ public class MarketCard {
     @Column(name = "type")
     private MarketCardType type;
 
-    @NotNull
-    @Column(name = "asset")
-    private String asset;
-
     @OneToMany(mappedBy="marketCard")
     private Set<MarketCardInGame> marketCardInGame;
 
