@@ -43,6 +43,13 @@ public class AbilityCardInGame{
     @JoinColumn(name="ability_card_id")
     private AbilityCard abilityCard;
 
+    public static AbilityCardInGame createInPlayer(Player player, AbilityCard card) {
+    	AbilityCardInGame cardIP = new AbilityCardInGame();
+    	cardIP.setPlayer(player);
+    	cardIP.setAbilityCard(card);
+    	return cardIP;
+    }
+
     public String toString(){
         return abilityCard.getAbilityType().toString();
     }
