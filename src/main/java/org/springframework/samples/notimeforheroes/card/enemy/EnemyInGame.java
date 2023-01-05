@@ -33,6 +33,7 @@ public class EnemyInGame {
     @ManyToOne(targetEntity = Enemy.class)
     private Enemy enemy;
 
+    //Asociar enemigos a un juego
     public static EnemyInGame createEnemyInGame(Enemy enemy, Game game) {
     	EnemyInGame enemyIG = new EnemyInGame();
     	enemyIG.setEnemy(enemy);

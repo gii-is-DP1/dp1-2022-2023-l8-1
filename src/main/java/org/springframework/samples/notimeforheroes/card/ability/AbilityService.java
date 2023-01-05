@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AbilityService {
+	//Repositorios de Cartas de Habilidad y Servicio de Jugador como variables
     @Autowired
     private AbilityCardRepository abilityCardRepository;
 
@@ -22,10 +23,13 @@ public class AbilityService {
     @Autowired
     private PlayerService playerService;
 
+	//Encuentra todas las AbilityCards y las asocia a una lista
     public List<AbilityCard> findAll() {
         return (List<AbilityCard>) abilityCardRepository.findAll();
     }
 
+
+	//Filtrar las cartas por HeroType y las asocia a una lista y player
     @Transactional()
 	public List<AbilityCardInGame> addAbilityCard(Player player, HeroType hero){
 		List<AbilityCardInGame> ability = findAll().stream().filter(x -> x.getHero().equals(hero)).map(card -> AbilityCardInGame.createInPlayer(player, card)).collect(Collectors.toList());
@@ -35,14 +39,18 @@ public class AbilityService {
 		return ability;
 	}
 
+	//Función save simple
     public void saveAbilityCardInGame(AbilityCardInGame card) {
 		abilityCardInGameRepository.save(card);
 	}
 
+	//Encontrar una AbilityCardInGame por Id
 	public AbilityCardInGame findById(int abilityCardId){
 		return abilityCardInGameRepository.findById(abilityCardId).get();
 	}
 
+
+	//Para añadir cartas no repetidas a una pila
     public void addCardToPile(AbilityCardInGame card, int playerId){
 
 		Player player = playerService.findPlayerById(playerId).get();

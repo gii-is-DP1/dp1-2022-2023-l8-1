@@ -10,17 +10,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EnemyService {
+	//Repositorios de enemigos como variables
 	@Autowired
 	private EnemyRepository enemyRepository;
 	@Autowired
 	private EnemyInGameRepository enemyInGameRepository;
 	
+	//Lista de todos los enemigos
 	public List<Enemy> findAll(){
 		return (List<Enemy>) enemyRepository.findAll();
 	}
+	//Lista de los enemigos en un juego determinado
 	public List<EnemyInGame>  findAllByGame(Game game){
 		return enemyInGameRepository.findAllByGame(game);
 	}
+
+	//Añade enemigos a un juego
 	@Transactional()
 	public List<EnemyInGame> addEnemies(Game game) {
 		List<EnemyInGame> enemiesIG = findAll().stream()
@@ -31,6 +36,7 @@ public class EnemyService {
 		return enemiesIG;
 	}
 	
+	//función save simple
 	public void saveEnemyInGame(EnemyInGame enemy) {
 		enemyInGameRepository.save(enemy);
 	}

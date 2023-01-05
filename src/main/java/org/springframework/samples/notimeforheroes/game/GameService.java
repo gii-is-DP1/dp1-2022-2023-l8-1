@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class GameService {
 
+    //Repositorios y servicios como variables y posterior asociación a este servicio
     private final GameRepository gameRepository;
     @Autowired
     private EnemyService enemyService;
@@ -35,14 +36,17 @@ public class GameService {
         this.gameRepository = repository;
     }
 
+    //Encuentra todos los juegos y los asocia a una lista
     public List<Game> gameList(){
         return gameRepository.findAll();
     }
 
+    //Encuentra la lista de Player asociada a un Game por su id
     public List<Player> showPlayersInGame(Integer gameId){
         return gameRepository.findPlayersInGame(gameId);
     }
 
+    //Patrón builder para la creación de un juego
     @Transactional()
     public void createGame(Game game) {
 
@@ -60,14 +64,18 @@ public class GameService {
     	Game last = gameRepository.findById(lastId).get();
     	last.setMonsterPile(enemyService.addEnemies(last));
     }
+
+    //Encontrar Game por id
 	public Optional<Game> findById(int id){
 		return gameRepository.findById(id);
 	}
 
+    //funcion save simple
     public void saveGame(Game game){
          gameRepository.save(game);
     }
 
+    //Funcion para la comparación de puntuación para la elección de lider
     public Player compareBet(int gameId){
         Player bestPlayerBet = new Player();
         int bestBet = 0;
@@ -95,7 +103,7 @@ public class GameService {
         return bestPlayerBet;
     }
 
-    
+    //Funcion para encontrar el jugador actual
     public Player getCurrentPlayer(User user, int gameId){
         
         Game game = gameRepository.findById(gameId).get();
@@ -107,6 +115,7 @@ public class GameService {
 
     }
 
+    //funcion para la compra de cartas del mercado por un jugador
     public void buyCard(User user, int gameId, int marketCardId){
 
         Player currentPlayer = getCurrentPlayer(user, gameId);

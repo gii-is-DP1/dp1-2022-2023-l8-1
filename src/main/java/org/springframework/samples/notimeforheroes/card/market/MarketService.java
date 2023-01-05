@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MarketService {
+
+	//Repositorios de mercado y servicio de Game como variables
 	@Autowired
 	private MarketCardRepository marketRepository;
 	@Autowired
@@ -18,9 +20,12 @@ public class MarketService {
 	@Autowired
 	private GameService gameService;
 
+	//Encuentra todas las MarketCard
 	public List<MarketCard> findAll(){
 		return (List<MarketCard>) marketRepository.findAll();
 	}
+
+	//Crea una lista de cartas de mercado para un juego
 	@Transactional()
 	public List<MarketCardInGame> addMarket(Game game){
 		List<MarketCardInGame> market = findAll().stream().map(card -> MarketCardInGame.createInGame(game, card)).collect(Collectors.toList());
@@ -30,6 +35,7 @@ public class MarketService {
 		return market;
 	}
 
+	//Añade cartas determinadas y no repetidas a una pila de cartas de mercado
 	public void addCardToMarket(MarketCardInGame card, int gameId){
 
 		Game currentGame = gameService.findById(gameId).get();
@@ -54,11 +60,12 @@ public class MarketService {
 
 	}
 
-	
+	//función save básica
 	public void saveMarketCardInGame(MarketCardInGame card) {
 		marketCardInGameRepository.save(card);
 	}
 
+	//Encuentra una carta de mercado por su id
 	public MarketCardInGame findById(int marketCardId){
 		return marketCardInGameRepository.findById(marketCardId).get();
 	}

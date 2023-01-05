@@ -34,13 +34,14 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class FriendsController {
-
+	//servicio de Frined y servicio de User como variables
 	@Autowired
 	private FriendsService friendService;
 
 	@Autowired
 	private UserService userService;
 
+	//controlador para la vista de todos los amigos asociados a un usuario
 	@GetMapping("/friendList")
 	public String listFriend(ModelMap modelMap) {
 		String vista = "friends/friendList";
@@ -61,6 +62,7 @@ public class FriendsController {
 		return vista;
 	}
 
+	//Controlador para la vista de solicitudes pendientes de amistad asociadas a un usuario
 	@GetMapping("/friendList/Pending")
 	public String listFriendPending(ModelMap modelMap) {
 		String vista = "friends/friendList";
@@ -80,6 +82,8 @@ public class FriendsController {
 		return vista;
 	}
 
+
+	//controlador para la invitación de un amigo asociado a un usuario a una partida
 	@GetMapping("/friendList/invite/{friendId}")
 	public String invitePlayer(@PathVariable("friendId") int friendId, ModelMap modelMap) {
 		Authentication a = SecurityContextHolder.getContext().getAuthentication();
@@ -100,6 +104,7 @@ public class FriendsController {
 		return "redirect:/";
 	}
 
+	//controlador para la eliminación de la solicitud de invitación de un amigo asociado a un usuario a la partida
 	@GetMapping("friendList/deleteInvitation/{friendId}")
 	public String deleteInvitation(@PathVariable("friendId") int friendId, ModelMap modelMap) {
 		//Optional<Friends> friend = friendService.findFriend(friendId);
@@ -110,7 +115,7 @@ public class FriendsController {
 		return "redirect:/friendList";
 	}
 
-
+	//controlador para la eliminación de un amigo asociado al usuario
 	@GetMapping("/friendList/delete/{friendId}")
 	public String deleteFriend(@PathVariable("friendId") int friendId, ModelMap modelMap) {
 		//String view = "friends/friendList";
@@ -125,7 +130,7 @@ public class FriendsController {
 		return "redirect:/friendList";
 	}
 
-
+	//controlador para la vista de detalles de un amigo determinado
 	@GetMapping("/friendList/details")
 	public ModelAndView showFriends(ModelMap modelMap) {
 		ModelAndView view = new ModelAndView("friends/friendDetails");
@@ -150,6 +155,8 @@ public class FriendsController {
         }
 
 	}
+
+	//Controlador para la vista de los detalles de una solicitud pendiente
 	@GetMapping("/friendList/detailsPending")
 	public ModelAndView showFriendsPending(ModelMap modelMap) {
 
@@ -175,6 +182,7 @@ public class FriendsController {
         }
 	}
 
+	//controlador para editar la información de un amigo determinado
 	@GetMapping("/friendList/edit/{friendId}")
 	public String processUpdateFriendForm(
 		@PathVariable("friendId") int friendId) {
@@ -187,6 +195,7 @@ public class FriendsController {
 		return "redirect:/friendList";
 	}
 
+	//controlador para la vista de solicitud de amistad para un usuario
 	@GetMapping("friendList/new/{userId}")
 	public String createNewFriend(ModelMap modelMap, @PathVariable("userId") int userId) {
 		Authentication a = SecurityContextHolder.getContext().getAuthentication();

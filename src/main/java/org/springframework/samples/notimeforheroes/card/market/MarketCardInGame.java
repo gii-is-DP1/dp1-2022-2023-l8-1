@@ -40,6 +40,8 @@ public class MarketCardInGame {
     @JoinColumn(name="market_card_id")
     private MarketCard marketCard;
     
+
+    //Asocia cartas de mercado a un juego
     public static MarketCardInGame createInGame(Game game, MarketCard card) {
     	MarketCardInGame cardIG = new MarketCardInGame();
     	cardIG.setGame(game);
