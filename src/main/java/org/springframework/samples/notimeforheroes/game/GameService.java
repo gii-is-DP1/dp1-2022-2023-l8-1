@@ -8,8 +8,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.card.enemy.EnemyService;
+import org.springframework.samples.notimeforheroes.card.market.MarketCard;
+import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
 import org.springframework.samples.notimeforheroes.card.market.MarketService;
 import org.springframework.samples.notimeforheroes.player.Player;
+import org.springframework.samples.notimeforheroes.player.PlayerService;
 import org.springframework.samples.notimeforheroes.user.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +27,8 @@ public class GameService {
     private EnemyService enemyService;
     @Autowired
     private MarketService marketService;
+    @Autowired
+    private PlayerService playerService;
     
     @Autowired
     public GameService(GameRepository repository){
@@ -101,7 +106,38 @@ public class GameService {
         return player;
 
     }
+
+    public void buyCard(User user, int gameId, int marketCardId){
+
+        Player currentPlayer = getCurrentPlayer(user, gameId);
+        
+
+        List<MarketCardInGame> marketHand = currentPlayer.getMarketHand(); // Obtengo la lista de cartas de mercado que tiene el jugador
+        
+        MarketCardInGame currentMarketCard = marketService.findById(marketCardId); // Obtengo la carta seleccionada para comprar dado su id
+        MarketCard marketCard = currentMarketCard.getMarketCard();
+
+
+        // Comprobamos si el jugador tiene suficiente oro para comprar la carta y si su héroe es compatible con la carta
+        if((currentPlayer.getGold() >= marketCard.getPrice()) && 
+        ((marketCard.getProfiency1().equals(currentPlayer.getProfiency())) ||
+        (marketCard.getProfiency2().equals(currentPlayer.getProfiency())) ||
+        (marketCard.getProfiency3().equals(currentPlayer.getProfiency())) ||
+        (marketCard.getProfiency4().equals(currentPlayer.getProfiency())))){
+            currentMarketCard.setPlayer(currentPlayer);
+
+            marketHand.add(currentMarketCard); // Compramos la carta añadiendola a la lista de cartas de mercado del jugador
+            marketService.addCardToMarket(currentMarketCard, gameId);
+
+
+            currentPlayer.setMarketHand(marketHand); // Seteo la lista de cartas de mercado del jugador con la lista que tenemos en la que hemos añadido la carta
+            int totalGold = currentPlayer.getGold();
+            totalGold = totalGold - currentMarketCard.getMarketCard().getPrice();
+            currentPlayer.setGold(totalGold); // Restamos el oro que cuesta la carta de mercado
+            playerService.savePlayer(currentPlayer); // Guardamos el jugador en la bd
+        }
+        // System.out.println("Mano de mercado del jugador: "+currentPlayer.getMarketHand());
+    }
     
 
-    
 }

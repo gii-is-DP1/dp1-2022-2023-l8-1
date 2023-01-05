@@ -46,4 +46,8 @@ public class MarketCardInGame {
     	cardIG.setMarketCard(card);
     	return cardIG;
     }
+
+    public String toString(){
+        return this.getMarketCard().getType().toString();
+    }
 }
