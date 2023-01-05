@@ -34,6 +34,8 @@ public class Enemy {
     @NotNull
     private int glory;
 
+    @NotNull
+    private int gold;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")

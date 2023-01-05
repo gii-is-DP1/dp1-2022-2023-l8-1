@@ -171,42 +171,76 @@ INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (52, 4);
 
 
 --INSERT INTO PLAYERS_ABILITY_PILE(players_id, ability_pile_id) VALUES (1, 1);
+-- Cartas de Enemigos Normales
+INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (2, 1, 1, 'HONDERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Hondero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (2, 1, 1, 'HONDERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Hondero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (2, 1, 0, 'HONDERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Hondero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (2, 1, 0, 'HONDERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Hondero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (2, 1, 0, 'HONDERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Hondero.jpg');
 
-INSERT INTO enemies(endurance, glory, type, asset ) VALUES (2,1,'HONDERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Hondero.jpg');
-INSERT INTO enemies(endurance, glory, type, asset , condition_type) VALUES (3,2,'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
-INSERT INTO enemies(endurance, glory, type, asset , condition_type) VALUES (3,1,'CHAMAN', 'MAGO_1', 'src\main\resources\static\resources\images\Cards\Enemigos\Chaman.jpg');
-INSERT INTO enemies(endurance, glory, type, asset ) VALUES (4,2,'GUERRERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero.jpg');
-INSERT INTO enemies(endurance, glory, type, asset , condition_type) VALUES (4,2,'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
-INSERT INTO enemies(endurance, glory, type, asset , condition_type) VALUES (5,3,'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
-INSERT INTO enemies(endurance, glory, type, asset ) VALUES (6,4,'BERSEKER', 'src\main\resources\static\resources\images\Cards\Enemigos\Berserker.jpg');
-INSERT INTO enemies(endurance, glory, type, asset ) VALUES (8,8,'GURDRUG', 'src\main\resources\static\resources\images\Cards\Señores\Gurdrug.jpg');
-INSERT INTO enemies(endurance, glory, type, asset ) VALUES (9,9,'ROGHKILLER', 'src\main\resources\static\resources\images\Cards\Señores\Roghkiller.jpg');
-INSERT INTO enemies(endurance, glory, type, asset ) VALUES (10,10,'SHRIEKKNIFER', 'src\main\resources\static\resources\images\Cards\Señores\Shriekknifer.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (3, 2, 1, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (3, 2, 1, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (3, 2, 0, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (3, 2, 0, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (3, 2, 0, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
+
+INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (3, 1, 2, 'CHAMAN', 'MAGO_1', 'src\main\resources\static\resources\images\Cards\Enemigos\Chaman.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (3, 2, 1, 'CHAMAN', 'MAGO_1', 'src\main\resources\static\resources\images\Cards\Enemigos\Chaman.jpg');
+
+INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (4, 2, 1, 'GUERRERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (4, 2, 0, 'GUERRERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (4, 2, 0, 'GUERRERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero.jpg');
+
+INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (4, 3, 2, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (4, 3, 2, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (4, 2, 2, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (4, 2, 1, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (4, 2, 1, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
+
+INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (5, 4, 2, 'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (5, 3, 2, 'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (5, 3, 2, 'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (5, 3, 0, 'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
+
+INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (6, 4, 1,'BERSEKER', 'src\main\resources\static\resources\images\Cards\Enemigos\Berserker.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (6, 4, 0,'BERSEKER', 'src\main\resources\static\resources\images\Cards\Enemigos\Berserker.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (6, 4, 0,'BERSEKER', 'src\main\resources\static\resources\images\Cards\Enemigos\Berserker.jpg');
+
+-- Cartas de Señores de la Guerra
+INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (8, 0, 0, 'GURDRUG', 'src\main\resources\static\resources\images\Cards\Señores\Gurdrug.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (9, 0, 0, 'ROGHKILLER', 'src\main\resources\static\resources\images\Cards\Señores\Roghkiller.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (10, 0, 0, 'SHRIEKKNIFER', 'src\main\resources\static\resources\images\Cards\Señores\Shriekknifer.jpg');
 
 INSERT INTO enemy_in_game(enemy_id, game_field_id) VALUES (1,1);
 
 --INSERT INTO GAMES_MONSTER_FIELD(game_id, monster_field_id) VALUES(1,1);
-
-
+--Cartas de Mercado
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
+                    VALUES(3, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'DAGA_ELFICA', 2, 'src\main\resources\static\resources\images\Cards\Tienda\Daga-Elfica.jpg');
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
+                    VALUES(3, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'DAGA_ELFICA', 2, 'src\main\resources\static\resources\images\Cards\Tienda\Daga-Elfica.jpg');
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
+                    VALUES(8, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'POCION_CURATIVA', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Pocion-Curativa.jpg');
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
+                    VALUES(8, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'POCION_CURATIVA', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Pocion-Curativa.jpg');
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
+                    VALUES(8, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'POCION_CURATIVA', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Pocion-Curativa.jpg');
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
+                    VALUES(4, 'MELEE', 'DISTANCIA', 'PERICIA', 'INCOMPATIBLE', 'PIEDRA_DE_AMOLAR', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Piedra-de-Amolar.jpg');
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset)
+                    VALUES(5, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA' , 'VIAL_DE_CONJURACION', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Vial-de-Conjuracion.jpg');
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset)
+                    VALUES(3, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'ELIXIR_DE_CONCENTRACION', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Elixir-de-Concentracion.jpg');
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset)
+                    VALUES(3, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'ELIXIR_DE_CONCENTRACION', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Elixir-de-Concentracion.jpg');
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
+                    VALUES(3, 'INCOMPATIBLE', 'DISTANCIA', 'INCOMPATIBLE', 'MAGIA', 'CAPA_ELFICA', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Capa-Elfica.jpg');
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
+                    VALUES(4, 'MELEE', 'INCOMPATIBLE', 'INCOMPATIBLE', 'INCOMPATIBLE', 'ARMADURA_DE_PLACAS', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Armadura-de-Placas.jpg');
 INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
                     VALUES(5, 'MELEE', 'INCOMPATIBLE', 'INCOMPATIBLE', 'INCOMPATIBLE', 'ALABARDA_ORCA', 4, 'src\main\resources\static\resources\images\Cards\Tienda\Alabarda-Orca.jpg');
 INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
                     VALUES(5, 'INCOMPATIBLE', 'DISTANCIA', 'INCOMPATIBLE','INCOMPATIBLE', 'ARCO_COMPUESTO', 4, 'src\main\resources\static\resources\images\Cards\Tienda\Arco-Compuesto.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                    VALUES(4, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'ARMADURA_DE_PLACAS', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Armadura-de-Placas.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                    VALUES(3, 'INCOMPATIBLE', 'DISTANCIA', 'INCOMPATIBLE', 'MAGIA', 'CAPA_ELFICA', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Capa-Elfica.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                    VALUES(3, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'DAGA_ELFICA', 2, 'src\main\resources\static\resources\images\Cards\Tienda\Daga-Elfica.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                    VALUES(3, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'ELIXIR_DE_CONCENTRACION', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Elixir-de-Concentracion.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                    VALUES(4, 'MELEE', 'DISTANCIA', 'PERICIA', 'INCOMPATIBLE', 'PIEDRA_DE_AMOLAR', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Piedra-de-Amolar.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                    VALUES(8, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'POCION_CURATIVA', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Pocion-Curativa.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                    VALUES(5, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA' , 'VIAL_DE_CONJURACION', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Vial-de-Conjuracion.jpg');
-
 
 INSERT INTO MARKET_CARD_IN_GAME (game_sale_id, player_id,market_card_id) VALUES (1,1,1);
 INSERT INTO MARKET_CARD_IN_GAME (game_sale_id, player_id,market_card_id) VALUES (1,1,2);
