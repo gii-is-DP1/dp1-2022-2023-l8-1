@@ -178,29 +178,29 @@ INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (2, 1, 0, 'HOND
 INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (2, 1, 0, 'HONDERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Hondero.jpg');
 INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (2, 1, 0, 'HONDERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Hondero.jpg');
 
-INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (3, 2, 1, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (3, 2, 1, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (3, 2, 0, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (3, 2, 0, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (3, 2, 0, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (3, 2, 1, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (3, 2, 1, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (3, 2, 0, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (3, 2, 0, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (3, 2, 0, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
 
-INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (3, 1, 2, 'CHAMAN', 'MAGO_1', 'src\main\resources\static\resources\images\Cards\Enemigos\Chaman.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (3, 2, 1, 'CHAMAN', 'MAGO_1', 'src\main\resources\static\resources\images\Cards\Enemigos\Chaman.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (3, 1, 2, 'CHAMAN', 'MAGO_1', 'src\main\resources\static\resources\images\Cards\Enemigos\Chaman.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (3, 2, 1, 'CHAMAN', 'MAGO_1', 'src\main\resources\static\resources\images\Cards\Enemigos\Chaman.jpg');
 
 INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (4, 2, 1, 'GUERRERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero.jpg');
 INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (4, 2, 0, 'GUERRERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero.jpg');
 INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (4, 2, 0, 'GUERRERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero.jpg');
 
-INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (4, 3, 2, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (4, 3, 2, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (4, 2, 2, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (4, 2, 1, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (4, 2, 1, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (4, 3, 2, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (4, 3, 2, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (4, 2, 2, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (4, 2, 1, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (4, 2, 1, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
 
-INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (5, 4, 2, 'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (5, 3, 2, 'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (5, 3, 2, 'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset , condition_type) VALUES (5, 3, 0, 'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (5, 4, 2, 'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (5, 3, 2, 'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (5, 3, 2, 'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (5, 3, 0, 'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
 
 INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (6, 4, 1,'BERSEKER', 'src\main\resources\static\resources\images\Cards\Enemigos\Berserker.jpg');
 INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (6, 4, 0,'BERSEKER', 'src\main\resources\static\resources\images\Cards\Enemigos\Berserker.jpg');
