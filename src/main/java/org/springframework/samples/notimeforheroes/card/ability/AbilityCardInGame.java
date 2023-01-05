@@ -43,7 +43,7 @@ public class AbilityCardInGame{
     @JoinColumn(name="ability_card_id")
     private AbilityCard abilityCard;
 
-    public static AbilityCardInGame createInPlayer(Player player, AbilityCard card) {
+    public static AbilityCardInGame createInPlayer(Player player, AbilityCard card) { //Asociar AbilityCards a un Player
     	AbilityCardInGame cardIP = new AbilityCardInGame();
     	cardIP.setPlayer(player);
     	cardIP.setAbilityCard(card);

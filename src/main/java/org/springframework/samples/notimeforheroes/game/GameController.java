@@ -36,6 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/games")
 public class GameController {
 
+    //Vistas de jsp a usar
     private static final String VIEW_GAME_LIST = "games/showGameList";
     private static final String VIEW_GAME_NEW = "games/createGame";
     private static final String VIEW_GAME_LOBBY = "games/showGameLobby";
@@ -44,7 +45,7 @@ public class GameController {
     private static final String VIEW_MARKET = "games/viewMarket";
     private static final String VIEW_CHOOSE_LEADER = "games/chooseLeader";
 
-
+    //Repositorios y servicios como variables y posterior asociación al controlador
     private final FriendsService friendsService;
 
     private final GameService service;
@@ -69,7 +70,7 @@ public class GameController {
 
     // @GetMapping('/')
 
-
+    //controlador para vista de todos los games
     @GetMapping("/")
     public ModelAndView showGameList(){
         ModelAndView mav = new ModelAndView(VIEW_GAME_LIST);
@@ -107,6 +108,7 @@ public class GameController {
         return mav;
     }
 
+    //controlador y vista para la selección de heroe
     @GetMapping("/{gameId}/lobby/selectHero/{heroType}")
     public String selectHero(@PathVariable("gameId") int gameId, ModelMap modelMap, @PathVariable("heroType") HeroType heroType) {
 
@@ -139,7 +141,8 @@ public class GameController {
     //     mav.addObject("message", "Partida iniciada");
     //     return mav;
     // }
-
+    
+    //controlador y vista para la elección de un lider de partida dependiendo de la puntuación de cartas
     @GetMapping("{gameId}/chooseLeader")
     public ModelAndView showPuja(@PathVariable("gameId") int gameId){
         ModelAndView mav = new ModelAndView(VIEW_CHOOSE_LEADER);
@@ -168,6 +171,7 @@ public class GameController {
         return mav;
     }
 
+    //controlador y vista para la puja de cartas para la puntuación de elección de lider
     @GetMapping("{gameId}/chooseLeader/{cardId}")
     public ModelAndView pujarCarta(@PathVariable("gameId") int gameId, @PathVariable("cardId") int cardId){
         ModelAndView mav = new ModelAndView(VIEW_CHOOSE_LEADER);
@@ -202,6 +206,7 @@ public class GameController {
 
     }
 
+    //controlador para la comparación de puntuación de la puja de cartas
     @GetMapping("{gameId}/chooseLeader/compare")
     public ModelAndView compareCardsToSelectLeader(@PathVariable("gameId") int gameId){
         ModelAndView mav = new ModelAndView(VIEW_CHOOSE_LEADER);
@@ -230,7 +235,7 @@ public class GameController {
     }
 
     
-
+    //controlador vista para la creación de game
 
     @GetMapping("/new")
     public ModelAndView createGameView(){
@@ -242,6 +247,7 @@ public class GameController {
         return mav;
     }
 
+    //Controlador post para la creación de un nuevo juego
     @PostMapping("/new")
     public String createGame(@Valid Game game, BindingResult br){
         ModelAndView mav = null;
@@ -258,6 +264,7 @@ public class GameController {
 		return "redirect:/games/";
     }
 
+    //Controlador vista para los enemigos asociados a un juego
     @GetMapping(value = "/monsterField/{gameId}")
     public ModelAndView showEnemiesList(@PathVariable("gameId") int gameId){
         ModelAndView mav = new ModelAndView(VIEW_ENEMIES_ACTIVES);
@@ -267,7 +274,7 @@ public class GameController {
         return mav;
     }
 
-    
+    //Controlador vista para el mercado asociado a un juego
     @GetMapping(value = "/market/{gameId}")
     public ModelAndView showmarketList(@PathVariable("gameId") int gameId){
         ModelAndView mav = new ModelAndView(VIEW_MARKET);
@@ -277,7 +284,7 @@ public class GameController {
         return mav;
     }
 
-
+    //Controlador vista para el tablero de un juego
     @GetMapping(value = "/board/{gameId}")
     public ModelAndView showBoard(@PathVariable("gameId") int gameId, HttpServletResponse response){
         // response.addHeader("Refresh", "1"); // Autorefresco
@@ -320,6 +327,7 @@ public class GameController {
         return mav;
     }
 
+    //controlador para pasar de turno o fase
     @GetMapping("/board/{gameId}/next")
     public String nextTurnOrPhase(@PathVariable("gameId") int gameId,  ModelMap modelMap){
         Game currentGame = service.findById(gameId).get();
@@ -350,7 +358,7 @@ public class GameController {
     }
 
 
-    
+    //controlador para la acción de evasión
     @GetMapping("/board/{gameId}/evasion")
     public String userEvasion(@PathVariable("gameId") int gameId,  ModelMap modelMap){
         Game currentGame = service.findById(gameId).get();
@@ -371,7 +379,7 @@ public class GameController {
         return "redirect:/games/board/"+gameId;
     }
 
-
+    //controlador para la compra de cartas de mercado
     @GetMapping("/board/{gameId}/buy/{marketCardId}")
     public String buyCard(@PathVariable("gameId") int gameId, @PathVariable("marketCardId") int marketCardId, ModelMap modelMap){
         Game currentGame = service.findById(gameId).get();

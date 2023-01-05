@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EnemyRepository extends CrudRepository<Enemy,Integer>{
-	
+	//Funciones básicas de repositorio gracias a la extensión CrudRepositry
 	
 }
