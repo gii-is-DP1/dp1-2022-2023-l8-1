@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
+import org.springframework.samples.notimeforheroes.card.ability.AbilityService;
 import org.springframework.samples.notimeforheroes.friends.Friends;
 import org.springframework.samples.notimeforheroes.friends.FriendsService;
 import org.springframework.samples.notimeforheroes.player.HeroType;
@@ -51,16 +52,19 @@ public class GameController {
     private final UserService userService;
     private final TurnService turnService;
 
+    private final AbilityService abilityService;
+
     @Autowired
     private final PlayerService playerService;
 
     @Autowired
-    public GameController(GameService gameService, PlayerService playerService, FriendsService fs, UserService uService, TurnService tService){
+    public GameController(GameService gameService, PlayerService playerService, FriendsService fs, UserService uService, TurnService tService, AbilityService aService){
         this.service = gameService;
         this.playerService = playerService;
         this.friendsService = fs;
         this.userService = uService;
         this.turnService = tService;
+        this.abilityService = aService;
     }
 
     // @GetMapping('/')
@@ -117,6 +121,7 @@ public class GameController {
             for(Player p : players){
                 if(p.getUser().getUsername() == currentUser.getUsername()){
                     p.setHero(heroType);
+                    abilityService.addAbilityCard(p, heroType);
                     playerService.savePlayer(p);
                 }
             }
