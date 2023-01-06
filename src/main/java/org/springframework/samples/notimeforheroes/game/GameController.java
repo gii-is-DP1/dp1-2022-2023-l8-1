@@ -218,11 +218,15 @@ public class GameController {
         for(AbilityCardInGame card : bestPlayerBet.getCartasPuja()){
             bet += card.getAbilityCard().getDamage();
         }
-
+        Turn newTurn = new Turn();
         Game currentGame = service.findById(gameId).get();
         currentGame.setState(GameState.EN_CURSO);
+        newTurn.setGame(currentGame);
+        newTurn.setPlayer(bestPlayerBet);
+        newTurn.setType(PhaseType.ATAQUE);
+        turnService.save(newTurn);
         service.saveGame(currentGame);
-
+        
 
         mav.addObject("bestPlayerBet", bestPlayerBet);
         mav.addObject("bestBet", bet);
