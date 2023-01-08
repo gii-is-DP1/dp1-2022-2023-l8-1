@@ -48,14 +48,23 @@ public class AbilityService {
 			return ability;
 		}else{
 			System.out.println(" =============Con Mazo=============== ");
+			for(AbilityCardInGame card:player.getAbilityPile()){
+				List<AbilityCardInGame> registradas = card.getAbilityCard().getAbilityCardInGame();
+				registradas.remove(card);
+				card.getAbilityCard().setAbilityCardInGame(registradas);
+				card.setAbilityCard(null);
+			}
 			abilityCardInGameRepository.deleteByPlayerPile(player);
 			player.setAbilityPile(null);
+			List<AbilityCardInGame> nuevo_mazo = new ArrayList<AbilityCardInGame>();
 			List<AbilityCardInGame> ability = findAll().stream().filter(x -> x.getHero().equals(hero)).map(card -> createPileInPlayer(player, card)).collect(Collectors.toList());
 			for (AbilityCardInGame card:ability) {
 				System.out.println(" =Añadida la carta= "+ card.toString());
 				saveAbilityCardInGame(card);
+				nuevo_mazo.add(card);
 			}
-			System.out.println(" =============Estado tras reasignacióno=============== " + abilityCardInGameRepository.findAllByPlayerPile(player));
+			player.setAbilityPile(nuevo_mazo);
+			System.out.println(" =============Estado tras reasignacióno=============== " + player.getAbilityPile());
 			return ability;
 		}
 	}
