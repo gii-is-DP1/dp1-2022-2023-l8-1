@@ -316,17 +316,17 @@ public class GameController {
             isMyTurn = true;
         }
 
-        Boolean faseMercado = false;
-        if(currentTurn.getType().equals(PhaseType.MERCADO)){
-            faseMercado = true;
-        }
+
+        PhaseType fase = currentTurn.getType();
+        
+        
 
 	    
 	    mav.addObject("game",game);
 	    mav.addObject("player",player);
         mav.addObject("turn", currentTurn);
         mav.addObject("isMyTurn", isMyTurn);
-        mav.addObject("faseMercado", faseMercado);
+        mav.addObject("fase", fase);
 
         return mav;
     }
@@ -396,6 +396,29 @@ public class GameController {
 
         return "redirect:/games/board/"+gameId;
     }
+
+    @GetMapping("/board/{gameId}/discard/{abilityCardId}")
+    public String discardAbilityCard(@PathVariable("gameId") int gameId, @PathVariable("abilityCardId") int cardId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String currentUserName = auth.getName();
+	    User currentUser = userService.findByUsername(currentUserName);
+
+        service.discardAbilityCard(currentUser, gameId, cardId);
+
+        return "redirect:/games/board/"+gameId;
+    }
+    // @GetMapping("/board/{gameId}/discard/{marketCardId}")
+    // public String discardMarketCard(@PathVariable("gameId") int gameId, @PathVariable("marketCardId") int marketCardId){
+    //     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	//     String currentUserName = auth.getName();
+	//     User currentUser = userService.findByUsername(currentUserName);
+
+    //     service.discardMarketCard(currentUser, gameId, marketCardId);
+
+    //     return "redirect:/games/board/"+gameId;
+    // }
+
+
 
 
 }

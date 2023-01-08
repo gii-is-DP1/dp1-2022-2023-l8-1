@@ -38,7 +38,7 @@
 						<div class="marketcardInGame">
 							<c:choose >
 
-								<c:when test="${faseMercado && isMyTurn}">
+								<c:when test="${fase.toString() == 'MERCADO' && isMyTurn}">
 									<a href="${fn:escapeXml(buyCard)}">
 										<img src="/resources/images/Cards/Shop/${marketCardInGame.marketCard.type}.jpg" width="150" />
 									</a>
@@ -63,13 +63,32 @@
 			</div>
 
 			<div class="yourCards">
+
 				<!--Panel de informacion personal, aparece abajo de la interfaz y todos los elementos aparecen en la misma linea-->
-				<c:forEach items="${player.abilityHand}" var="cardsInGame">
-					
+				<c:forEach items="${player.abilityHand}" var="cardInGame">
+
+						<spring:url value="/games/board/{gameId}/discard/{abilityCardId}" var="discardCard">
+								<spring:param name="abilityCardId" value="${cardInGame.id}"></spring:param>
+
+								<spring:param name="gameId" value="${game.id}"></spring:param>
+
+						</spring:url>
 						<div class="myCard">
-							<img src= "/resources/images/Cards/Abilities/${cardsInGame.abilityCard.abilityType}.jpg" width="100"/>
-							<h4 class="cardplayer">Damage:<c:out value=" ${cardsInGame.abilityCard.damage}"/></h4>
+							<c:choose >
+								<c:when test="${fase.toString() == 'RESTABLECIMIENTO' && isMyTurn && (player.abilityHand.size() + player.marketHand.size()) > 4}">
+									<a href="${fn:escapeXml(discardCard)}">
+										<img src= "/resources/images/Cards/Abilities/${cardInGame.abilityCard.abilityType}.jpg" width="100"/>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<img src= "/resources/images/Cards/Abilities/${cardInGame.abilityCard.abilityType}.jpg" width="100"/>
+
+								</c:otherwise>
+							</c:choose>
+							
+							<h4 class="cardplayer">Damage:<c:out value=" ${cardInGame.abilityCard.damage}"/></h4>
 						</div>
+						
 				</c:forEach>
 				<c:forEach items="${player.marketHand}" var="marketCard">
 					<img src="/resources/images/Cards/Shop/${marketCard.marketCard.type}.jpg" width="100"/>
@@ -118,8 +137,12 @@
 			</div>
 			<div class="yourCards">
 				<div class="myCard pilaDesgaste">
-					<img
-						src="<spring:url value="/resources/images/no-time-for-heroes.png" htmlEscape="true" />">
+					<c:forEach items="${player.discardPile}" var="cardInGame">
+							<img
+							src="/resources/images/Cards/Abilities/${cardInGame.abilityCard.abilityType}.jpg">
+
+					</c:forEach>
+					
 					<h4 class="pilaDesgaste">PilaDesgaste</h4>
 				</div>
 				<div class="myCard baraja">
