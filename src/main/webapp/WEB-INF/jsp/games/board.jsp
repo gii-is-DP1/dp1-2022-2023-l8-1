@@ -39,13 +39,12 @@
 							<c:choose >
 
 								<c:when test="${faseMercado && isMyTurn}">
-									
 									<a href="${fn:escapeXml(buyCard)}">
-										<img src="/resources/images/Cards/Shop/${marketCard.marketCard.type}.jpg" width="150" />
+										<img src="/resources/images/Cards/Shop/${marketCardInGame.marketCard.type}.jpg" width="150" />
 									</a>
 								</c:when>
 								<c:otherwise>
-									<img src="/resources/images/Cards/Shop/${marketCard.marketCard.type}.jpg" width="150" />
+									<img src="/resources/images/Cards/Shop/${marketCardInGame.marketCard.type}.jpg" width="150" />
 	
 								</c:otherwise>
 							</c:choose>
