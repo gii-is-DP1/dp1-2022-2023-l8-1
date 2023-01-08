@@ -33,10 +33,7 @@ public class PlayerService {
     //Funcion save simple
     @Transactional
     public void savePlayer(Player player){
-
     	playerRepository.save(player);
-
-
     }
 
     //Creación de un player para un juego con valores determinados iniciales

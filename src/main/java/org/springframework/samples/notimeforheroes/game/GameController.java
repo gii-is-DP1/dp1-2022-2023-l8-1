@@ -123,7 +123,7 @@ public class GameController {
             for(Player p : players){
                 if(p.getUser().getUsername() == currentUser.getUsername()){
                     p.setHero(heroType);
-                    abilityService.addAbilityCard(p, heroType);
+                    abilityService.addAbilityCards(p, heroType);
                     playerService.savePlayer(p);
                 }
             }
@@ -162,7 +162,8 @@ public class GameController {
         for(Player p : players){
             if(p.getUser().getUsername() == currentUser.getUsername()){
                 currentPlayer = p;
-
+                abilityService.addStartingHand(p);
+                playerService.savePlayer(p);
             }
         }
         mav.addObject("cardInGames", currentPlayer.getAbilityHand());
