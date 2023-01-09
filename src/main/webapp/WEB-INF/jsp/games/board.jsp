@@ -171,9 +171,13 @@
 					
 					<h4 class="pilaDesgaste">PilaDesgaste</h4>
 				</div>
+				
 				<div class="myCard baraja">
-					<img
-						src="<spring:url value="/resources/images/no-time-for-heroes.png" htmlEscape="true" />">
+					<c:if test="${player.abilityPile.size() >0}">
+						<img
+						src="/resources/images/Cards/Abilities/${player.abilityPile.get(0).abilityCard.abilityType}.jpg">
+					</c:if>
+					
 					<h4 class="baraja">Baraja</h4>
 					
 				</div>

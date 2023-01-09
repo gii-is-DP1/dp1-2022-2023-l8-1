@@ -438,6 +438,19 @@ public class GameController {
         return "redirect:/games/board/"+gameId;
     }
 
+    @GetMapping("/board/{gameId}/stealCard")
+    public String stealCard(@PathVariable("gameId") int gameId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String currentUserName = auth.getName();
+	    User currentUser = userService.findByUsername(currentUserName);
+
+        service.stealCard(service.getCurrentPlayer(currentUser, gameId));
+
+        return "redirect:/games/board/"+gameId;
+    }
+
+
+
 
 
 
