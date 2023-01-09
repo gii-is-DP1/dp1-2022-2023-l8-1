@@ -62,10 +62,27 @@ public class GameService {
         newGame.setMarketPile(marketService.addMarket(newGame));
         gameRepository.save(newGame);
     }
-    public void insertMonsterPile() {
+    //poblar los enemigos de la partida según el número de jugadores
+    //2players:19enemies, 3players:23enemies, 4players:27enemies
+    public void insertMonsterPile(int numPlayers) {
     	int lastId = gameList().size();
+    	int numCards=0;
+    	switch(numPlayers) {
+	    	case 2:{
+	    		numCards=19;
+	    		break;
+	    	}
+	    	case 3:{
+	    		numCards=23;
+	    		break;
+	    	}
+	    	case 4: {
+	    		numCards=27;
+	    		break;
+	    	}
+    	}
     	Game last = gameRepository.findById(lastId).get();
-    	last.setMonsterPile(enemyService.addEnemies(last));
+    	last.setMonsterPile(enemyService.addEnemies(last,numCards));
     }
 
     //Encontrar Game por id

@@ -193,8 +193,8 @@ INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ENGANAR', 0
 
 INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ROBAR_BOLSILLOS', 0, 'PICARO_MASCULINO');
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SAQUEO', 1, 'PICARO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SAQUEO', 1, 'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SAQUEO', 0, 'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SAQUEO', 0, 'PICARO_MASCULINO');
 
 INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('TRAMPA', 0, 'PICARO_MASCULINO');
 
@@ -320,9 +320,9 @@ INSERT INTO enemies(endurance, glory, gold, type ) VALUES (6, 4, 0,'BERSEKER');
 INSERT INTO enemies(endurance, glory, gold, type ) VALUES (6, 4, 0,'BERSEKER');
 
 -- Cartas de Señores de la Guerra
-INSERT INTO enemies(endurance, glory, gold, type ) VALUES (8, 0, 0, 'GURDRUG');
-INSERT INTO enemies(endurance, glory, gold, type ) VALUES (9, 0, 0, 'ROGHKILLER');
-INSERT INTO enemies(endurance, glory, gold, type ) VALUES (10, 0, 0, 'SHRIEKKNIFER');
+INSERT INTO enemies(endurance, glory, gold, type, is_boss) VALUES (8, 0, 0, 'GURDRUG',true);
+INSERT INTO enemies(endurance, glory, gold, type, is_boss) VALUES (9, 0, 0, 'ROGHKILLER',true);
+INSERT INTO enemies(endurance, glory, gold, type, is_boss) VALUES (10, 0, 0, 'SHRIEKKNIFER',true);
 
 INSERT INTO enemy_in_game(enemy_id, game_field_id) VALUES (1,1);
 INSERT INTO enemy_in_game(enemy_id, game_field_id) VALUES (3,1);

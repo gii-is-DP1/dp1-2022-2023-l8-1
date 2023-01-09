@@ -175,12 +175,10 @@
 					<img
 						src="<spring:url value="/resources/images/no-time-for-heroes.png" htmlEscape="true" />">
 					<h4 class="baraja">Baraja</h4>
-					
 				</div>
 				<div class="myCard yourHeroCard">
 					<img
-						src="<spring:url value="/resources/images/no-time-for-heroes.png" htmlEscape="true" />">
-					<h4><c:out value="${player.hero}"/></h4>
+						src="<spring:url value="/resources/images/Cards/Heroes/${player.hero}.jpg" htmlEscape="true" />">
 				</div>
 				<div class="myCard enemyPileDefeated">
 					<img

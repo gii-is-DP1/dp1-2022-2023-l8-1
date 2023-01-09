@@ -149,14 +149,18 @@ public class GameController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.getByUsername(auth.getName());
-
         Player currentPlayer = new Player();
-
+      
         // Establecer la partida en escoger líder
         Game currentGame = service.findById(gameId).get();
         currentGame.setState(GameState.ESCOGER_LIDER);
         service.saveGame(currentGame);
-
+        
+        //Una vez se llega aquí suponemos que ya están en la partida todos los jugadores que van a jugar
+        //Poblamos el juego de enemigos respecto el número de jugadores
+        if(currentGame.getMonsterPile().size()==0 && currentGame.getState().toString()=="ESCOGER_LIDER") { //comprobar que esté aquí para que no se pueda crear antes o después
+        	service.insertMonsterPile(currentGame.getPlayer().size());
+        }
 
         List<Player> players = service.findById(gameId).get().getPlayer();
         for(Player p : players){
@@ -261,7 +265,6 @@ public class GameController {
 			mav.addAllObjects(br.getModel());
 		}else{
 			service.createGame(game);
-			service.insertMonsterPile();
 			mav = showGameList();
 			mav.addObject("message", "Game saved correctly");
 		}
@@ -293,7 +296,7 @@ public class GameController {
     @GetMapping(value = "/board/{gameId}")
     public ModelAndView showBoard(@PathVariable("gameId") int gameId, HttpServletResponse response){
         // response.addHeader("Refresh", "1"); // Autorefresco
-
+    	
         ModelAndView mav = new ModelAndView("games/board");
         Game game =service.findById(gameId).get();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -301,7 +304,7 @@ public class GameController {
 	    User currentUser = userService.findByUsername(currentUserName);
 	    List<Player> players = game.getPlayer();
 	    Player player = players.stream().filter(x->x.getUser().equals(currentUser)).findFirst().get();
-
+	    
         // turnService.newTurn(game, player, PhaseType.RESTABLECIMIENTO);
 
         
