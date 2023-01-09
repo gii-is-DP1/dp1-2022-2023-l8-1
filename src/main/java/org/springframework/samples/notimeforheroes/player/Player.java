@@ -79,6 +79,9 @@ public class Player{
     @OneToMany(mappedBy="playerDiscard")
     private List<AbilityCardInGame> discardPile;
 
+    @OneToMany(mappedBy="playerMarketDiscard")
+    private List<MarketCardInGame> marketDiscardPile;
+
     @OneToMany(mappedBy="playerPile")
     private List<AbilityCardInGame> abilityPile;
 

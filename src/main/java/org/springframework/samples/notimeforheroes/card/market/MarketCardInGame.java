@@ -28,6 +28,10 @@ public class MarketCardInGame {
     @JoinColumn(name="player_id")
     private Player player;
 
+    @ManyToOne(targetEntity = Player.class, cascade = CascadeType.ALL)
+    @JoinColumn(name="player_marketDiscard_id")
+    private Player playerMarketDiscard;
+
     @ManyToOne(targetEntity = Game.class)
     @JoinColumn(name="game_id")
     private Game game;

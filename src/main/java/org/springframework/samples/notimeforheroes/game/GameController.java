@@ -317,17 +317,22 @@ public class GameController {
             isMyTurn = true;
         }
 
-        Boolean faseMercado = false;
-        if(currentTurn.getType().equals(PhaseType.MERCADO)){
-            faseMercado = true;
+
+        PhaseType fase = currentTurn.getType();
+
+        if(fase.equals(PhaseType.RESTABLECIMIENTO) && ((player.getAbilityHand().size() + Math.abs(player.getMarketHand().size() - player.getMarketDiscardPile().size())) > 4)){
+            mav.addObject("message","Debes de pasar de turno con 4 cartas");
+
         }
+        
+        
 
 	    
 	    mav.addObject("game",game);
 	    mav.addObject("player",player);
         mav.addObject("turn", currentTurn);
         mav.addObject("isMyTurn", isMyTurn);
-        mav.addObject("faseMercado", faseMercado);
+        mav.addObject("fase", fase);
 
         return mav;
     }
@@ -356,7 +361,9 @@ public class GameController {
         }else if(currentTurn.getType() == PhaseType.MERCADO){
             turnService.newTurn(currentGame, currentPlayerGaming, PhaseType.RESTABLECIMIENTO);
         }else{
-            turnService.newTurn(currentGame, nextPlayerToGame, PhaseType.ATAQUE);
+            if((currentPlayerGaming.getAbilityHand().size() + Math.abs(currentPlayerGaming.getMarketHand().size() - currentPlayerGaming.getMarketDiscardPile().size())) <= 4){
+                turnService.newTurn(currentGame, nextPlayerToGame, PhaseType.ATAQUE);
+            }
         }
 
         return "redirect:/games/board/"+gameId;
@@ -369,6 +376,8 @@ public class GameController {
         Game currentGame = service.findById(gameId).get();
         Turn currentTurn = currentGame.getTurn().get(currentGame.getTurn().size()-1);
 
+        
+
         Player currentPlayerGaming = currentTurn.getPlayer();
         Player nextPlayerToGame = new Player();
 
@@ -377,6 +386,14 @@ public class GameController {
 
         }catch (Exception e){
             nextPlayerToGame = currentGame.getPlayer().get(0);
+        }
+
+
+        if(currentPlayerGaming.getAbilityHand().size() >1){ // Al hacer la evasión se descartan 2 cartas
+            int cardId1 = currentPlayerGaming.getAbilityHand().get(0).getId();
+            int cardId2 = currentPlayerGaming.getAbilityHand().get(1).getId();
+            service.discardAbilityCard(currentPlayerGaming.getUser(), gameId, cardId1);
+            service.discardAbilityCard(currentPlayerGaming.getUser(), gameId, cardId2);
         }
         
         turnService.newTurn(currentGame, nextPlayerToGame, PhaseType.ATAQUE);
@@ -387,7 +404,7 @@ public class GameController {
     //controlador para la compra de cartas de mercado
     @GetMapping("/board/{gameId}/buy/{marketCardId}")
     public String buyCard(@PathVariable("gameId") int gameId, @PathVariable("marketCardId") int marketCardId, ModelMap modelMap){
-        Game currentGame = service.findById(gameId).get();
+        // Game currentGame = service.findById(gameId).get();
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String currentUserName = auth.getName();
@@ -395,8 +412,34 @@ public class GameController {
 
         service.buyCard(currentUser, gameId, marketCardId);
 
+
+
         return "redirect:/games/board/"+gameId;
     }
+
+    @GetMapping("/board/{gameId}/discard/{abilityCardId}")
+    public String discardAbilityCard(@PathVariable("gameId") int gameId, @PathVariable("abilityCardId") int cardId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String currentUserName = auth.getName();
+	    User currentUser = userService.findByUsername(currentUserName);
+
+        service.discardAbilityCard(currentUser, gameId, cardId);
+
+        return "redirect:/games/board/"+gameId;
+    }
+
+    @GetMapping("/board/{gameId}/discardMarketCard/{marketCardId}")
+    public String discardMarketCard(@PathVariable("gameId") int gameId, @PathVariable("marketCardId") int marketCardId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String currentUserName = auth.getName();
+	    User currentUser = userService.findByUsername(currentUserName);
+
+        service.discardMarketCard(currentUser, gameId, marketCardId);
+
+        return "redirect:/games/board/"+gameId;
+    }
+
+
 
 
 }

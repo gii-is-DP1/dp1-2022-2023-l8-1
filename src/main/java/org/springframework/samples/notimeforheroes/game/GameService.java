@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
+import org.springframework.samples.notimeforheroes.card.ability.AbilityService;
 import org.springframework.samples.notimeforheroes.card.enemy.EnemyService;
 import org.springframework.samples.notimeforheroes.card.market.MarketCard;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
@@ -30,6 +31,8 @@ public class GameService {
     private MarketService marketService;
     @Autowired
     private PlayerService playerService;
+    @Autowired
+    private AbilityService abilityService;
     
     @Autowired
     public GameService(GameRepository repository){
@@ -146,6 +149,46 @@ public class GameService {
             playerService.savePlayer(currentPlayer); // Guardamos el jugador en la bd
         }
         // System.out.println("Mano de mercado del jugador: "+currentPlayer.getMarketHand());
+    }
+
+    public void discardAbilityCard(User user, int gameId, int abilityCardId){
+
+        Player currentPlayer = getCurrentPlayer(user, gameId);
+
+        List<AbilityCardInGame> currentAbilityHand = currentPlayer.getAbilityHand();
+
+        AbilityCardInGame currentCard = abilityService.findById(abilityCardId);
+        currentAbilityHand.remove(currentCard);
+        
+        currentCard.setPlayerDiscard(currentPlayer);
+        currentCard.setPlayer(null);
+        abilityService.saveAbilityCardInGame(currentCard);
+
+        currentPlayer.setAbilityHand(currentAbilityHand);
+        playerService.savePlayer(currentPlayer);
+
+
+    }
+
+    public void discardMarketCard(User user, int gameId, int marketCardId) {
+
+        Player currentPlayer = getCurrentPlayer(user, gameId);
+        MarketCardInGame marketCard = marketService.findById(marketCardId);
+
+        List<MarketCardInGame> currentMarketHand = currentPlayer.getMarketHand();
+        currentMarketHand.remove(marketCard);
+
+        marketCard.setPlayerMarketDiscard(currentPlayer);
+        // marketCard.setPlayer(null);
+        marketService.saveMarketCardInGame(marketCard);
+        
+        currentPlayer.setMarketHand(currentMarketHand);
+        playerService.savePlayer(currentPlayer);
+
+        int i = 0;
+        Math.abs(i);
+
+
     }
     
 
