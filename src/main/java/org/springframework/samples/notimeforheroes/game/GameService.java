@@ -1,6 +1,8 @@
 package org.springframework.samples.notimeforheroes.game;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -190,6 +192,44 @@ public class GameService {
 
 
     }
-    
+
+    public void stealCard(Player player){
+        List<AbilityCardInGame> pile = player.getAbilityPile();
+        List<AbilityCardInGame> hand = player.getAbilityHand();
+        List<AbilityCardInGame> discards= player.getDiscardPile();
+
+        if(pile.size()==0){
+            pile = discards;
+            Collections.shuffle(pile);
+            for(int i = 0; i<pile.size(); i++){
+                pile.get(i).setPlayerDiscard(null);
+                // pile.get(i).setPlayer(null);
+                pile.get(i).setPlayerPile(player);
+                System.out.println("Cartas en descarte: "+pile.get(i).getPlayerPile());
+                // discards.remove(c);
+                abilityService.saveAbilityCardInGame(pile.get(i));
+                
+            }
+            // player.setAbilityPile(pile);
+            // player.setDiscardPile(discards);
+
+
+
+            playerService.savePlayer(player);
+        }
+
+        AbilityCardInGame card = pile.get(0);
+        card.setPlayer(player);
+        card.setPlayerPile(null);
+
+        pile.remove(card);
+        hand.add(card);
+        
+        abilityService.saveAbilityCardInGame(card);
+        playerService.savePlayer(player);
+
+
+
+    }
 
 }
