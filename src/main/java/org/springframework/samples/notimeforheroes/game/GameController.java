@@ -375,6 +375,8 @@ public class GameController {
         Game currentGame = service.findById(gameId).get();
         Turn currentTurn = currentGame.getTurn().get(currentGame.getTurn().size()-1);
 
+        
+
         Player currentPlayerGaming = currentTurn.getPlayer();
         Player nextPlayerToGame = new Player();
 
@@ -383,6 +385,14 @@ public class GameController {
 
         }catch (Exception e){
             nextPlayerToGame = currentGame.getPlayer().get(0);
+        }
+
+
+        if(currentPlayerGaming.getAbilityHand().size() >1){ // Al hacer la evasión se descartan 2 cartas
+            int cardId1 = currentPlayerGaming.getAbilityHand().get(0).getId();
+            int cardId2 = currentPlayerGaming.getAbilityHand().get(1).getId();
+            service.discardAbilityCard(currentPlayerGaming.getUser(), gameId, cardId1);
+            service.discardAbilityCard(currentPlayerGaming.getUser(), gameId, cardId2);
         }
         
         turnService.newTurn(currentGame, nextPlayerToGame, PhaseType.ATAQUE);
@@ -393,13 +403,15 @@ public class GameController {
     //controlador para la compra de cartas de mercado
     @GetMapping("/board/{gameId}/buy/{marketCardId}")
     public String buyCard(@PathVariable("gameId") int gameId, @PathVariable("marketCardId") int marketCardId, ModelMap modelMap){
-        Game currentGame = service.findById(gameId).get();
+        // Game currentGame = service.findById(gameId).get();
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String currentUserName = auth.getName();
 	    User currentUser = userService.findByUsername(currentUserName);
 
         service.buyCard(currentUser, gameId, marketCardId);
+
+
 
         return "redirect:/games/board/"+gameId;
     }

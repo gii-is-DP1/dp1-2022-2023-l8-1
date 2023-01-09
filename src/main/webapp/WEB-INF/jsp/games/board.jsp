@@ -63,8 +63,6 @@
 			</div>
 
 			<div class="yourCards">
-				${Math.abs(player.marketHand.size() - player.marketDiscardPile.size())}
-
 				<!--Panel de informacion personal, aparece abajo de la interfaz y todos los elementos aparecen en la misma linea-->
 				<c:forEach items="${player.abilityHand}" var="cardInGame">
 
