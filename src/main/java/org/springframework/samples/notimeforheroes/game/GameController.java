@@ -318,6 +318,11 @@ public class GameController {
 
 
         PhaseType fase = currentTurn.getType();
+
+        if(fase.equals(PhaseType.RESTABLECIMIENTO) && ((player.getAbilityHand().size() + Math.abs(player.getMarketHand().size() - player.getMarketDiscardPile().size())) > 4)){
+            mav.addObject("message","Debes de pasar de turno con 4 cartas");
+
+        }
         
         
 
@@ -355,7 +360,9 @@ public class GameController {
         }else if(currentTurn.getType() == PhaseType.MERCADO){
             turnService.newTurn(currentGame, currentPlayerGaming, PhaseType.RESTABLECIMIENTO);
         }else{
-            turnService.newTurn(currentGame, nextPlayerToGame, PhaseType.ATAQUE);
+            if((currentPlayerGaming.getAbilityHand().size() + Math.abs(currentPlayerGaming.getMarketHand().size() - currentPlayerGaming.getMarketDiscardPile().size())) <= 4){
+                turnService.newTurn(currentGame, nextPlayerToGame, PhaseType.ATAQUE);
+            }
         }
 
         return "redirect:/games/board/"+gameId;
@@ -407,16 +414,17 @@ public class GameController {
 
         return "redirect:/games/board/"+gameId;
     }
-    // @GetMapping("/board/{gameId}/discard/{marketCardId}")
-    // public String discardMarketCard(@PathVariable("gameId") int gameId, @PathVariable("marketCardId") int marketCardId){
-    //     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	//     String currentUserName = auth.getName();
-	//     User currentUser = userService.findByUsername(currentUserName);
 
-    //     service.discardMarketCard(currentUser, gameId, marketCardId);
+    @GetMapping("/board/{gameId}/discardMarketCard/{marketCardId}")
+    public String discardMarketCard(@PathVariable("gameId") int gameId, @PathVariable("marketCardId") int marketCardId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String currentUserName = auth.getName();
+	    User currentUser = userService.findByUsername(currentUserName);
 
-    //     return "redirect:/games/board/"+gameId;
-    // }
+        service.discardMarketCard(currentUser, gameId, marketCardId);
+
+        return "redirect:/games/board/"+gameId;
+    }
 
 
 

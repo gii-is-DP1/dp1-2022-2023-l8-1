@@ -170,20 +170,26 @@ public class GameService {
 
     }
 
-    // public void discardMarketCard(User user, int gameId, int marketCardId) {
+    public void discardMarketCard(User user, int gameId, int marketCardId) {
 
-    //     Player currentPlayer = getCurrentPlayer(user, gameId);
-    //     MarketCardInGame marketCard = marketService.findById(marketCardId);
+        Player currentPlayer = getCurrentPlayer(user, gameId);
+        MarketCardInGame marketCard = marketService.findById(marketCardId);
 
-    //     List<MarketCardInGame> currentMarketHand = currentPlayer.getMarketHand();
-    //     currentMarketHand.remove(marketCard);
+        List<MarketCardInGame> currentMarketHand = currentPlayer.getMarketHand();
+        currentMarketHand.remove(marketCard);
 
+        marketCard.setPlayerMarketDiscard(currentPlayer);
+        // marketCard.setPlayer(null);
+        marketService.saveMarketCardInGame(marketCard);
         
+        currentPlayer.setMarketHand(currentMarketHand);
+        playerService.savePlayer(currentPlayer);
 
-        
+        int i = 0;
+        Math.abs(i);
 
 
-    // }
+    }
     
 
 }

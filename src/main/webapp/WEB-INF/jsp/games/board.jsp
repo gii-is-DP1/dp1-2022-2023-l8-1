@@ -10,7 +10,7 @@
     <body class="background">
 		<div class="board">
 			<div class="phase">
-				<h1 class="fase">FASE ACTUAL ${message}</h1>
+				<h1 class="fase">FASE ACTUAL</h1>
 				<h1 class="fase_actual">${turn.type}</h1>
 				<h1 >Turno de ${turn.player.user.username}</h1>
 				<!--Aquí iria el nombre de la fase en la que estamos (Ataque, mercado, reabastecimiento, espera)-->
@@ -63,6 +63,7 @@
 			</div>
 
 			<div class="yourCards">
+				${Math.abs(player.marketHand.size() - player.marketDiscardPile.size())}
 
 				<!--Panel de informacion personal, aparece abajo de la interfaz y todos los elementos aparecen en la misma linea-->
 				<c:forEach items="${player.abilityHand}" var="cardInGame">
@@ -73,9 +74,10 @@
 								<spring:param name="gameId" value="${game.id}"></spring:param>
 
 						</spring:url>
+
 						<div class="myCard">
 							<c:choose >
-								<c:when test="${fase.toString() == 'RESTABLECIMIENTO' && isMyTurn && (player.abilityHand.size() + player.marketHand.size()) > 4}">
+								<c:when test="${fase.toString() == 'RESTABLECIMIENTO' && isMyTurn && (player.abilityHand.size() + Math.abs(player.marketHand.size() - player.marketDiscardPile.size())) > 4}">
 									<a href="${fn:escapeXml(discardCard)}">
 										<img src= "/resources/images/Cards/Abilities/${cardInGame.abilityCard.abilityType}.jpg" width="100"/>
 									</a>
@@ -90,8 +92,28 @@
 						</div>
 						
 				</c:forEach>
+				
+				<!-- Mostrar cartas de mercado en mano -->
 				<c:forEach items="${player.marketHand}" var="marketCard">
-					<img src="/resources/images/Cards/Shop/${marketCard.marketCard.type}.jpg" width="100"/>
+					<spring:url value="/games/board/{gameId}/discardMarketCard/{marketCardId}" var="discardMarketCard">
+						<spring:param name="marketCardId" value="${marketCard.id}"></spring:param>
+
+						<spring:param name="gameId" value="${game.id}"></spring:param>
+
+					</spring:url>
+					<c:if test="${marketCard.playerMarketDiscard==null}">
+						<c:choose >
+						<c:when test="${fase.toString() == 'RESTABLECIMIENTO' && isMyTurn && (player.abilityHand.size() + player.marketHand.size()) > 4}">
+							<a href="${fn:escapeXml(discardMarketCard)}">
+								<img src="/resources/images/Cards/Shop/${marketCard.marketCard.type}.jpg" width="100"/>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<img src="/resources/images/Cards/Shop/${marketCard.marketCard.type}.jpg" width="100"/>
+						</c:otherwise>
+					</c:choose>
+					</c:if>
+					
 				</c:forEach>
 
 
@@ -142,6 +164,12 @@
 							src="/resources/images/Cards/Abilities/${cardInGame.abilityCard.abilityType}.jpg">
 
 					</c:forEach>
+					<c:forEach items="${player.marketDiscardPile}" var="marketCardInGame">
+						
+						<img
+						src="/resources/images/Cards/Shop/${marketCardInGame.marketCard.type}.jpg">
+
+				</c:forEach>
 					
 					<h4 class="pilaDesgaste">PilaDesgaste</h4>
 				</div>
