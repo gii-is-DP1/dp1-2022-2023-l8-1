@@ -86,7 +86,20 @@ public class GameService {
     	Game last = gameRepository.findById(lastId).get();
     	last.setMonsterPile(enemyService.addEnemies(last,numCards));
     }
-
+    
+    //comprueba cuantos enemigos hay y rellena los enemigos según las normas
+    //si quedan 0 se añaden 3 si quedan 1 o 2 se añade 1, si quedan 3 no se hace nada
+  	public void resupplyEnemies(int gameId) {
+  		Game currentGame = findById(gameId).get();
+  		int currentNumEnemies = currentGame.getMonsterField().size();//los que quedan
+  		int enemiesToAdd=0;//los que habría que añadir
+  		if (currentNumEnemies==0) {
+  			enemiesToAdd=3;
+  		}else if(currentNumEnemies==1 || currentNumEnemies==2) {
+  			enemiesToAdd=1;
+  		}
+  		enemyService.enemyToField(currentGame, enemiesToAdd);
+  	}
     //Encontrar Game por id
 	public Optional<Game> findById(int id){
 		return gameRepository.findById(id);

@@ -32,7 +32,7 @@ public class MarketService {
 		List<MarketCard> market = findAll();
 		Collections.shuffle(market);
 		List<MarketCardInGame> marketIG = market.stream().map(card -> MarketCardInGame.createInGame(game, card)).collect(Collectors.toList());
-		for(int i =0;i<5;i++) {
+		for(int i =0;i<5;i++) {//para tener 5 cartas on sale al empezar la partida
 			MarketCardInGame card = marketIG.get(i);
 			card.setGame(null);
 			card.setGameOnSale(game);
