@@ -158,10 +158,10 @@ public class GameController {
         
         //Una vez se llega aquí suponemos que ya están en la partida todos los jugadores que van a jugar
         //Poblamos el juego de enemigos respecto el número de jugadores
-        if(currentGame.getMonsterPile().size()==0 && currentGame.getState().toString()=="ESCOGER_LIDER") { //comprobar que esté aquí para que no se pueda crear antes o después
+        if(currentGame.getMonsterPile().size()==0 && currentGame.getState().toString()=="ESCOGER_LIDER") { //comprobar que esté aquí para que no se pueda poblar antes o después
         	service.insertMonsterPile(currentGame.getPlayer().size());
         }
-
+        
         List<Player> players = service.findById(gameId).get().getPlayer();
         for(Player p : players){
             if(p.getUser().getUsername() == currentUser.getUsername()){
@@ -364,6 +364,7 @@ public class GameController {
         }else if(currentTurn.getType() == PhaseType.MERCADO){
             turnService.newTurn(currentGame, currentPlayerGaming, PhaseType.RESTABLECIMIENTO);
         }else{
+        	service.resupplyEnemies(gameId);
             if((currentPlayerGaming.getAbilityHand().size() + Math.abs(currentPlayerGaming.getMarketHand().size() - currentPlayerGaming.getMarketDiscardPile().size())) <= 4){
                 turnService.newTurn(currentGame, nextPlayerToGame, PhaseType.ATAQUE);
             }
@@ -414,7 +415,6 @@ public class GameController {
 	    User currentUser = userService.findByUsername(currentUserName);
 
         service.buyCard(currentUser, gameId, marketCardId);
-
 
 
         return "redirect:/games/board/"+gameId;
