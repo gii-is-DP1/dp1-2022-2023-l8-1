@@ -10,7 +10,7 @@
     <body class="background">
 		<div class="board">
 			<div class="phase">
-				<h1 class="fase">FASE ACTUAL ${message}</h1>
+				<h1 class="fase">FASE ACTUAL</h1>
 				<h1 class="fase_actual">${turn.type}</h1>
 				<h1 >Turno de ${turn.player.user.username}</h1>
 				<!--Aquí iria el nombre de la fase en la que estamos (Ataque, mercado, reabastecimiento, espera)-->
@@ -19,14 +19,13 @@
 			<div class="enemies">
 			<c:forEach items="${game.monsterField}" var="enemyInGame">
 					<div class="enemy">
-						<img src="${enemyInGame.enemy.asset.split('static', '')[1]}" width="200" />
+						<img src="/resources/images/Cards/Enemies/${enemyInGame.enemy.type}.jpg" width="200" />
 						<h4>Endurance: <c:out value=" ${enemyInGame.enemy.endurance}"/></h4>
 					</div>
 			</c:forEach>
 			</div>
-			
+			<h3>MERCADO</h3>
 			<div class="market">
-				<h3>MERCADO</h3>
 				<c:forEach items="${game.sale}" var="marketCardInGame">
 					<spring:url value="/games/board/{gameId}/buy/{marketCardId}" var="buyCard">
 						<spring:param name="marketCardId" value="${marketCardInGame.id}"></spring:param>
@@ -38,14 +37,13 @@
 						<div class="marketcardInGame">
 							<c:choose >
 
-								<c:when test="${faseMercado && isMyTurn}">
-									
+								<c:when test="${fase.toString() == 'MERCADO' && isMyTurn}">
 									<a href="${fn:escapeXml(buyCard)}">
-										<img src="${marketCardInGame.marketCard.asset.split('static', '')[1]}" width="150" />
+										<img src="/resources/images/Cards/Shop/${marketCardInGame.marketCard.type}.jpg" width="150" />
 									</a>
 								</c:when>
 								<c:otherwise>
-									<img src="${marketCardInGame.marketCard.asset.split('static', '')[1]}" width="150" />
+									<img src="/resources/images/Cards/Shop/${marketCardInGame.marketCard.type}.jpg" width="150" />
 	
 								</c:otherwise>
 							</c:choose>
@@ -65,15 +63,54 @@
 
 			<div class="yourCards">
 				<!--Panel de informacion personal, aparece abajo de la interfaz y todos los elementos aparecen en la misma linea-->
-				<c:forEach items="${player.abilityHand}" var="cardsInGame">
-					
+				<c:forEach items="${player.abilityHand}" var="cardInGame">
+
+						<spring:url value="/games/board/{gameId}/discard/{abilityCardId}" var="discardCard">
+								<spring:param name="abilityCardId" value="${cardInGame.id}"></spring:param>
+
+								<spring:param name="gameId" value="${game.id}"></spring:param>
+
+						</spring:url>
+
 						<div class="myCard">
-							<img src="${cardsInGame.abilityCard.asset.split('static', '')[1]}"/>
-							<h4 class="cardplayer">Damage:<c:out value=" ${cardsInGame.abilityCard.damage}"/></h4>
+							<c:choose >
+								<c:when test="${fase.toString() == 'RESTABLECIMIENTO' && isMyTurn && (player.abilityHand.size() + Math.abs(player.marketHand.size() - player.marketDiscardPile.size())) > 4}">
+									<a href="${fn:escapeXml(discardCard)}">
+										<img src= "/resources/images/Cards/Abilities/${cardInGame.abilityCard.abilityType}.jpg" width="100"/>
+									</a>
+								</c:when>
+								<c:otherwise>
+									<img src= "/resources/images/Cards/Abilities/${cardInGame.abilityCard.abilityType}.jpg" width="100"/>
+
+								</c:otherwise>
+							</c:choose>
+							
+							<h4 class="cardplayer">Damage:<c:out value=" ${cardInGame.abilityCard.damage}"/></h4>
 						</div>
+						
 				</c:forEach>
+				
+				<!-- Mostrar cartas de mercado en mano -->
 				<c:forEach items="${player.marketHand}" var="marketCard">
-					<img src="${marketCard.marketCard.asset.split('static', '')[1]}" width="100"/>
+					<spring:url value="/games/board/{gameId}/discardMarketCard/{marketCardId}" var="discardMarketCard">
+						<spring:param name="marketCardId" value="${marketCard.id}"></spring:param>
+
+						<spring:param name="gameId" value="${game.id}"></spring:param>
+
+					</spring:url>
+					<c:if test="${marketCard.playerMarketDiscard==null}">
+						<c:choose >
+						<c:when test="${fase.toString() == 'RESTABLECIMIENTO' && isMyTurn && (player.abilityHand.size() + player.marketHand.size()) > 4}">
+							<a href="${fn:escapeXml(discardMarketCard)}">
+								<img src="/resources/images/Cards/Shop/${marketCard.marketCard.type}.jpg" width="100"/>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<img src="/resources/images/Cards/Shop/${marketCard.marketCard.type}.jpg" width="100"/>
+						</c:otherwise>
+					</c:choose>
+					</c:if>
+					
 				</c:forEach>
 
 
@@ -119,20 +156,32 @@
 			</div>
 			<div class="yourCards">
 				<div class="myCard pilaDesgaste">
-					<img
-						src="<spring:url value="/resources/images/no-time-for-heroes.png" htmlEscape="true" />">
+					<c:forEach items="${player.discardPile}" var="cardInGame">
+							<img
+							src="/resources/images/Cards/Abilities/${cardInGame.abilityCard.abilityType}.jpg">
+
+					</c:forEach>
+					<c:forEach items="${player.marketDiscardPile}" var="marketCardInGame">
+						
+						<img
+						src="/resources/images/Cards/Shop/${marketCardInGame.marketCard.type}.jpg">
+
+				</c:forEach>
+					
 					<h4 class="pilaDesgaste">PilaDesgaste</h4>
 				</div>
+				
 				<div class="myCard baraja">
-					<img
-						src="<spring:url value="/resources/images/no-time-for-heroes.png" htmlEscape="true" />">
-					<h4 class="baraja">Baraja</h4>
+					<c:if test="${player.abilityPile.size() >0}">
+						<img
+						src="/resources/images/Cards/Abilities/${player.abilityPile.get(0).abilityCard.abilityType}.jpg">
+					</c:if>
 					
+					<h4 class="baraja">Baraja</h4>
 				</div>
 				<div class="myCard yourHeroCard">
 					<img
-						src="<spring:url value="/resources/images/no-time-for-heroes.png" htmlEscape="true" />">
-					<h4><c:out value="${player.hero}"/></h4>
+						src="<spring:url value="/resources/images/Cards/Heroes/${player.hero}.jpg" htmlEscape="true" />">
 				</div>
 				<div class="myCard enemyPileDefeated">
 					<img

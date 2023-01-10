@@ -1,6 +1,7 @@
 package org.springframework.samples.notimeforheroes.card.market;
 
-import java.util.Set;
+
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -59,12 +60,8 @@ public class MarketCard {
     @Column(name = "type")
     private MarketCardType type;
 
-    @NotNull
-    @Column(name = "asset")
-    private String asset;
-
     @OneToMany(mappedBy="marketCard")
-    private Set<MarketCardInGame> marketCardInGame;
+    private List<MarketCardInGame> marketCardInGame;
 
 
     public String toString(){

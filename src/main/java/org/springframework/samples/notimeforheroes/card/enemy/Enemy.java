@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.samples.notimeforheroes.card.ConditionType;
 
 import lombok.Getter;
@@ -43,15 +44,15 @@ public class Enemy {
 
     @Enumerated(EnumType.STRING)
     @Column(name="conditionType")
-    private ConditionType condition;
 
-    @NotNull
-    @Column(name = "asset")
-    private String asset;
+    private ConditionType condition;
+    
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isBoss;
 
     @OneToMany()
     private List<EnemyInGame> enemyInGame;
 
-
+    
     
 }

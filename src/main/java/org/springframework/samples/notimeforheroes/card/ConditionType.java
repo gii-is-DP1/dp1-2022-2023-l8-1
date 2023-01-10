@@ -4,7 +4,6 @@ public enum ConditionType {
     MAGO_1,
     MAGO_2,
     REGENERACION,
-    USO_UNICO,
-    BOTIN_EXTRA
+    USO_UNICO
     
 }

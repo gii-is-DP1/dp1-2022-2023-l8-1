@@ -1,12 +1,15 @@
 package org.springframework.samples.notimeforheroes.game;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
+import org.springframework.samples.notimeforheroes.card.ability.AbilityService;
 import org.springframework.samples.notimeforheroes.card.enemy.EnemyService;
 import org.springframework.samples.notimeforheroes.card.market.MarketCard;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
@@ -30,6 +33,8 @@ public class GameService {
     private MarketService marketService;
     @Autowired
     private PlayerService playerService;
+    @Autowired
+    private AbilityService abilityService;
     
     @Autowired
     public GameService(GameRepository repository){
@@ -59,12 +64,42 @@ public class GameService {
         newGame.setMarketPile(marketService.addMarket(newGame));
         gameRepository.save(newGame);
     }
-    public void insertMonsterPile() {
-    	int lastId = gameList().size();
+    //poblar los enemigos de la partida según el número de jugadores
+    //2players:19enemies, 3players:23enemies, 4players:27enemies
+    public void insertMonsterPile(int numPlayers) {
+    	int lastId = gameList().size();//TODO METER EL ID DEL JUEGO COMO VARIABLE A LA FUNCION
+    	int numCards=0;
+    	switch(numPlayers) {
+	    	case 2:{
+	    		numCards=19;
+	    		break;
+	    	}
+	    	case 3:{
+	    		numCards=23;
+	    		break;
+	    	}
+	    	case 4: {
+	    		numCards=27;
+	    		break;
+	    	}
+    	}
     	Game last = gameRepository.findById(lastId).get();
-    	last.setMonsterPile(enemyService.addEnemies(last));
+    	last.setMonsterPile(enemyService.addEnemies(last,numCards));
     }
-
+    
+    //comprueba cuantos enemigos hay y rellena los enemigos según las normas
+    //si quedan 0 se añaden 3 si quedan 1 o 2 se añade 1, si quedan 3 no se hace nada
+  	public void resupplyEnemies(int gameId) {
+  		Game currentGame = findById(gameId).get();
+  		int currentNumEnemies = currentGame.getMonsterField().size();//los que quedan
+  		int enemiesToAdd=0;//los que habría que añadir
+  		if (currentNumEnemies==0) {
+  			enemiesToAdd=3;
+  		}else if(currentNumEnemies==1 || currentNumEnemies==2) {
+  			enemiesToAdd=1;
+  		}
+  		enemyService.enemyToField(currentGame, enemiesToAdd);
+  	}
     //Encontrar Game por id
 	public Optional<Game> findById(int id){
 		return gameRepository.findById(id);
@@ -148,5 +183,83 @@ public class GameService {
         // System.out.println("Mano de mercado del jugador: "+currentPlayer.getMarketHand());
     }
     
+    public void discardAbilityCard(User user, int gameId, int abilityCardId){
+
+        Player currentPlayer = getCurrentPlayer(user, gameId);
+
+        List<AbilityCardInGame> currentAbilityHand = currentPlayer.getAbilityHand();
+
+        AbilityCardInGame currentCard = abilityService.findById(abilityCardId);
+        currentAbilityHand.remove(currentCard);
+        
+        currentCard.setPlayerDiscard(currentPlayer);
+        currentCard.setPlayer(null);
+        abilityService.saveAbilityCardInGame(currentCard);
+
+        currentPlayer.setAbilityHand(currentAbilityHand);
+        playerService.savePlayer(currentPlayer);
+
+
+    }
+
+    public void discardMarketCard(User user, int gameId, int marketCardId) {
+
+        Player currentPlayer = getCurrentPlayer(user, gameId);
+        MarketCardInGame marketCard = marketService.findById(marketCardId);
+
+        List<MarketCardInGame> currentMarketHand = currentPlayer.getMarketHand();
+        currentMarketHand.remove(marketCard);
+
+        marketCard.setPlayerMarketDiscard(currentPlayer);
+        // marketCard.setPlayer(null);
+        marketService.saveMarketCardInGame(marketCard);
+        
+        currentPlayer.setMarketHand(currentMarketHand);
+        playerService.savePlayer(currentPlayer);
+
+        int i = 0;
+        Math.abs(i);
+
+
+    }
+
+    public void stealCard(Player player){
+        List<AbilityCardInGame> pile = player.getAbilityPile();
+        List<AbilityCardInGame> hand = player.getAbilityHand();
+        List<AbilityCardInGame> discards= player.getDiscardPile();
+
+        if(pile.size()==0){
+            pile = discards;
+            Collections.shuffle(pile);
+            for(int i = 0; i<pile.size(); i++){
+                pile.get(i).setPlayerDiscard(null);
+                // pile.get(i).setPlayer(null);
+                pile.get(i).setPlayerPile(player);
+                System.out.println("Cartas en descarte: "+pile.get(i).getPlayerPile());
+                // discards.remove(c);
+                abilityService.saveAbilityCardInGame(pile.get(i));
+                
+            }
+            // player.setAbilityPile(pile);
+            // player.setDiscardPile(discards);
+
+
+
+            playerService.savePlayer(player);
+        }
+
+        AbilityCardInGame card = pile.get(0);
+        card.setPlayer(player);
+        card.setPlayerPile(null);
+
+        pile.remove(card);
+        hand.add(card);
+        
+        abilityService.saveAbilityCardInGame(card);
+        playerService.savePlayer(player);
+
+
+
+    }
 
 }

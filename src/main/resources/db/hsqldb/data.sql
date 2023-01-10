@@ -23,90 +23,203 @@ INSERT INTO friends(id,user1_id,user2_id,friend_state) VALUES (3,3,1,1);
 INSERT INTO games(start_time, end_time, has_scenes, max_players,min_players, state, username,user_id) VALUES --, winner_id 
 ('2022-11-10', '2022-11-10', 0, 4, 2, 'TERMINADO', 'admin',1); --,1
 
-INSERT INTO players(glory, gold, wounds, evasion, profiency, hero_type, user_id, game_id) VALUES (5, 10, 20, TRUE, 'MAGIA', 'MAGO_MASCULINO', 1, 1);
+INSERT INTO players(glory, gold, wounds, evasion, profiency, hero_type, user_id, game_id) VALUES (5, 50, 20, TRUE, 'MAGIA', 'MAGO_MASCULINO', 1, 1);
 INSERT INTO players(glory, gold, wounds, evasion, profiency, hero_type, user_id, game_id) VALUES (4, 9, 20, TRUE, 'MAGIA', 'MAGO_MASCULINO',2, 1);
 INSERT INTO players(glory, gold, wounds, evasion, profiency, hero_type, user_id, game_id) VALUES (4, 9, 20, TRUE, 'MAGIA', 'GUERRERO_FEMENINO',3, 1);
 INSERT INTO players(glory, gold, wounds, evasion, profiency, hero_type, user_id, game_id) VALUES (4, 9, 20, TRUE, 'MAGIA', 'PICARO_MASCULINO',4, 1);
 
 
 -- EXPLORADORES    
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('COMPANERO_LOBO', 2, 'src\main\resources\static\resources\images\Cards\Explorador\Companero-Lobo.jpg', 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('DISPARO_CERTERO', 3, 'src\main\resources\static\resources\images\Cards\Explorador\Disparo-Certero.jpg', 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('DISPARO_RAPIDO', 1, 'src\main\resources\static\resources\images\Cards\Explorador\Disparo-Rapido.jpg', 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('EN_LA_DIANA', 4, 'src\main\resources\static\resources\images\Cards\Explorador\En-la-Diana.jpg', 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('LLUVIA_DE_FLECHAS', 2, 'src\main\resources\static\resources\images\Cards\Explorador\Lluvia-de-Flechas.jpg', 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('RECOGER_FLECHAS', 0, 'src\main\resources\static\resources\images\Cards\Explorador\Recoger-Flechas.jpg', 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('SUPERVIVENCIA', 0, 'src\main\resources\static\resources\images\Cards\Explorador\Supervivencia.jpg', 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('COMPANERO_LOBO', 2, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_CERTERO', 3, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_CERTERO', 3, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('EN_LA_DIANA', 4, 'EXPLORADOR_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('LLUVIA_DE_FLECHAS', 2, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('LLUVIA_DE_FLECHAS', 2, 'EXPLORADOR_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('RECOGER_FLECHAS', 0, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('RECOGER_FLECHAS', 0, 'EXPLORADOR_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SUPERVIVENCIA', 0, 'EXPLORADOR_MASCULINO');
 
 
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('COMPANERO_LOBO', 2, 'src\main\resources\static\resources\images\Cards\Explorador\Companero-Lobo.jpg', 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('DISPARO_CERTERO', 3, 'src\main\resources\static\resources\images\Cards\Explorador\Disparo-Certero.jpg', 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('DISPARO_RAPIDO', 1, 'src\main\resources\static\resources\images\Cards\Explorador\Disparo-Rapido.jpg', 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('EN_LA_DIANA', 4, 'src\main\resources\static\resources\images\Cards\Explorador\En-la-Diana.jpg', 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('LLUVIA_DE_FLECHAS', 2, 'src\main\resources\static\resources\images\Cards\Explorador\Lluvia-de-Flechas.jpg', 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('RECOGER_FLECHAS', 0, 'src\main\resources\static\resources\images\Cards\Explorador\Recoger-Flechas.jpg', 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('SUPERVIVENCIA', 0, 'src\main\resources\static\resources\images\Cards\Explorador\Supervivencia.jpg', 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('COMPANERO_LOBO', 2, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_CERTERO', 3, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_CERTERO', 3, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('EN_LA_DIANA', 4, 'EXPLORADOR_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('LLUVIA_DE_FLECHAS', 2, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('LLUVIA_DE_FLECHAS', 2, 'EXPLORADOR_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('RECOGER_FLECHAS', 0, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('RECOGER_FLECHAS', 0, 'EXPLORADOR_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SUPERVIVENCIA', 0, 'EXPLORADOR_FEMENINO');
 
 
 -- GUERREROS
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('ATAQUE_BRUTAL', 3, 'src\main\resources\static\resources\images\Cards\Guerrero\Ataque-Brutal.jpg', 'GUERRERO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('CARGA_CON_ESCUDO', 2, 'src\main\resources\static\resources\images\Cards\Guerrero\Carga-con-Escudo.jpg', 'GUERRERO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('DOBLE_ESPADAZO', 2, 'src\main\resources\static\resources\images\Cards\Guerrero\Doble-Espadazo.jpg', 'GUERRERO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('ESCUDO', 0, 'src\main\resources\static\resources\images\Cards\Guerrero\Escudo.jpg', 'GUERRERO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('ESPADAZO', 1, 'src\main\resources\static\resources\images\Cards\Guerrero\Espadazo.jpg', 'GUERRERO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('PASO_ATRAS', 0, 'src\main\resources\static\resources\images\Cards\Guerrero\Paso-Atras.jpg', 'GUERRERO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('TODO_O_NADA', 1, 'src\main\resources\static\resources\images\Cards\Guerrero\Todo-o-Nada.jpg', 'GUERRERO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('VOZ_DE_ALIENTO', 0, 'src\main\resources\static\resources\images\Cards\Guerrero\Voz-de-Aliento.jpg', 'GUERRERO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_BRUTAL', 3, 'GUERRERO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_BRUTAL', 3, 'GUERRERO_MASCULINO');
 
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('ATAQUE_BRUTAL', 3, 'src\main\resources\static\resources\images\Cards\Guerrero\Ataque-Brutal.jpg', 'GUERRERO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('CARGA_CON_ESCUDO', 2, 'src\main\resources\static\resources\images\Cards\Guerrero\Carga-con-Escudo.jpg', 'GUERRERO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('DOBLE_ESPADAZO', 2, 'src\main\resources\static\resources\images\Cards\Guerrero\Doble-Espadazo.jpg', 'GUERRERO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('ESCUDO', 0, 'src\main\resources\static\resources\images\Cards\Guerrero\Escudo.jpg', 'GUERRERO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('ESPADAZO', 1, 'src\main\resources\static\resources\images\Cards\Guerrero\Espadazo.jpg', 'GUERRERO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('PASO_ATRAS', 0, 'src\main\resources\static\resources\images\Cards\Guerrero\Paso-Atras.jpg', 'GUERRERO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('TODO_O_NADA', 1, 'src\main\resources\static\resources\images\Cards\Guerrero\Todo-o-Nada.jpg', 'GUERRERO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('VOZ_DE_ALIENTO', 0, 'src\main\resources\static\resources\images\Cards\Guerrero\Voz-de-Aliento.jpg', 'GUERRERO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('CARGA_CON_ESCUDO', 2, 'GUERRERO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DOBLE_ESPADAZO', 2, 'GUERRERO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DOBLE_ESPADAZO', 2, 'GUERRERO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESCUDO', 0, 'GUERRERO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESCUDO', 0, 'GUERRERO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESPADAZO', 1, 'GUERRERO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESPADAZO', 1, 'GUERRERO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESPADAZO', 1, 'GUERRERO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESPADAZO', 1, 'GUERRERO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PASO_ATRAS', 0, 'GUERRERO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PASO_ATRAS', 0, 'GUERRERO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('TODO_O_NADA', 1, 'GUERRERO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('VOZ_DE_ALIENTO', 0, 'GUERRERO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_BRUTAL', 3, 'GUERRERO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_BRUTAL', 3, 'GUERRERO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('CARGA_CON_ESCUDO', 2, 'GUERRERO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DOBLE_ESPADAZO', 2, 'GUERRERO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DOBLE_ESPADAZO', 2, 'GUERRERO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESCUDO', 0, 'GUERRERO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESCUDO', 0, 'GUERRERO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESPADAZO', 1, 'GUERRERO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESPADAZO', 1, 'GUERRERO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESPADAZO', 1, 'GUERRERO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESPADAZO', 1, 'GUERRERO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PASO_ATRAS', 0, 'GUERRERO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PASO_ATRAS', 0, 'GUERRERO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('TODO_O_NADA', 1, 'GUERRERO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('VOZ_DE_ALIENTO', 0, 'GUERRERO_FEMENINO');
 
 -- MAGOS
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('AURA_PROTECTORA', 0, 'src\main\resources\static\resources\images\Cards\Mago\Aura-Protectora.jpg', 'MAGO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('BOLA_DE_FUEGO', 2, 'src\main\resources\static\resources\images\Cards\Mago\Bola-de-Fuego.jpg', 'MAGO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('DISPARO_GELIDO', 1, 'src\main\resources\static\resources\images\Cards\Mago\Disparo-Gelido.jpg', 'MAGO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('FLECHA_CORROSIVA', 1, 'src\main\resources\static\resources\images\Cards\Mago\Flecha-Corrosiva.jpg', 'MAGO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'src\main\resources\static\resources\images\Cards\Mago\Golpe-de-Baston.jpg', 'MAGO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type, condition_type) VALUES ('ORBE_CURATIVO', 0, 'src\main\resources\static\resources\images\Cards\Mago\Orbe-Curativo.jpg', 'MAGO_MASCULINO', 'USO_UNICO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('PROYECTIL_IGNEO', 2, 'src\main\resources\static\resources\images\Cards\Mago\Proyectil-Igneo.jpg', 'MAGO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('RECONSTITUCION', 0, 'src\main\resources\static\resources\images\Cards\Mago\Reconstitucion.jpg', 'MAGO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('TORRENTE_DE_LUZ', 2, 'src\main\resources\static\resources\images\Cards\Mago\Torrente-de-Luz.jpg', 'MAGO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('AURA_PROTECTORA', 0, 'MAGO_MASCULINO');
 
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('AURA_PROTECTORA', 0, 'src\main\resources\static\resources\images\Cards\Mago\Aura-Protectora.jpg', 'MAGO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('BOLA_DE_FUEGO', 2, 'src\main\resources\static\resources\images\Cards\Mago\Bola-de-Fuego.jpg', 'MAGO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('DISPARO_GELIDO', 1, 'src\main\resources\static\resources\images\Cards\Mago\Disparo-Gelido.jpg', 'MAGO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('FLECHA_CORROSIVA', 1, 'src\main\resources\static\resources\images\Cards\Mago\Flecha-Corrosiva.jpg', 'MAGO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'src\main\resources\static\resources\images\Cards\Mago\Golpe-de-Baston.jpg', 'MAGO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type, condition_type) VALUES ('ORBE_CURATIVO', 0, 'src\main\resources\static\resources\images\Cards\Mago\Orbe-Curativo.jpg', 'MAGO_FEMENINO', 'USO_UNICO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('PROYECTIL_IGNEO', 2, 'src\main\resources\static\resources\images\Cards\Mago\Proyectil-Igneo.jpg', 'MAGO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('RECONSTITUCION', 0, 'src\main\resources\static\resources\images\Cards\Mago\Reconstitucion.jpg', 'MAGO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('TORRENTE_DE_LUZ', 2, 'src\main\resources\static\resources\images\Cards\Mago\Torrente-de-Luz.jpg', 'MAGO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('BOLA_DE_FUEGO', 2, 'MAGO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_GELIDO', 1, 'MAGO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_GELIDO', 1, 'MAGO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('FLECHA_CORROSIVA', 1, 'MAGO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type, condition_type) VALUES ('ORBE_CURATIVO', 0, 'MAGO_MASCULINO', 'USO_UNICO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('RECONSTITUCION', 0, 'MAGO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('TORRENTE_DE_LUZ', 2, 'MAGO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('AURA_PROTECTORA', 0, 'MAGO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('BOLA_DE_FUEGO', 2, 'MAGO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_GELIDO', 1, 'MAGO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_GELIDO', 1, 'MAGO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('FLECHA_CORROSIVA', 1, 'MAGO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type, condition_type) VALUES ('ORBE_CURATIVO', 0, 'MAGO_FEMENINO', 'USO_UNICO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('RECONSTITUCION', 0, 'MAGO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('TORRENTE_DE_LUZ', 2, 'MAGO_FEMENINO');
 
 -- PICAROS
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('AL_CORAZON', 4, 'src\main\resources\static\resources\images\Cards\Picaro\Al-Corazon.jpg', 'PICARO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('ATAQUE_FURTIVO', 2, 'src\main\resources\static\resources\images\Cards\Picaro\Ataque-Furtivo.jpg', 'PICARO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('BALLESTA_PRECISA', 2, 'src\main\resources\static\resources\images\Cards\Picaro\Ballesta-Precisa.jpg', 'PICARO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('EN_LAS_SOMBRAS', 1, 'src\main\resources\static\resources\images\Cards\Picaro\En-las-Sombras.jpg', 'PICARO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('ENGANAR', 0, 'src\main\resources\static\resources\images\Cards\Picaro\Enganar.jpg', 'PICARO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('ROBAR_BOLSILLOS', 0, 'src\main\resources\static\resources\images\Cards\Picaro\Robar-Bolsillos.jpg', 'PICARO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('SAQUEO', 1, 'src\main\resources\static\resources\images\Cards\Picaro\Saqueo.jpg', 'PICARO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('TRAMPA', 0, 'src\main\resources\static\resources\images\Cards\Picaro\Trampa.jpg', 'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('AL_CORAZON', 4,'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('AL_CORAZON', 4,'PICARO_MASCULINO');
 
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('AL_CORAZON', 4, 'src\main\resources\static\resources\images\Cards\Picaro\Al-Corazon.jpg', 'PICARO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('ATAQUE_FURTIVO', 2, 'src\main\resources\static\resources\images\Cards\Picaro\Ataque-Furtivo.jpg', 'PICARO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('BALLESTA_PRECISA', 2, 'src\main\resources\static\resources\images\Cards\Picaro\Ballesta-Precisa.jpg', 'PICARO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('EN_LAS_SOMBRAS', 1, 'src\main\resources\static\resources\images\Cards\Picaro\En-las-Sombras.jpg', 'PICARO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('ENGANAR', 0, 'src\main\resources\static\resources\images\Cards\Picaro\Enganar.jpg', 'PICARO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('ROBAR_BOLSILLOS', 0, 'src\main\resources\static\resources\images\Cards\Picaro\Robar-Bolsillos.jpg', 'PICARO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('SAQUEO', 1, 'src\main\resources\static\resources\images\Cards\Picaro\Saqueo.jpg', 'PICARO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage, asset, hero_type) VALUES ('TRAMPA', 0, 'src\main\resources\static\resources\images\Cards\Picaro\Trampa.jpg', 'PICARO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_MASCULINO');
 
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('EN_LAS_SOMBRAS', 1, 'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('EN_LAS_SOMBRAS', 1, 'PICARO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ENGANAR', 0, 'PICARO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ROBAR_BOLSILLOS', 0, 'PICARO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SAQUEO', 0, 'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SAQUEO', 0, 'PICARO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('TRAMPA', 0, 'PICARO_MASCULINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('AL_CORAZON', 4,'PICARO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('AL_CORAZON', 4,'PICARO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('EN_LAS_SOMBRAS', 1, 'PICARO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('EN_LAS_SOMBRAS', 1, 'PICARO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ENGANAR', 0, 'PICARO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ROBAR_BOLSILLOS', 0, 'PICARO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SAQUEO', 1, 'PICARO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SAQUEO', 1, 'PICARO_FEMENINO');
+
+INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('TRAMPA', 0, 'PICARO_FEMENINO');
 
 --INSERT INTO ABILITY_CARD_IN_GAME(damage, asset, ability_card_id, player_id) VALUES (10, 1, 1);--EL ATRIBUTO DAMAGE HAY QUE QUITARLO
 
@@ -131,129 +244,89 @@ INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (51, 4);
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (52, 4);
 
 
--- INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(1,1);
--- INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(2,2);
--- INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(3,3);
--- INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(4,4);
--- INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(15,5);
--- INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(16,6);
--- INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(17,7);
--- INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(18,8);
--- INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(31,9);
--- INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(32,10);
--- INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(33,11);
--- INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(34,12);
--- INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(49,13);
--- INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(50,14);
--- INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(51,15);
--- INSERT INTO ABILITY_CARDS_ABILITY_CARD_IN_GAME(ability_card_id, ability_card_in_game_id) VAlUES(52,16);
-
--- INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,1);
--- INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,2);
--- INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,3);
--- INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,4);
-
--- INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(2,5);
--- INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(2,6);
--- INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(2,7);
--- INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(2,8);
-
--- INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(3,9);
--- INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(3,10);
--- INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(3,11);
--- INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(3,12);
-
--- INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(4,13);
--- INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(4,14);
--- INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(4,15);
--- INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(4,16);
-
-
-
---INSERT INTO PLAYERS_ABILITY_PILE(players_id, ability_pile_id) VALUES (1, 1);
 -- Cartas de Enemigos Normales
-INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (2, 1, 1, 'HONDERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Hondero.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (2, 1, 1, 'HONDERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Hondero.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (2, 1, 0, 'HONDERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Hondero.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (2, 1, 0, 'HONDERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Hondero.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (2, 1, 0, 'HONDERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Hondero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type ) VALUES (2, 1, 1, 'HONDERO');
+INSERT INTO enemies(endurance, glory, gold, type ) VALUES (2, 1, 1, 'HONDERO');
+INSERT INTO enemies(endurance, glory, gold, type ) VALUES (2, 1, 0, 'HONDERO');
+INSERT INTO enemies(endurance, glory, gold, type ) VALUES (2, 1, 0, 'HONDERO');
+INSERT INTO enemies(endurance, glory, gold, type ) VALUES (2, 1, 0, 'HONDERO');
 
-INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (3, 2, 1, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (3, 2, 1, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (3, 2, 0, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (3, 2, 0, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (3, 2, 0, 'PIQUERO', 'REGENERACION', 'src\main\resources\static\resources\images\Cards\Enemigos\Piquero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type) VALUES (3, 2, 1, 'PIQUERO', 'REGENERACION');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type) VALUES (3, 2, 1, 'PIQUERO', 'REGENERACION');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type) VALUES (3, 2, 0, 'PIQUERO', 'REGENERACION');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type) VALUES (3, 2, 0, 'PIQUERO', 'REGENERACION');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type) VALUES (3, 2, 0, 'PIQUERO', 'REGENERACION');
 
-INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (3, 1, 2, 'CHAMAN', 'MAGO_1', 'src\main\resources\static\resources\images\Cards\Enemigos\Chaman.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (3, 2, 1, 'CHAMAN', 'MAGO_1', 'src\main\resources\static\resources\images\Cards\Enemigos\Chaman.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type) VALUES (3, 1, 2, 'CHAMAN', 'MAGO_1');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type) VALUES (3, 2, 1, 'CHAMAN', 'MAGO_1');
 
-INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (4, 2, 1, 'GUERRERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (4, 2, 0, 'GUERRERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (4, 2, 0, 'GUERRERO', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero.jpg');
+INSERT INTO enemies(endurance, glory, gold, type ) VALUES (4, 2, 1, 'GUERRERO');
+INSERT INTO enemies(endurance, glory, gold, type ) VALUES (4, 2, 0, 'GUERRERO');
+INSERT INTO enemies(endurance, glory, gold, type ) VALUES (4, 2, 0, 'GUERRERO');
 
-INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (4, 3, 2, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (4, 3, 2, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (4, 2, 2, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (4, 2, 1, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (4, 2, 1, 'GUERRERO', 'BOTIN_EXTRA', 'src\main\resources\static\resources\images\Cards\Enemigos\Guerrero-Botin.jpg');
+INSERT INTO enemies(endurance, glory, gold, type) VALUES (4, 3, 2, 'GUERRERO');
+INSERT INTO enemies(endurance, glory, gold, type) VALUES (4, 3, 2, 'GUERRERO');
+INSERT INTO enemies(endurance, glory, gold, type) VALUES (4, 2, 2, 'GUERRERO');
+INSERT INTO enemies(endurance, glory, gold, type) VALUES (4, 2, 1, 'GUERRERO');
+INSERT INTO enemies(endurance, glory, gold, type) VALUES (4, 2, 1, 'GUERRERO');
 
-INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (5, 4, 2, 'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (5, 3, 2, 'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (5, 3, 2, 'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, condition_type, asset) VALUES (5, 3, 0, 'NIGROMANTE', 'MAGO_2', 'E:\DP - Proyecto\dp1-2022-2023-l8-1\dp1-2022-2023-l8-1\src\main\resources\static\resources\images\Cards\Enemigos\Nigromante.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type) VALUES (5, 4, 2, 'NIGROMANTE', 'MAGO_2');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type) VALUES (5, 3, 2, 'NIGROMANTE', 'MAGO_2');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type) VALUES (5, 3, 2, 'NIGROMANTE', 'MAGO_2');
+INSERT INTO enemies(endurance, glory, gold, type, condition_type) VALUES (5, 3, 0, 'NIGROMANTE', 'MAGO_2');
 
-INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (6, 4, 1,'BERSEKER', 'src\main\resources\static\resources\images\Cards\Enemigos\Berserker.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (6, 4, 0,'BERSEKER', 'src\main\resources\static\resources\images\Cards\Enemigos\Berserker.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (6, 4, 0,'BERSEKER', 'src\main\resources\static\resources\images\Cards\Enemigos\Berserker.jpg');
+INSERT INTO enemies(endurance, glory, gold, type ) VALUES (6, 4, 1,'BERSEKER');
+INSERT INTO enemies(endurance, glory, gold, type ) VALUES (6, 4, 0,'BERSEKER');
+INSERT INTO enemies(endurance, glory, gold, type ) VALUES (6, 4, 0,'BERSEKER');
 
 -- Cartas de Señores de la Guerra
-INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (8, 0, 0, 'GURDRUG', 'src\main\resources\static\resources\images\Cards\Señores\Gurdrug.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (9, 0, 0, 'ROGHKILLER', 'src\main\resources\static\resources\images\Cards\Señores\Roghkiller.jpg');
-INSERT INTO enemies(endurance, glory, gold, type, asset ) VALUES (10, 0, 0, 'SHRIEKKNIFER', 'src\main\resources\static\resources\images\Cards\Señores\Shriekknifer.jpg');
+INSERT INTO enemies(endurance, glory, gold, type, is_boss) VALUES (8, 0, 0, 'GURDRUG',true);
+INSERT INTO enemies(endurance, glory, gold, type, is_boss) VALUES (9, 0, 0, 'ROGHKILLER',true);
+INSERT INTO enemies(endurance, glory, gold, type, is_boss) VALUES (10, 0, 0, 'SHRIEKKNIFER',true);
 
 INSERT INTO enemy_in_game(enemy_id, game_field_id) VALUES (1,1);
 INSERT INTO enemy_in_game(enemy_id, game_field_id) VALUES (3,1);
-INSERT INTO enemy_in_game(enemy_id, game_field_id) VALUES (2,1);
-INSERT INTO enemy_in_game(enemy_id, game_field_id) VALUES (4,1);
+INSERT INTO enemy_in_game(enemy_id, game_id) VALUES (2,1);
+INSERT INTO enemy_in_game(enemy_id, game_id) VALUES (4,1);
 
 
---INSERT INTO GAMES_MONSTER_FIELD(game_id, monster_field_id) VALUES(1,1);
 --Cartas de Mercado
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                    VALUES(3, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'DAGA_ELFICA', 2, 'src\main\resources\static\resources\images\Cards\Tienda\Daga-Elfica.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                    VALUES(3, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'DAGA_ELFICA', 2, 'src\main\resources\static\resources\images\Cards\Tienda\Daga-Elfica.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                    VALUES(8, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'POCION_CURATIVA', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Pocion-Curativa.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                    VALUES(8, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'POCION_CURATIVA', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Pocion-Curativa.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                    VALUES(8, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'POCION_CURATIVA', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Pocion-Curativa.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                    VALUES(4, 'MELEE', 'DISTANCIA', 'PERICIA', 'INCOMPATIBLE', 'PIEDRA_DE_AMOLAR', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Piedra-de-Amolar.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset)
-                    VALUES(5, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA' , 'VIAL_DE_CONJURACION', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Vial-de-Conjuracion.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset)
-                    VALUES(3, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'ELIXIR_DE_CONCENTRACION', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Elixir-de-Concentracion.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset)
-                    VALUES(3, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'ELIXIR_DE_CONCENTRACION', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Elixir-de-Concentracion.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                    VALUES(3, 'INCOMPATIBLE', 'DISTANCIA', 'INCOMPATIBLE', 'MAGIA', 'CAPA_ELFICA', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Capa-Elfica.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                    VALUES(4, 'MELEE', 'INCOMPATIBLE', 'INCOMPATIBLE', 'INCOMPATIBLE', 'ARMADURA_DE_PLACAS', 0, 'src\main\resources\static\resources\images\Cards\Tienda\Armadura-de-Placas.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                    VALUES(5, 'MELEE', 'INCOMPATIBLE', 'INCOMPATIBLE', 'INCOMPATIBLE', 'ALABARDA_ORCA', 4, 'src\main\resources\static\resources\images\Cards\Tienda\Alabarda-Orca.jpg');
-INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage, asset) 
-                     VALUES(5, 'INCOMPATIBLE', 'DISTANCIA', 'INCOMPATIBLE','INCOMPATIBLE', 'ARCO_COMPUESTO', 4, 'src\main\resources\static\resources\images\Cards\Tienda\Arco-Compuesto.jpg');
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage) 
+                    VALUES(3, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'DAGA_ELFICA', 2);
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage) 
+                    VALUES(3, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'DAGA_ELFICA', 2);
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage) 
+                    VALUES(8, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'POCION_CURATIVA', 0);
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage) 
+                    VALUES(8, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'POCION_CURATIVA', 0);
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage) 
+                    VALUES(8, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'POCION_CURATIVA', 0);
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage) 
+                    VALUES(4, 'MELEE', 'DISTANCIA', 'PERICIA', 'INCOMPATIBLE', 'PIEDRA_DE_AMOLAR', 0);
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage)
+                    VALUES(5, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA' , 'VIAL_DE_CONJURACION', 0);
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage)
+                    VALUES(3, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'ELIXIR_DE_CONCENTRACION', 0);
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage)
+                    VALUES(3, 'MELEE', 'DISTANCIA', 'PERICIA', 'MAGIA', 'ELIXIR_DE_CONCENTRACION', 0);
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage) 
+                    VALUES(3, 'INCOMPATIBLE', 'DISTANCIA', 'INCOMPATIBLE', 'MAGIA', 'CAPA_ELFICA', 0);
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage) 
+                    VALUES(4, 'MELEE', 'INCOMPATIBLE', 'INCOMPATIBLE', 'INCOMPATIBLE', 'ARMADURA_DE_PLACAS', 0);
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage) 
+                    VALUES(5, 'MELEE', 'INCOMPATIBLE', 'INCOMPATIBLE', 'INCOMPATIBLE', 'ALABARDA_ORCA', 4);
+INSERT INTO MARKET_CARD(price, profiency1, profiency2, profiency3, profiency4, type, damage) 
+                     VALUES(5, 'INCOMPATIBLE', 'DISTANCIA', 'INCOMPATIBLE','INCOMPATIBLE', 'ARCO_COMPUESTO', 4);
 
 
-INSERT INTO MARKET_CARD_IN_GAME (game_id, game_sale_id,market_card_id) VALUES (1,1,1);
-INSERT INTO MARKET_CARD_IN_GAME (game_id,game_sale_id ,market_card_id) VALUES (1,1,2);
-INSERT INTO MARKET_CARD_IN_GAME (game_id,game_sale_id,market_card_id) VALUES (1,1,3);
-INSERT INTO MARKET_CARD_IN_GAME (game_id,game_sale_id,market_card_id) VALUES (1,1,4);
---INSERT INTO PLAYERS_ABILITY_HAND(players_id, ability_hand_id) VALUES(1,1);NO HACE FALTA SI HACES BIEN LA RELACIÓN(YA ESTÁ CORRGIDA)
-
---INSERT INTO PLAYERS_MARKET_HAND (players_id, market_hand_id) VALUES(1,1);NO HACE FALTA SI HACES BIEN LA RELACIÓN(YA ESTÁ CORRGIDA)
+INSERT INTO MARKET_CARD_IN_GAME (game_sale_id,market_card_id) VALUES (1,1);
+INSERT INTO MARKET_CARD_IN_GAME (game_sale_id ,market_card_id) VALUES (1,2);
+INSERT INTO MARKET_CARD_IN_GAME (game_sale_id,market_card_id) VALUES (1,3);
+INSERT INTO MARKET_CARD_IN_GAME (game_sale_id,market_card_id) VALUES (1,4);
+INSERT INTO MARKET_CARD_IN_GAME (game_sale_id,market_card_id) VALUES (1,5);
+INSERT INTO MARKET_CARD_IN_GAME (game_id,market_card_id) VALUES (1,6);
+INSERT INTO MARKET_CARD_IN_GAME (game_id,market_card_id) VALUES (1,7);
+INSERT INTO MARKET_CARD_IN_GAME (game_id,market_card_id) VALUES (1,8);
 
 --game para probar board
 
