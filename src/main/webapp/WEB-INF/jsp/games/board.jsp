@@ -133,6 +133,13 @@
 					</c:otherwise>
 
 				</c:choose>
+				
+				<!--<spring:url value="/games/{gameId}/finishGame" var="finishGame">
+					<spring:param name="gameId" value="${game.id}"></spring:param>
+				</spring:url>
+				<a href="${fn:escapeXml(finishGame)}" class="nextPhase btn btn-primary">FINALIZAR PARTIDA</a>-->
+
+				
 
 
 				
