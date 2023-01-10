@@ -2,6 +2,7 @@ package org.springframework.samples.notimeforheroes.game;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -349,8 +350,19 @@ public class GameController {
         Player currentPlayerGaming = currentTurn.getPlayer();
         Player nextPlayerToGame = new Player();
 
-        
-        
+        List<Player> players = service.showPlayersInGame(gameId);
+        Integer acum = 0;
+        for(Player player:players) {
+            if(player.getWounds()>0) {
+                acum += 1;
+
+            }
+        }
+        if(acum == 0) {
+            return "redirect:/games/{gameId}/finishGame";
+        } else if(currentGame.getMonsterField().size()==0 && currentGame.getMonsterPile().size()==0) {
+            return "redirect:/games/{gameId}/finishGame";
+        }
 
         try{
             nextPlayerToGame = currentGame.getPlayer().get(currentGame.getPlayer().indexOf(currentPlayerGaming)+1);
@@ -451,6 +463,49 @@ public class GameController {
         service.stealCard(service.getCurrentPlayer(currentUser, gameId));
 
         return "redirect:/games/board/"+gameId;
+    }
+
+    @GetMapping("/{gameId}/finishGame")
+    public ModelAndView finishGame(@PathVariable("gameId") int gameId) {
+        Game currentGame = service.findById(gameId).get();
+
+        List<Player> players = currentGame.getPlayer();
+        Integer maxGlory = 0;
+        
+        Player winner = new Player();
+        for(Player player:players) {
+            player.setGlory(player.getGlory()+(int)(player.getGold()/3));
+            if(player.getGlory()>maxGlory) {
+                maxGlory = player.getGlory();
+                winner = player;
+            } else if (player.getGlory() == maxGlory) {
+                if(winner.getWounds()<player.getWounds()) {
+                    winner = player;
+                }
+            }
+        }
+        Integer acum = 0;
+        for(Player player:players) {
+            if(player.getWounds()>0) {
+                acum += 1;
+
+            }
+        }
+        if(acum == 0) {
+            winner = null;
+        }
+        currentGame.setEndTime(new Date());
+        currentGame.setState(GameState.TERMINADO);
+        service.saveGame(currentGame);
+
+        ModelAndView mav = new ModelAndView("games/gameFinished");
+        Game game = service.findById(gameId).get();
+        mav.addObject("game", game);
+        mav.addObject("winner", winner);
+
+        return mav;
+
+
     }
 
 
