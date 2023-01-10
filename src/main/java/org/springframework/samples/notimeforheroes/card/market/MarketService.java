@@ -1,5 +1,6 @@
 package org.springframework.samples.notimeforheroes.card.market;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,31 +26,37 @@ public class MarketService {
 		return (List<MarketCard>) marketRepository.findAll();
 	}
 
-	//Crea una lista de cartas de mercado para un juego
+	//Crea una lista de cartas de mercado para un juego, añadiendo a pila y a la venta
 	@Transactional()
 	public List<MarketCardInGame> addMarket(Game game){
-		List<MarketCardInGame> market = findAll().stream().map(card -> MarketCardInGame.createInGame(game, card)).collect(Collectors.toList());
-		for (MarketCardInGame card:market) {
+		List<MarketCard> market = findAll();
+		Collections.shuffle(market);
+		List<MarketCardInGame> marketIG = market.stream().map(card -> MarketCardInGame.createInGame(game, card)).collect(Collectors.toList());
+		for(int i =0;i<5;i++) {
+			MarketCardInGame card = marketIG.get(i);
+			card.setGame(null);
+			card.setGameOnSale(game);
+		}
+		for (MarketCardInGame card:marketIG) {
 			saveMarketCardInGame(card);
 		}
-		return market;
+		return marketIG;
 	}
 
-	//Añade cartas determinadas y no repetidas a una pila de cartas de mercado
+	//Añade cartas determinadas al sale y no repetidas a una pila de cartas de mercado
+	@Transactional()
 	public void addCardToMarket(MarketCardInGame card, int gameId){
 
 		Game currentGame = gameService.findById(gameId).get();
 		List<MarketCardInGame> currentMarketSale = currentGame.getSale();
-
+		List<MarketCardInGame> currentMarketPile = currentGame.getMarketPile();
 
 		List<MarketCard> marketCards = findAll(); // Obtenemos las cartas del mercado
-		for(MarketCardInGame mk: currentMarketSale){ // Eliminamos las cartas para no añadir cartas repetidas
-			marketCards.remove(mk.getMarketCard());
-		}
-		try{
 
-			// Añadimos la siguiente carta al mercado
-			MarketCardInGame mk =  MarketCardInGame.createInGame(currentGame, marketCards.get(0));
+		try{
+			
+			MarketCardInGame mk = currentMarketPile.get(0);
+			mk.setGame(null);
 			mk.setGameOnSale(currentGame);
 			
 			saveMarketCardInGame(mk);

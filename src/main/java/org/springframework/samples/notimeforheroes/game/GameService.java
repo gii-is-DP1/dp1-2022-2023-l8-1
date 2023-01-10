@@ -67,7 +67,7 @@ public class GameService {
     //poblar los enemigos de la partida según el número de jugadores
     //2players:19enemies, 3players:23enemies, 4players:27enemies
     public void insertMonsterPile(int numPlayers) {
-    	int lastId = gameList().size();
+    	int lastId = gameList().size();//TODO METER EL ID DEL JUEGO COMO VARIABLE A LA FUNCION
     	int numCards=0;
     	switch(numPlayers) {
 	    	case 2:{
@@ -169,7 +169,7 @@ public class GameService {
         }
         // System.out.println("Mano de mercado del jugador: "+currentPlayer.getMarketHand());
     }
-
+    
     public void discardAbilityCard(User user, int gameId, int abilityCardId){
 
         Player currentPlayer = getCurrentPlayer(user, gameId);

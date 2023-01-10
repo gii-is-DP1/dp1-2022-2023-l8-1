@@ -32,11 +32,11 @@ public class MarketCardInGame {
     @JoinColumn(name="player_marketDiscard_id")
     private Player playerMarketDiscard;
 
-    @ManyToOne(targetEntity = Game.class)
+    @ManyToOne(targetEntity = Game.class, cascade = CascadeType.ALL)
     @JoinColumn(name="game_id")
     private Game game;
     
-    @ManyToOne(targetEntity = Game.class)
+    @ManyToOne(targetEntity = Game.class, cascade = CascadeType.ALL)
     @JoinColumn(name="game_sale_id")
     private Game gameOnSale;
 

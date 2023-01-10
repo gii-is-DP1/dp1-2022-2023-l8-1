@@ -19,10 +19,6 @@ import lombok.Setter;
 @Entity
 public class AbilityCardInGame{
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private int id;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

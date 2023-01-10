@@ -24,9 +24,8 @@
 					</div>
 			</c:forEach>
 			</div>
-			
+			<h3>MERCADO</h3>
 			<div class="market">
-				<h3>MERCADO</h3>
 				<c:forEach items="${game.sale}" var="marketCardInGame">
 					<spring:url value="/games/board/{gameId}/buy/{marketCardId}" var="buyCard">
 						<spring:param name="marketCardId" value="${marketCardInGame.id}"></spring:param>
