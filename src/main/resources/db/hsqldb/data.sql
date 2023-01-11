@@ -30,224 +30,220 @@ INSERT INTO players(glory, gold, wounds, evasion, profiency, hero_type, user_id,
 
 
 -- EXPLORADORES    
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('COMPANERO_LOBO', 2, 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_CERTERO', 3, 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_CERTERO', 3, 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('COMPANERO_LOBO', 2, 'EXPLORADOR_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_CERTERO', 3, 'EXPLORADOR_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_CERTERO', 3, 'EXPLORADOR_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('EN_LA_DIANA', 4, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('EN_LA_DIANA', 4, 'EXPLORADOR_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('LLUVIA_DE_FLECHAS', 2, 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('LLUVIA_DE_FLECHAS', 2, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('LLUVIA_DE_FLECHAS', 2, 'EXPLORADOR_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('LLUVIA_DE_FLECHAS', 2, 'EXPLORADOR_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('RECOGER_FLECHAS', 0, 'EXPLORADOR_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('RECOGER_FLECHAS', 0, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('RECOGER_FLECHAS', 0, 'EXPLORADOR_MASCULINO', false);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('RECOGER_FLECHAS', 0, 'EXPLORADOR_MASCULINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SUPERVIVENCIA', 0, 'EXPLORADOR_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('SUPERVIVENCIA', 0, 'EXPLORADOR_MASCULINO', true);
 
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('COMPANERO_LOBO', 2, 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_CERTERO', 3, 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_CERTERO', 3, 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('COMPANERO_LOBO', 2, 'EXPLORADOR_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_CERTERO', 3, 'EXPLORADOR_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_CERTERO', 3, 'EXPLORADOR_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_RAPIDO', 1, 'EXPLORADOR_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('EN_LA_DIANA', 4, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('EN_LA_DIANA', 4, 'EXPLORADOR_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('LLUVIA_DE_FLECHAS', 2, 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('LLUVIA_DE_FLECHAS', 2, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('LLUVIA_DE_FLECHAS', 2, 'EXPLORADOR_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('LLUVIA_DE_FLECHAS', 2, 'EXPLORADOR_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('RECOGER_FLECHAS', 0, 'EXPLORADOR_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('RECOGER_FLECHAS', 0, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('RECOGER_FLECHAS', 0, 'EXPLORADOR_FEMENINO', false);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('RECOGER_FLECHAS', 0, 'EXPLORADOR_FEMENINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SUPERVIVENCIA', 0, 'EXPLORADOR_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('SUPERVIVENCIA', 0, 'EXPLORADOR_FEMENINO', false);
 
 
 -- GUERREROS
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_BRUTAL', 3, 'GUERRERO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_BRUTAL', 3, 'GUERRERO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ATAQUE_BRUTAL', 3, 'GUERRERO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ATAQUE_BRUTAL', 3, 'GUERRERO_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('CARGA_CON_ESCUDO', 2, 'GUERRERO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('CARGA_CON_ESCUDO', 2, 'GUERRERO_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DOBLE_ESPADAZO', 2, 'GUERRERO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DOBLE_ESPADAZO', 2, 'GUERRERO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DOBLE_ESPADAZO', 2, 'GUERRERO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DOBLE_ESPADAZO', 2, 'GUERRERO_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESCUDO', 0, 'GUERRERO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESCUDO', 0, 'GUERRERO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ESCUDO', 0, 'GUERRERO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ESCUDO', 0, 'GUERRERO_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESPADAZO', 1, 'GUERRERO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESPADAZO', 1, 'GUERRERO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESPADAZO', 1, 'GUERRERO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESPADAZO', 1, 'GUERRERO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ESPADAZO', 1, 'GUERRERO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ESPADAZO', 1, 'GUERRERO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ESPADAZO', 1, 'GUERRERO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ESPADAZO', 1, 'GUERRERO_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PASO_ATRAS', 0, 'GUERRERO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PASO_ATRAS', 0, 'GUERRERO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('PASO_ATRAS', 0, 'GUERRERO_MASCULINO', false);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('PASO_ATRAS', 0, 'GUERRERO_MASCULINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('TODO_O_NADA', 1, 'GUERRERO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('TODO_O_NADA', 1, 'GUERRERO_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('VOZ_DE_ALIENTO', 0, 'GUERRERO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('VOZ_DE_ALIENTO', 0, 'GUERRERO_MASCULINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_BRUTAL', 3, 'GUERRERO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_BRUTAL', 3, 'GUERRERO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ATAQUE_BRUTAL', 3, 'GUERRERO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ATAQUE_BRUTAL', 3, 'GUERRERO_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('CARGA_CON_ESCUDO', 2, 'GUERRERO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('CARGA_CON_ESCUDO', 2, 'GUERRERO_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DOBLE_ESPADAZO', 2, 'GUERRERO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DOBLE_ESPADAZO', 2, 'GUERRERO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DOBLE_ESPADAZO', 2, 'GUERRERO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DOBLE_ESPADAZO', 2, 'GUERRERO_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESCUDO', 0, 'GUERRERO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESCUDO', 0, 'GUERRERO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ESCUDO', 0, 'GUERRERO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ESCUDO', 0, 'GUERRERO_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESPADAZO', 1, 'GUERRERO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESPADAZO', 1, 'GUERRERO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESPADAZO', 1, 'GUERRERO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ESPADAZO', 1, 'GUERRERO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ESPADAZO', 1, 'GUERRERO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ESPADAZO', 1, 'GUERRERO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ESPADAZO', 1, 'GUERRERO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ESPADAZO', 1, 'GUERRERO_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PASO_ATRAS', 0, 'GUERRERO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PASO_ATRAS', 0, 'GUERRERO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('PASO_ATRAS', 0, 'GUERRERO_FEMENINO', false);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('PASO_ATRAS', 0, 'GUERRERO_FEMENINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('TODO_O_NADA', 1, 'GUERRERO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('TODO_O_NADA', 1, 'GUERRERO_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('VOZ_DE_ALIENTO', 0, 'GUERRERO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('VOZ_DE_ALIENTO', 0, 'GUERRERO_FEMENINO', false);
 
 -- MAGOS
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('AURA_PROTECTORA', 0, 'MAGO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('AURA_PROTECTORA', 0, 'MAGO_MASCULINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('BOLA_DE_FUEGO', 2, 'MAGO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('BOLA_DE_FUEGO', 2, 'MAGO_MASCULINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_GELIDO', 1, 'MAGO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_GELIDO', 1, 'MAGO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_GELIDO', 1, 'MAGO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_GELIDO', 1, 'MAGO_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('FLECHA_CORROSIVA', 1, 'MAGO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('FLECHA_CORROSIVA', 1, 'MAGO_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type, condition_type) VALUES ('ORBE_CURATIVO', 0, 'MAGO_MASCULINO', 'USO_UNICO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, condition_type ,target) VALUES ('ORBE_CURATIVO', 0, 'MAGO_MASCULINO', 'USO_UNICO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('RECONSTITUCION', 0, 'MAGO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('RECONSTITUCION', 0, 'MAGO_MASCULINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('TORRENTE_DE_LUZ', 2, 'MAGO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('TORRENTE_DE_LUZ', 2, 'MAGO_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('AURA_PROTECTORA', 0, 'MAGO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('AURA_PROTECTORA', 0, 'MAGO_FEMENINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('BOLA_DE_FUEGO', 2, 'MAGO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('BOLA_DE_FUEGO', 2, 'MAGO_FEMENINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_GELIDO', 1, 'MAGO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('DISPARO_GELIDO', 1, 'MAGO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_GELIDO', 1, 'MAGO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_GELIDO', 1, 'MAGO_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('FLECHA_CORROSIVA', 1, 'MAGO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('FLECHA_CORROSIVA', 1, 'MAGO_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('GOLPE_DE_BASTON', 1, 'MAGO_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type, condition_type) VALUES ('ORBE_CURATIVO', 0, 'MAGO_FEMENINO', 'USO_UNICO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, condition_type, target) VALUES ('ORBE_CURATIVO', 0, 'MAGO_FEMENINO', 'USO_UNICO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('PROYECTIL_IGNEO', 2, 'MAGO_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('RECONSTITUCION', 0, 'MAGO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('RECONSTITUCION', 0, 'MAGO_FEMENINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('TORRENTE_DE_LUZ', 2, 'MAGO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('TORRENTE_DE_LUZ', 2, 'MAGO_FEMENINO', true);
 
 -- PICAROS
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('AL_CORAZON', 4,'PICARO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('AL_CORAZON', 4,'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('AL_CORAZON', 4,'PICARO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('AL_CORAZON', 4,'PICARO_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('EN_LAS_SOMBRAS', 1, 'PICARO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('EN_LAS_SOMBRAS', 1, 'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('EN_LAS_SOMBRAS', 1, 'PICARO_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('EN_LAS_SOMBRAS', 1, 'PICARO_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ENGANAR', 0, 'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ENGANAR', 0, 'PICARO_MASCULINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ROBAR_BOLSILLOS', 0, 'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ROBAR_BOLSILLOS', 0, 'PICARO_MASCULINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SAQUEO', 0, 'PICARO_MASCULINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SAQUEO', 0, 'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('SAQUEO', 0, 'PICARO_MASCULINO', false);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('SAQUEO', 0, 'PICARO_MASCULINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('TRAMPA', 0, 'PICARO_MASCULINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('TRAMPA', 0, 'PICARO_MASCULINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('AL_CORAZON', 4,'PICARO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('AL_CORAZON', 4,'PICARO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('AL_CORAZON', 4,'PICARO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('AL_CORAZON', 4,'PICARO_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ATAQUE_FURTIVO', 2, 'PICARO_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('BALLESTA_PRECISA', 2, 'PICARO_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('EN_LAS_SOMBRAS', 1, 'PICARO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('EN_LAS_SOMBRAS', 1, 'PICARO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('EN_LAS_SOMBRAS', 1, 'PICARO_FEMENINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('EN_LAS_SOMBRAS', 1, 'PICARO_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ENGANAR', 0, 'PICARO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ENGANAR', 0, 'PICARO_FEMENINO', true);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('ROBAR_BOLSILLOS', 0, 'PICARO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ROBAR_BOLSILLOS', 0, 'PICARO_FEMENINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SAQUEO', 1, 'PICARO_FEMENINO');
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SAQUEO', 1, 'PICARO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('SAQUEO', 1, 'PICARO_FEMENINO', false);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('SAQUEO', 1, 'PICARO_FEMENINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('TRAMPA', 0, 'PICARO_FEMENINO');
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('TRAMPA', 0, 'PICARO_FEMENINO', false);
 -- Cartas de Mercado como Cartas de Habilidad
 
-INSERT INTO ability_cards(hero_type,  ability_type, damage) 
-                    VALUES('SIN_HEROE', 'DAGA_ELFICA', 2);
-INSERT INTO ability_cards(hero_type,  ability_type, damage) 
-                    VALUES('SIN_HEROE', 'DAGA_ELFICA', 2);
-INSERT INTO ability_cards(hero_type,  ability_type, damage) 
-                    VALUES('SIN_HEROE', 'POCION_CURATIVA', 0);
-INSERT INTO ability_cards(hero_type,  ability_type, damage) 
-                    VALUES('SIN_HEROE', 'POCION_CURATIVA', 0);
-INSERT INTO ability_cards(hero_type,  ability_type, damage) 
-                    VALUES('SIN_HEROE', 'POCION_CURATIVA', 0);
-INSERT INTO ability_cards(hero_type,  ability_type, damage) 
-                    VALUES('SIN_HEROE', 'PIEDRA_DE_AMOLAR', 0);
-INSERT INTO ability_cards(hero_type,  ability_type, damage)
-                    VALUES('SIN_HEROE', 'VIAL_DE_CONJURACION', 0);
-INSERT INTO ability_cards(hero_type,  ability_type, damage)
-                    VALUES('SIN_HEROE', 'ELIXIR_DE_CONCENTRACION', 0);
-INSERT INTO ability_cards(hero_type,  ability_type, damage)
-                    VALUES('SIN_HEROE', 'ELIXIR_DE_CONCENTRACION', 0);
-INSERT INTO ability_cards(hero_type,  ability_type, damage) 
-                    VALUES('SIN_HEROE', 'CAPA_ELFICA', 0);
-INSERT INTO ability_cards(hero_type,  ability_type, damage) 
-                    VALUES('SIN_HEROE', 'ARMADURA_DE_PLACAS', 0);
-INSERT INTO ability_cards(hero_type,  ability_type, damage) 
-                    VALUES('SIN_HEROE', 'ALABARDA_ORCA', 4);
-INSERT INTO ability_cards(hero_type,  ability_type, damage) 
-                     VALUES('SIN_HEROE', 'ARCO_COMPUESTO', 4);
+INSERT INTO ability_cards(hero_type,  ability_type, damage, target) 
+                    VALUES('SIN_HEROE', 'DAGA_ELFICA', 2, true);
+INSERT INTO ability_cards(hero_type,  ability_type, damage, target) 
+                    VALUES('SIN_HEROE', 'DAGA_ELFICA', 2, true);
+INSERT INTO ability_cards(hero_type,  ability_type, damage, target) 
+                    VALUES('SIN_HEROE', 'POCION_CURATIVA', 0, false);
+INSERT INTO ability_cards(hero_type,  ability_type, damage, target) 
+                    VALUES('SIN_HEROE', 'POCION_CURATIVA', 0, false);
+INSERT INTO ability_cards(hero_type,  ability_type, damage, target) 
+                    VALUES('SIN_HEROE', 'POCION_CURATIVA', 0, false);
+INSERT INTO ability_cards(hero_type,  ability_type, damage, target) 
+                    VALUES('SIN_HEROE', 'PIEDRA_DE_AMOLAR', 0, false);
+INSERT INTO ability_cards(hero_type,  ability_type, damage, target)
+                    VALUES('SIN_HEROE', 'VIAL_DE_CONJURACION', 0, false);
+INSERT INTO ability_cards(hero_type,  ability_type, damage, target)
+                    VALUES('SIN_HEROE', 'ELIXIR_DE_CONCENTRACION', 0, false);
+INSERT INTO ability_cards(hero_type,  ability_type, damage, target)
+                    VALUES('SIN_HEROE', 'ELIXIR_DE_CONCENTRACION', 0, false);
+INSERT INTO ability_cards(hero_type,  ability_type, damage, target) 
+                    VALUES('SIN_HEROE', 'CAPA_ELFICA', 0, true);
+INSERT INTO ability_cards(hero_type,  ability_type, damage, target)
+                    VALUES('SIN_HEROE', 'ARMADURA_DE_PLACAS', 0, false);
+INSERT INTO ability_cards(hero_type,  ability_type, damage, target) 
+                    VALUES('SIN_HEROE', 'ALABARDA_ORCA', 4, true);
+INSERT INTO ability_cards(hero_type,  ability_type, damage, target) 
+                     VALUES('SIN_HEROE', 'ARCO_COMPUESTO', 4, true);
 
 --INSERT INTO ABILITY_CARD_IN_GAME(damage, asset, ability_card_id, player_id) VALUES (10, 1, 1);--EL ATRIBUTO DAMAGE HAY QUE QUITARLO
 
@@ -370,6 +366,9 @@ INSERT INTO authorities(id,user_id,username,authority) VALUES (6,6,'user5', 'use
 INSERT INTO users(username, password, email, birth_date, enabled) VALUES 
 ('user6', 'user', 'user6@user.com','1957-01-09', 1);--5 playerId
 INSERT INTO authorities(id,user_id,username,authority) VALUES (7,7,'user6', 'user');
+INSERT INTO users(username, password, email, birth_date, enabled) VALUES 
+('samalbort', 'samuel', 'samalbort@user.com','2000-10-01', 1);--6 playerId
+INSERT INTO authorities(id,user_id,username,authority) VALUES (8,8,'samalbort', 'user');
 
 INSERT INTO players(glory, gold, wounds, evasion, profiency, hero_type, user_id, game_id) VALUES 
 (2, 7, 0, TRUE, 'MELEE', 'MAGO_MASCULINO', 5, 2);
