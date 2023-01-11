@@ -89,7 +89,9 @@ public class GameController {
         ArrayList<HeroType> heroTypes = new ArrayList<>();
         String heroeAMostrar = "";
         for(HeroType h : HeroType.values()){
-            heroTypes.add(h);
+            if( h != HeroType.SIN_HEROE){
+                heroTypes.add(h);
+            }
         }
 
         for(Player player : players){

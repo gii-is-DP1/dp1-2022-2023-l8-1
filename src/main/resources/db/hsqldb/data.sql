@@ -370,6 +370,9 @@ INSERT INTO authorities(id,user_id,username,authority) VALUES (6,6,'user5', 'use
 INSERT INTO users(username, password, email, birth_date, enabled) VALUES 
 ('user6', 'user', 'user6@user.com','1957-01-09', 1);--5 playerId
 INSERT INTO authorities(id,user_id,username,authority) VALUES (7,7,'user6', 'user');
+INSERT INTO users(username, password, email, birth_date, enabled) VALUES 
+('samalbort', 'samuel', 'samalbort@user.com','2000-10-01', 1);--6 playerId
+INSERT INTO authorities(id,user_id,username,authority) VALUES (8,8,'samalbort', 'user');
 
 INSERT INTO players(glory, gold, wounds, evasion, profiency, hero_type, user_id, game_id) VALUES 
 (2, 7, 0, TRUE, 'MELEE', 'MAGO_MASCULINO', 5, 2);

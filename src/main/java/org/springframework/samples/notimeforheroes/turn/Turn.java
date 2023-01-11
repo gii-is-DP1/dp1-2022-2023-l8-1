@@ -17,6 +17,7 @@ import javax.persistence.OneToOne;
 
 import org.springframework.samples.notimeforheroes.game.Game;
 import org.springframework.samples.notimeforheroes.player.Player;
+import org.springframework.lang.Nullable;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class Turn {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Nullable
     @Column(name="damageReduction")
 	private int damageReduction;
 
