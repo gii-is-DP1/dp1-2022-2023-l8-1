@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityService;
+import org.springframework.samples.notimeforheroes.card.enemy.EnemyInGame;
 import org.springframework.samples.notimeforheroes.card.enemy.EnemyService;
 import org.springframework.samples.notimeforheroes.card.market.MarketCard;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
@@ -297,6 +298,26 @@ public class GameService {
         playerService.savePlayer(player);
         marketService.saveMarketCardInGame(card);
         
+    }
+
+    public void changeEnemy(int enemyId, int gameId){
+
+        Game game = findById(gameId).get();
+
+        EnemyInGame selectedEnemy = enemyService.findById(enemyId).get();
+        selectedEnemy.setGameField(null);
+        selectedEnemy.setGame(game);
+
+        List<EnemyInGame> enemies = game.getMonsterPile();
+        EnemyInGame nextEnemy = enemies.get(0); // Obtengo el enemigo al final del mazo
+        nextEnemy.setGameField(game);
+        nextEnemy.setGame(null);
+
+        enemyService.saveEnemyInGame(nextEnemy);
+        enemyService.saveEnemyInGame(selectedEnemy);
+        
+
+
     }
 
 

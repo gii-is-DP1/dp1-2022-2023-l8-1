@@ -43,8 +43,9 @@ public class AbilityCard {
     private ConditionType condition;
 
 
-    //@NotNull
-    private Boolean target;
+    // @NotNull
+    // private Boolean target;
+
 
     @NotNull
     @Enumerated(EnumType.STRING)
