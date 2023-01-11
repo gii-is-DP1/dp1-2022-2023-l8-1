@@ -15,7 +15,6 @@
 				<h1 >Turno de ${turn.player.user.username}</h1>
 				<!--Aquí iria el nombre de la fase en la que estamos (Ataque, mercado, reabastecimiento, espera)-->
 			</div>
-
 			<div class="enemies">
 			<c:forEach items="${game.monsterField}" var="enemyInGame">
 					<div class="enemy">

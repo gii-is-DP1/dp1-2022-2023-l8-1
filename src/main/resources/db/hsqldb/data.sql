@@ -314,8 +314,8 @@ INSERT INTO enemies(endurance, glory, gold, type, is_boss) VALUES (10, 0, 0, 'SH
 
 INSERT INTO enemy_in_game(enemy_id, game_field_id) VALUES (1,1);
 INSERT INTO enemy_in_game(enemy_id, game_field_id) VALUES (3,1);
-INSERT INTO enemy_in_game(enemy_id, game_id) VALUES (2,1);
-INSERT INTO enemy_in_game(enemy_id, game_id) VALUES (4,1);
+INSERT INTO enemy_in_game(enemy_id, game_id) VALUES (10,1);
+INSERT INTO enemy_in_game(enemy_id, game_id) VALUES (11,1);
 
 
 --Cartas de Mercado
