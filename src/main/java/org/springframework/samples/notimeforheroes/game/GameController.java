@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityService;
+import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
 import org.springframework.samples.notimeforheroes.friends.Friends;
 import org.springframework.samples.notimeforheroes.friends.FriendsService;
 import org.springframework.samples.notimeforheroes.player.HeroType;
@@ -483,5 +484,54 @@ public class GameController {
 
 
     }
+
+    @GetMapping("/board/{gameId}/showDiscards")
+    public String showDiscards(@PathVariable("gameId") int gameId, ModelMap modelMap){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String currentUserName = auth.getName();
+	    User currentUser = userService.findByUsername(currentUserName);
+
+        Player currentPlayer = service.getCurrentPlayer(currentUser, gameId);
+
+        List<AbilityCardInGame> discardPile = currentPlayer.getDiscardPile();
+        List<MarketCardInGame> marketDiscardPile = currentPlayer.getMarketDiscardPile();
+
+        modelMap.addAttribute("discardPile", discardPile);
+        modelMap.addAttribute("marketDiscardPile", marketDiscardPile);
+        modelMap.addAttribute("game", service.findById(gameId).get());
+
+        return "games/showDiscards";
+    }
+
+    @GetMapping("/{gameId}/selectDiscard/{cardId}")
+    public String selectDiscard(@PathVariable("gameId") int gameId,@PathVariable("cardId") int cardId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String currentUserName = auth.getName();
+	    User currentUser = userService.findByUsername(currentUserName);
+
+        Player currentPlayer = service.getCurrentPlayer(currentUser, gameId);
+
+        service.recoverCard(cardId, currentPlayer);
+
+
+        return "redirect:/games/board/"+gameId;
+
+    }
+
+    @GetMapping("/{gameId}/selectMarketDiscard/{marketCardId}")
+    public String selectMarketDiscard(@PathVariable("gameId") int gameId, @PathVariable("marketCardId") int marketCardId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String currentUserName = auth.getName();
+	    User currentUser = userService.findByUsername(currentUserName);
+
+        Player currentPlayer = service.getCurrentPlayer(currentUser, gameId);
+
+        service.recoverMarketCard(marketCardId, currentPlayer);
+
+
+        return "redirect:/games/board/"+gameId;
+
+    }
+
 
 }
