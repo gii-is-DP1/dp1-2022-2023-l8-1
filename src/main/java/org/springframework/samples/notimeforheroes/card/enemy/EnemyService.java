@@ -51,7 +51,7 @@ public class EnemyService {
 		enemiesIG.add(boss);
 		return enemiesIG;
 	}
-	//añadir el número de enemigos que pida
+	//añadir el número de enemigos que pida al field
 	public void enemyToField(Game game,int numEnemies) {
 		List<EnemyInGame> pile = game.getMonsterPile();
 		try {

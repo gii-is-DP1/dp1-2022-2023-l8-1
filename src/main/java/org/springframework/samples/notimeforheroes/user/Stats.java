@@ -16,7 +16,6 @@ public class Stats {
 
     private int wins;
 
-    // @ManyToOne(targetEntity = User.class)
     @ManyToOne(targetEntity = User.class)
     private User user;
     

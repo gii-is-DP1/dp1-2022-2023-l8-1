@@ -57,11 +57,6 @@ public class UserController {
 		this.userService = userService;
 	}
 
-//	@InitBinder
-//	public void setAllowedFields(WebDataBinder dataBinder) {
-//		dataBinder.setDisallowedFields("id");
-//	}
-
 	@GetMapping(value = "/users/new")
 	public String initCreationForm(Map<String, Object> model) {
 
@@ -147,13 +142,6 @@ public class UserController {
 
 	}
 
-
-//	@GetMapping(value = "/admins/users.xml") //no funciona así que lo dejo así por si lo necesitamos
-//	public @ResponseBody Users showResourcesUserList() {
-//		Users users = new Users();
-//		users.getUserList().addAll(this.userService.findUsers());
-//		return users;
-//	} 
 	@GetMapping(value="/admins/users/{userId}")
 	public ModelAndView showUser(@PathVariable("userId")int userId) {
 		ModelAndView model = new ModelAndView("admins/userDetails");
