@@ -46,6 +46,7 @@ public class AbilityCard {
     // @NotNull
     // private Boolean target;
 
+
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "abilityType")
