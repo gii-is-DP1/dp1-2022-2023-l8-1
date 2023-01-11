@@ -244,10 +244,11 @@ div.board * {
 }
 
 .enemies {
-	column-count: 3;
-	column-gap: 5px;
-	margin-bottom: 10px;
+	display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-gap: 3em;
 }
+
 
 .enemy img{
 	width: 100px;
