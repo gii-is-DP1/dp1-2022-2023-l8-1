@@ -131,17 +131,6 @@ public class GameController {
                 
             return "redirect:/games/"+gameId+"/lobby";
         }
-
-
-    // @GetMapping("/{gameId}/start")
-    // public ModelAndView startGame(@PathVariable("gameId") int gameId){
-    //     ModelAndView mav = new ModelAndView(VIEW_GAME_LOBBY);
-    //     Game game = service.findById(gameId).get();
-    //     game.setState(GameState.ESCOGER_LIDER);
-    //     service.saveGame(game);
-    //     mav.addObject("message", "Partida iniciada");
-    //     return mav;
-    // }
     
     //controlador y vista para la elección de un lider de partida dependiendo de la puntuación de cartas
     @GetMapping("{gameId}/chooseLeader")
@@ -306,21 +295,14 @@ public class GameController {
 	    List<Player> players = game.getPlayer();
 	    Player player = players.stream().filter(x->x.getUser().equals(currentUser)).findFirst().get();
 	    
-        // turnService.newTurn(game, player, PhaseType.RESTABLECIMIENTO);
-
-        
         Turn currentTurn = game.getTurn().get(game.getTurn().size()-1); // Accedo al ultimo elemento de la lista de turnos
         
-        // System.out.println("Turno - "+turno + " de: "+player.getUser().getUsername());
-
-
         Boolean isMyTurn = false;
         Player myPlayer = service.getCurrentPlayer(currentUser, gameId);
 
         if(currentTurn.getPlayer() == myPlayer){ // Esto se hace para saber si es mi turno y poder pasar de turno.
             isMyTurn = true;
         }
-
 
         PhaseType fase = currentTurn.getType();
 
@@ -330,8 +312,6 @@ public class GameController {
         }
         
         
-
-	    
 	    mav.addObject("game",game);
 	    mav.addObject("player",player);
         mav.addObject("turn", currentTurn);
@@ -392,8 +372,6 @@ public class GameController {
         Game currentGame = service.findById(gameId).get();
         Turn currentTurn = currentGame.getTurn().get(currentGame.getTurn().size()-1);
 
-        
-
         Player currentPlayerGaming = currentTurn.getPlayer();
         Player nextPlayerToGame = new Player();
 
@@ -403,7 +381,6 @@ public class GameController {
         }catch (Exception e){
             nextPlayerToGame = currentGame.getPlayer().get(0);
         }
-
 
         if(currentPlayerGaming.getAbilityHand().size() >1){ // Al hacer la evasión se descartan 2 cartas
             int cardId1 = currentPlayerGaming.getAbilityHand().get(0).getId();
@@ -427,7 +404,6 @@ public class GameController {
 	    User currentUser = userService.findByUsername(currentUserName);
 
         service.buyCard(currentUser, gameId, marketCardId);
-
 
         return "redirect:/games/board/"+gameId;
     }
@@ -507,10 +483,5 @@ public class GameController {
 
 
     }
-
-
-
-
-
 
 }

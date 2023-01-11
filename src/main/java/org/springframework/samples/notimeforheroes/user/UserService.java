@@ -44,8 +44,6 @@ public class UserService {
 	@Autowired
 	private AuthoritiesService authoritiesService;
 
-//	@Autowired
-//	private FriendsService friendsService;
 
 	@Autowired
 	public UserService(UserRepository userRepository) {
@@ -81,9 +79,6 @@ public class UserService {
 		return (Collection<User>) userRepository.findAll();
 	}
 	
-//	public Collection<Friends> findFriends(String userName){
-//		return friendsService.findAllFriendsByUserName(userName);
-//	}
 
 	public void delete(User user) {
 		userRepository.delete(user);
