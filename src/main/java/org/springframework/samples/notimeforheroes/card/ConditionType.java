@@ -5,5 +5,4 @@ public enum ConditionType {
     MAGO_2,
     REGENERACION,
     USO_UNICO
-    
 }

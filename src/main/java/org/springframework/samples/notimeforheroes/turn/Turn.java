@@ -4,7 +4,6 @@ package org.springframework.samples.notimeforheroes.turn;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,7 +16,6 @@ import javax.persistence.OneToOne;
 
 import org.springframework.samples.notimeforheroes.game.Game;
 import org.springframework.samples.notimeforheroes.player.Player;
-import org.springframework.lang.Nullable;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 
 import lombok.Getter;
