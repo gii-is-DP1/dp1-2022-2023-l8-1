@@ -8,7 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.springframework.samples.notimeforheroes.card.enemy.EnemyInGame;
 import org.springframework.samples.notimeforheroes.player.Player;
+import org.springframework.samples.notimeforheroes.turn.Turn;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -38,6 +40,14 @@ public class AbilityCardInGame{
     @ManyToOne(targetEntity = AbilityCard.class, cascade = CascadeType.ALL)
     @JoinColumn(name="ability_card_id")
     private AbilityCard abilityCard;
+
+    @ManyToOne(targetEntity = Turn.class, cascade = CascadeType.ALL)
+    @JoinColumn(name="turn_id")
+    private Turn turn;
+
+    @ManyToOne(targetEntity = EnemyInGame.class, cascade = CascadeType.ALL)
+    @JoinColumn(name="enemy_in_game_id")
+    private EnemyInGame enemyInGame;
 
     public static AbilityCardInGame createInPlayer(Player player, AbilityCard card) { //Asociar AbilityCards a un Player
     	AbilityCardInGame cardIP = new AbilityCardInGame();
