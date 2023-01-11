@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends CrudRepository<User, Integer>{
 
     @Query("Select u FROM User u where username = :username")
-  public User getByUsername(@Param("username") String username);
+    public User getByUsername(@Param("username") String username);
 
     public List<User> findByUsernameStartsWith(String username);
 	

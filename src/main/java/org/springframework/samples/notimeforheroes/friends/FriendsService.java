@@ -25,12 +25,7 @@ import org.springframework.samples.notimeforheroes.user.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Mostly used as a facade for all Petclinic controllers Also a placeholder
- * for @Transactional and @Cacheable annotations
- *
- * @author Michael Isvy
- */
+
 @Service
 public class FriendsService {
 	//Repositorio de Friend como variable
