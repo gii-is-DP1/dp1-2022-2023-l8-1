@@ -261,6 +261,44 @@ public class GameService {
 
     }
 
+    public void recoverCard(int cardId, Player player){
+        AbilityCardInGame card = abilityService.findById(cardId);
+
+        card.setPlayerDiscard(null);
+        card.setPlayer(player);
+
+        List<AbilityCardInGame> hand = player.getAbilityHand();
+        List<AbilityCardInGame> discard = player.getDiscardPile();
+        hand.add(card);
+        discard.remove(card);
+
+        player.setAbilityHand(hand);
+        player.setDiscardPile(discard);
+        
+        playerService.savePlayer(player);
+        abilityService.saveAbilityCardInGame(card);
+        
+    }
+
+    public void recoverMarketCard(int marketCardId, Player player){
+        MarketCardInGame card = marketService.findById(marketCardId);
+
+        card.setPlayerMarketDiscard(null);
+        card.setPlayer(player);
+
+        List<MarketCardInGame> hand = player.getMarketHand();
+        List<MarketCardInGame> discard = player.getMarketDiscardPile();
+        hand.add(card);
+        discard.remove(card);
+
+        player.setMarketHand(hand);
+        player.setMarketDiscardPile(discard);
+        
+        playerService.savePlayer(player);
+        marketService.saveMarketCardInGame(card);
+        
+    }
+
 
 
 }

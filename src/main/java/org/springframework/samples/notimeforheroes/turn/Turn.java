@@ -32,9 +32,8 @@ public class Turn {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Nullable
-    @Column(name="damageReduction")
-	private int damageReduction;
+    // @Column(name="damageReduction")
+	// private int damageReduction;
 
     @OneToMany(mappedBy="turn")
 	private List<AbilityCardInGame> cardsPlayed;
