@@ -46,5 +46,9 @@ public class EnemyInGame {
     	enemyIG.setGame(game);
 		return enemyIG;
     }
+
+    public String toString(){
+      return enemy.getType().toString();
+    }
     
 }

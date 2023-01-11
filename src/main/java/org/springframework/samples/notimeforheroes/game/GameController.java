@@ -535,5 +535,12 @@ public class GameController {
 
     }
 
+    @GetMapping("/{gameId}/changeEnemy/{enemyId}")
+    public String changeEnemy(@PathVariable("gameId") int gameId, @PathVariable("enemyId") int enemyId){
 
+
+
+        service.changeEnemy(enemyId, gameId);
+        return "redirect:/games/board/"+gameId;
+    }
 }
