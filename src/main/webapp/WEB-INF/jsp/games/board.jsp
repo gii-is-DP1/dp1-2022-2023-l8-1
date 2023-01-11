@@ -21,6 +21,7 @@
 					<div class="enemy">
 						<img src="/resources/images/Cards/Enemies/${enemyInGame.enemy.type}.jpg" width="200" />
 						<h4>Endurance: <c:out value=" ${enemyInGame.enemy.endurance}"/></h4>
+						<h4>Id: <c:out value=" ${enemyInGame.id}"/></h4>
 					</div>
 			</c:forEach>
 			</div>
@@ -81,6 +82,23 @@
 								</c:when>
 								<c:otherwise>
 									<img src= "/resources/images/Cards/Abilities/${cardInGame.abilityCard.abilityType}.jpg" width="100"/>
+									<c:choose>
+										<c:when test="${isMyTurn && fase.toString() == 'ATAQUE'}">
+											<button onclick="Event">
+												<select class="selector">
+													<option>NO USAR CARTA</option>
+													<c:forEach var="enemies" items="${game.monsterField}">
+														<option>Enemigo con id ${enemies.id}</option>
+													</c:forEach>
+												</select>
+											</button>
+										</c:when>
+										<c:otherwise>
+											<button onclick="Event">
+												<h3>No es tu turno/fase de ataque</h3>
+											</button>
+										</c:otherwise>
+									</c:choose>
 
 								</c:otherwise>
 							</c:choose>
