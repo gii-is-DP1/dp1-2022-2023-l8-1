@@ -25,10 +25,20 @@ public class EnemyInGame {
     @ManyToOne(targetEntity = Game.class)
     @JoinColumn(name="game_id")
     private Game game;
+    
+    @ManyToOne(targetEntity = Game.class)
+    @JoinColumn(name="game_field_id")
+    private Game gameField;
 
     @ManyToOne(targetEntity = Enemy.class)
     private Enemy enemy;
 
-
+    //Asociar enemigos a un juego
+    public static EnemyInGame createEnemyInGame(Enemy enemy, Game game) {
+    	EnemyInGame enemyIG = new EnemyInGame();
+    	enemyIG.setEnemy(enemy);
+    	enemyIG.setGame(game);
+		return enemyIG;
+    }
     
 }

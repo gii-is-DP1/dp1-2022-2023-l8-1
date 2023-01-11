@@ -59,5 +59,7 @@ public class User extends BaseEntity{
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Authorities> authorities;
 
-	
+	public String toString(){
+		return username;
+	}
 }

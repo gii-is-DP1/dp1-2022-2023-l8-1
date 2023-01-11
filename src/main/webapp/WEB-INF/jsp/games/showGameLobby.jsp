@@ -7,11 +7,19 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="lobby">
-
-
-
-
-    
+	<style>
+		.zoom {
+		  padding: 30px;
+		  transition: transform .3s; /* Animation */
+		  width: 250px;
+		  height: 330px;
+		  margin: 0 auto;
+		}
+		
+		.zoom:hover {
+		  transform: scale(1.75); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+		}
+		</style>
     <h1 style="text-align:center">LOBBY ${gameId}</h1>
 
 	<h1>ELIGE TU H&EacuteROE</h1>
@@ -21,7 +29,7 @@
 		<spring:param name="gameId" value="${gameId}"/>
 		<spring:param name="heroType" value="${heroType}"/>
 	</spring:url>
-	<a href="${fn:escapeXml(selectHero)}" class="btn btn-default">${heroType}</a>
+	<a href="${fn:escapeXml(selectHero)}"> <img width=300 class="zoom" src="<spring:url value="/resources/images/Cards/Heroes/${heroType}.jpg" htmlEscape="true" />"> </a>
 	</c:forEach>
 
     <h3>Lista de jugadores</h3>

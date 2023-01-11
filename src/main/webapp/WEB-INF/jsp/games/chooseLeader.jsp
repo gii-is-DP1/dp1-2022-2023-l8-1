@@ -7,6 +7,20 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layoutInGame pageName="games">
+    <style>
+		.zoom {
+		  padding: 30px;
+		  transition: transform .3s; /* Animation */
+		  width: 250px;
+		  height: 330px;
+		  margin: 0 auto;
+		}
+		
+		.zoom:hover {
+		  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+		}
+		</style>
+
     <div>
         <div class="phase">
             <h1>FASE ACTUAL</h1>
@@ -34,13 +48,11 @@
         <div class="baraja">
             <h4 class="baraja"><strong>Mi baraja</strong></h4>
             <c:forEach items="${cardInGames}" var="card">
-                <div >
                     <spring:url value="/games/{gameId}/chooseLeader/{cardId}" var="selectCard">
                     	<spring:param name="gameId" value="${game.id}"/>
                         <spring:param name="cardId" value="${card.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(selectCard)}" class="btn btn-default">${card.abilityCard.abilityType} -> ${card.abilityCard.damage}</a>
-                </div>
+                    <a href="${fn:escapeXml(selectCard)}"> <img width=300 class="zoom" src="<spring:url value="/resources/images/Cards/Abilities/${card.abilityCard.abilityType}.jpg" htmlEscape="true" />"> </a>
             </c:forEach>
 
         </div>
@@ -54,11 +66,12 @@
                 <a href="${fn:escapeXml(tablero)}" class="btn btn-default">Ir al tablero</a>
             </c:when>
             <c:otherwise>
+                <div>
             	<spring:url value="/games/{gameId}/chooseLeader/compare" var="compare">
                     <spring:param name="gameId" value="${game.id}"/>
                 </spring:url>
                 <a href="${fn:escapeXml(compare)}" class="btn btn-default">Terminar puja</a>
-
+            </div>
             </c:otherwise>
         </c:choose>
 

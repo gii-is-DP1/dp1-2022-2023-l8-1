@@ -255,8 +255,9 @@ div.board * {
 }
 
 .market {
-	column-count: 5;
-	column-gap: 5px;
+	display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-gap: 3em;
 }
 
 .marketcard img {
@@ -265,8 +266,9 @@ div.board * {
 }
 
 .yourCards {
-	column-count: 4;
-	column-gap: 5px;
+	display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-gap: 3em;
 }
 .myCard img {
 	width: 100px;

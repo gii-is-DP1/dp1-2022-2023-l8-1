@@ -33,37 +33,44 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class FriendsService {
-
+	//Repositorio de Friend como variable
 	private FriendsRepository friendsRepository;
 
+	//Asocia repositorio al servicio
 	@Autowired
 	public FriendsService(FriendsRepository friendsRepository) {
 		this.friendsRepository = friendsRepository;
 	}
 
+	//Funcion save simple
 	@Transactional
 	public void saveFriend(Friends friends) throws DataAccessException {
 		friendsRepository.save(friends);
 	}
 
+	//funcion eliminación simple
 	public void deleteFriend(Friends friend) {
 		friendsRepository.delete(friend);
 	}
 
+	//Encuentra Friend por id
 	@Transactional(readOnly = true)
 	public Optional<Friends> findFriend(Integer id) {
 		return friendsRepository.findById(id);
 	}
 
+	//Encuentra todos los Friends
 	@Transactional
 	public Collection<Friends> findFriends(){
 		return (Collection<Friends>) friendsRepository.findAll();
 	}
 
+	//Encuentra Friend dado un determinado receptor
 	public Collection<Friends> findFriendByReceiver(User receiver) {
         return friendsRepository.getByFriendRP(receiver);
     }
 
+	//Encuentra Friends a partir de un usuario
     public Collection<Friends> findFriendOfUser(User user) {
         return friendsRepository.getByFriendA(user);
     }

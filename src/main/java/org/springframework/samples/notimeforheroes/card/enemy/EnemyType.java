@@ -5,6 +5,7 @@ public enum EnemyType{
     PIQUERO,
     CHAMAN,
     GUERRERO,
+    GUERRERO_BOTIN,
     NIGROMANTE,
     BERSEKER,
     GURDRUG,

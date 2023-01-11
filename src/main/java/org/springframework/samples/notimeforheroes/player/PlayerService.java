@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PlayerService {
     
-
+    //Repositorio de Player como variable y posterior asociación a este servicio
     private PlayerRepository playerRepository;
 
     @Autowired
@@ -24,19 +24,19 @@ public class PlayerService {
         this.playerRepository = playerRepository;
     }
 
+    //Encuentra todos los Players
     public Collection<Player> findPlayers(){
         return playerRepository.findAll();
     }
 
 
+    //Funcion save simple
     @Transactional
     public void savePlayer(Player player){
-
     	playerRepository.save(player);
-
-
     }
 
+    //Creación de un player para un juego con valores determinados iniciales
     public void createPlayer(Player player, Game game, User user){
     	player.setEvasion(true);
 	      player.setGame(game);
@@ -51,18 +51,22 @@ public class PlayerService {
     }
 
     
-
+    //Encunetra Jugador por su id
     public Optional<Player> findPlayerById(Integer id) {
         return  playerRepository.findById(id);
     }
+
+    //Elimina Player
     public void delete(Player player) {
     	playerRepository.delete(player);
     }
 
+    //Encuentra la lista de cartas de habilidad asociadas a un Player
     public List<AbilityCardInGame> showHand(Player p){
         return p.getAbilityHand(); 
     }
 
+    //Puja de cartas para elección de lider
     public List<AbilityCardInGame> pujarCarta(Player p, int cardId){
         List<AbilityCardInGame> cartasAPujar = p.getCartasPuja();
 
@@ -87,6 +91,8 @@ public class PlayerService {
         return cartasAPujar;
 
     }
+
+
 
 
 

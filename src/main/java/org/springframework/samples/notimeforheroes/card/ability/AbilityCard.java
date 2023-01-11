@@ -1,6 +1,6 @@
 package org.springframework.samples.notimeforheroes.card.ability;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,7 +49,7 @@ public class AbilityCard {
 
 
     @OneToMany(mappedBy="abilityCard")
-    private Set<AbilityCardInGame> abilityCardInGame;
+    private List<AbilityCardInGame> abilityCardInGame;
 
     public String toString(){
         return abilityType.toString();

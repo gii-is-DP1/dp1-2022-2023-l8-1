@@ -1,6 +1,7 @@
 package org.springframework.samples.notimeforheroes.card.market;
 
-import java.util.Set;
+
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.samples.notimeforheroes.card.ConditionType;
+import org.springframework.samples.notimeforheroes.player.Profiency;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -36,19 +38,19 @@ public class MarketCard {
 
     @Enumerated(EnumType.STRING)
     @Column(name="profiency1")
-    private Proficiency profiency1;
+    private Profiency profiency1;
 
     @Enumerated(EnumType.STRING)
     @Column(name="profiency2")
-    private Proficiency profiency2;
+    private Profiency profiency2;
 
     @Enumerated(EnumType.STRING)
     @Column(name="profiency3")
-    private Proficiency profiency3;
+    private Profiency profiency3;
 
     @Enumerated(EnumType.STRING)
     @Column(name="profiency4")
-    private Proficiency profiency4;
+    private Profiency profiency4;
 
     @Enumerated(EnumType.STRING)
     @Column(name="conditionType")
@@ -59,6 +61,10 @@ public class MarketCard {
     private MarketCardType type;
 
     @OneToMany(mappedBy="marketCard")
-    private Set<MarketCardInGame> marketCardInGame;
+    private List<MarketCardInGame> marketCardInGame;
 
+
+    public String toString(){
+        return this.getType().toString();
+    }
 }

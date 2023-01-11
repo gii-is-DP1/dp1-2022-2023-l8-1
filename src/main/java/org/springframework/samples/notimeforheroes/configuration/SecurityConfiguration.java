@@ -30,6 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	DataSource dataSource;
 	
+	//Concede permisos a determinadas rutas para determinadas autenticaciones
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()

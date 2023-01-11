@@ -21,12 +21,18 @@ import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
 import org.springframework.samples.notimeforheroes.game.Game;
 import org.springframework.samples.notimeforheroes.user.User;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
 @Entity(name = "players")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Player{
 
     @Id
@@ -70,10 +76,13 @@ public class Player{
     @OneToMany(mappedBy="player")
     private List<AbilityCardInGame> abilityHand;
 
-    @OneToMany(mappedBy="player")
+    @OneToMany(mappedBy="playerDiscard")
     private List<AbilityCardInGame> discardPile;
 
-    @OneToMany(mappedBy="player")
+    @OneToMany(mappedBy="playerMarketDiscard")
+    private List<MarketCardInGame> marketDiscardPile;
+
+    @OneToMany(mappedBy="playerPile")
     private List<AbilityCardInGame> abilityPile;
 
 

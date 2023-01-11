@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TurnService {
-    
+    //Repositorios como variables y posterior asociación a este servicio
     private final TurnRepository repo;
     private final GameRepository gameRepository;
 
@@ -20,6 +20,7 @@ public class TurnService {
         this.repo = turnRepo;
     };
 
+    //
     public List<Player> setLeader(int gameId){
         List<Player> players = gameRepository.findPlayersInGame(gameId);
 
@@ -32,6 +33,7 @@ public class TurnService {
 
     }
 
+    //Cambio de turno
     public void newTurn(Game game, Player player, PhaseType phaseType){
         Turn turn = new Turn();
         turn.setGame(game);
@@ -41,6 +43,7 @@ public class TurnService {
 
     }
 
+    //función save simple
     public void save(Turn turn){
         repo.save(turn);
     }
