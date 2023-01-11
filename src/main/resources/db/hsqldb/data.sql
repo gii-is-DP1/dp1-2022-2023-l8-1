@@ -220,6 +220,34 @@ INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SAQUEO', 1,
 INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('SAQUEO', 1, 'PICARO_FEMENINO');
 
 INSERT INTO ability_cards(ability_type, damage,  hero_type) VALUES ('TRAMPA', 0, 'PICARO_FEMENINO');
+-- Cartas de Mercado como Cartas de Habilidad
+
+INSERT INTO ability_cards(hero_type,  ability_type, damage) 
+                    VALUES('SIN_HEROE', 'DAGA_ELFICA', 2);
+INSERT INTO ability_cards(hero_type,  ability_type, damage) 
+                    VALUES('SIN_HEROE', 'DAGA_ELFICA', 2);
+INSERT INTO ability_cards(hero_type,  ability_type, damage) 
+                    VALUES('SIN_HEROE', 'POCION_CURATIVA', 0);
+INSERT INTO ability_cards(hero_type,  ability_type, damage) 
+                    VALUES('SIN_HEROE', 'POCION_CURATIVA', 0);
+INSERT INTO ability_cards(hero_type,  ability_type, damage) 
+                    VALUES('SIN_HEROE', 'POCION_CURATIVA', 0);
+INSERT INTO ability_cards(hero_type,  ability_type, damage) 
+                    VALUES('SIN_HEROE', 'PIEDRA_DE_AMOLAR', 0);
+INSERT INTO ability_cards(hero_type,  ability_type, damage)
+                    VALUES('SIN_HEROE', 'VIAL_DE_CONJURACION', 0);
+INSERT INTO ability_cards(hero_type,  ability_type, damage)
+                    VALUES('SIN_HEROE', 'ELIXIR_DE_CONCENTRACION', 0);
+INSERT INTO ability_cards(hero_type,  ability_type, damage)
+                    VALUES('SIN_HEROE', 'ELIXIR_DE_CONCENTRACION', 0);
+INSERT INTO ability_cards(hero_type,  ability_type, damage) 
+                    VALUES('SIN_HEROE', 'CAPA_ELFICA', 0);
+INSERT INTO ability_cards(hero_type,  ability_type, damage) 
+                    VALUES('SIN_HEROE', 'ARMADURA_DE_PLACAS', 0);
+INSERT INTO ability_cards(hero_type,  ability_type, damage) 
+                    VALUES('SIN_HEROE', 'ALABARDA_ORCA', 4);
+INSERT INTO ability_cards(hero_type,  ability_type, damage) 
+                     VALUES('SIN_HEROE', 'ARCO_COMPUESTO', 4);
 
 --INSERT INTO ABILITY_CARD_IN_GAME(damage, asset, ability_card_id, player_id) VALUES (10, 1, 1);--EL ATRIBUTO DAMAGE HAY QUE QUITARLO
 

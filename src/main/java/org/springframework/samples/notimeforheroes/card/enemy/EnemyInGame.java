@@ -1,12 +1,16 @@
 package org.springframework.samples.notimeforheroes.card.enemy;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.game.Game;
 
 import lombok.Getter;
@@ -32,6 +36,9 @@ public class EnemyInGame {
 
     @ManyToOne(targetEntity = Enemy.class)
     private Enemy enemy;
+
+    @OneToMany(mappedBy="enemyInGame")
+	  private List<AbilityCardInGame> cardsPlayed;
 
     //Asociar enemigos a un juego
     public static EnemyInGame createEnemyInGame(Enemy enemy, Game game) {
