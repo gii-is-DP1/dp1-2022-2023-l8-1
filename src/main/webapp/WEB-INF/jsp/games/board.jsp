@@ -87,9 +87,16 @@
 											<button onclick="Event">
 												<select class="selector">
 													<option>NO USAR CARTA</option>
-													<c:forEach var="enemies" items="${game.monsterField}">
-														<option>Enemigo con id ${enemies.id}</option>
-													</c:forEach>
+													<c:choose>
+														<c:when test="${cardInGame.abilityCard.target == true}">
+															<c:forEach var="enemies" items="${game.monsterField}">
+																<option>Enemigo con id ${enemies.id}</option>
+															</c:forEach>
+														</c:when>
+														<c:otherwise>
+															<option>USAR CARTA</option>
+														</c:otherwise>
+													</c:choose>
 												</select>
 											</button>
 										</c:when>
