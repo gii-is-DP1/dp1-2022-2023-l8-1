@@ -93,6 +93,9 @@ public class PlayerService {
     }
 
 
+    public List<Player> findPlayersInGame() {
+        return playerRepository.findPlayingPlayers();
+    } 
 
 
 

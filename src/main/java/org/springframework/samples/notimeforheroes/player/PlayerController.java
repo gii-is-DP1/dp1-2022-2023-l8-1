@@ -133,12 +133,19 @@ public class PlayerController {
 		Optional<Game> game= gameService.findById(gameId);
 	  	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    User currentUser = (User) auth.getPrincipal();
-	    List<Player> players = game.get().getPlayer();
-	    if(!players.stream().anyMatch(x->x.getUser()==userService.findByUsername(currentUser.getUsername()))) {//si el user ya está en la partida no se podrá unir
-			Player newPlayer = new Player();
-			org.springframework.samples.notimeforheroes.user.User user = userService.findByUsername(currentUser.getUsername());
-			playerService.createPlayer(newPlayer, game.get(), user);
+	    List<Player> playersInGame = playerService.findPlayersInGame();
+	    //if(!players.stream().anyMatch(x->x.getUser()==userService.findByUsername(currentUser.getUsername()))) {//si el user ya está en la partida no se podrá unir
+		//	Player newPlayer = new Player();
+		//	org.springframework.samples.notimeforheroes.user.User user = userService.findByUsername(currentUser.getUsername());
+		//	playerService.createPlayer(newPlayer, game.get(), user);
+		//}
+		if(playersInGame.stream().anyMatch(x->x.getUser()==userService.findByUsername(currentUser.getUsername()))) {
+			return "redirect:/games/";
 		}
+		Player newPlayer = new Player();
+		org.springframework.samples.notimeforheroes.user.User user = userService.findByUsername(currentUser.getUsername());
+		playerService.createPlayer(newPlayer, game.get(), user);
+		
 	    return "redirect:/games/"+gameId+"/lobby";
 	}
 
