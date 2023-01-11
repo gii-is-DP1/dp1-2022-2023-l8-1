@@ -36,7 +36,6 @@ public class Turn {
     // @Column(name="damageReduction")
 	// private int damageReduction;
 
-
     @OneToMany(mappedBy="turn")
 	private List<AbilityCardInGame> cardsPlayed;
 
