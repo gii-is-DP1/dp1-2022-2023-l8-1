@@ -85,8 +85,6 @@ public class Player{
     @OneToMany(mappedBy="playerPile")
     private List<AbilityCardInGame> abilityPile;
 
-
-    // TODO: Hay que añadirlo al UML
     @Size(max = 2, min = 0)
     @OneToMany()
     private List<AbilityCardInGame> cartasPuja;

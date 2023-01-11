@@ -48,10 +48,7 @@ public class MarketService {
 	public void addCardToMarket(MarketCardInGame card, int gameId){
 
 		Game currentGame = gameService.findById(gameId).get();
-		List<MarketCardInGame> currentMarketSale = currentGame.getSale();
-		List<MarketCardInGame> currentMarketPile = currentGame.getMarketPile();
-
-		List<MarketCard> marketCards = findAll(); // Obtenemos las cartas del mercado
+		List<MarketCardInGame> currentMarketPile = currentGame.getMarketPile();//obtenemos las cartas de la pila
 
 		try{
 			

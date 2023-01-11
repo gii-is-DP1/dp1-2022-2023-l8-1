@@ -1,7 +1,6 @@
 package org.springframework.samples.notimeforheroes.game;
 
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
