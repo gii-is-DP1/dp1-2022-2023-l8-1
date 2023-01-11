@@ -13,6 +13,7 @@ import org.springframework.samples.notimeforheroes.game.Game;
 import org.springframework.samples.notimeforheroes.player.HeroType;
 import org.springframework.samples.notimeforheroes.player.Player;
 import org.springframework.samples.notimeforheroes.player.PlayerService;
+import org.springframework.samples.notimeforheroes.turn.Turn;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -72,11 +73,14 @@ public class AbilityService {
 	}
 
 	@Transactional
-	public void playTargetedEnemyAbilityCard(Player player, AbilityCardInGame card, Game game, List<EnemyInGame> targets){
+	public void playAbilityCard(Turn turn, AbilityCardInGame card, EnemyInGame enemy){
 		AbilityType carta = card.getAbilityCard().getAbilityType();
-		int damage = card.getAbilityCard().getDamage();
+		int damage = card.getAbilityCard().getDamage(); // HAY QUE PONER UN BREAK; AL FINAL DE CADA UNO
+		List<AbilityCardInGame> turn_cards = turn.getCardsPlayed();
+		List<AbilityCardInGame> enemy_cards = enemy.getCardsPlayed();
 		switch (carta) {
 			case COMPANERO_LOBO: // Daño 2, Previenes 2 de Daño
+
 			case DISPARO_CERTERO: // Daño 3, Pierdes 1 cartas, Finalizas tu ataque
 			case DISPARO_RAPIDO: // Daño 1, Roba 1 si es "Disparo rápido" úsala, sino ponla al fondo del mazo de Habilidad
 			case EN_LA_DIANA: // Daño 4, Gana 1 de Gloria, Pierdes 1 carta
@@ -148,6 +152,13 @@ public class AbilityService {
 	public static AbilityCardInGame createPileInPlayer(Player player, AbilityCard card) { //Asociar AbilityCards a un Player
     	AbilityCardInGame cardIP = new AbilityCardInGame();
     	cardIP.setPlayerPile(player);
+    	cardIP.setAbilityCard(card);
+    	return cardIP;
+    }
+
+	public AbilityCardInGame createHandInPlayer(Player player, AbilityCard card) { //Asociar AbilityCards a un Player
+    	AbilityCardInGame cardIP = new AbilityCardInGame();
+    	cardIP.setPlayer(player);
     	cardIP.setAbilityCard(card);
     	return cardIP;
     }

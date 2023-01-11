@@ -5,13 +5,19 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.persistence.EnumType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
+import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGameRepository;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityService;
+import org.springframework.samples.notimeforheroes.card.ability.AbilityType;
 import org.springframework.samples.notimeforheroes.card.enemy.EnemyService;
 import org.springframework.samples.notimeforheroes.card.market.MarketCard;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
+import org.springframework.samples.notimeforheroes.card.market.MarketCardType;
 import org.springframework.samples.notimeforheroes.card.market.MarketService;
 import org.springframework.samples.notimeforheroes.player.Player;
 import org.springframework.samples.notimeforheroes.player.PlayerService;
@@ -168,6 +174,10 @@ public class GameService {
         (marketCard.getProfiency3().equals(currentPlayer.getProfiency())) ||
         (marketCard.getProfiency4().equals(currentPlayer.getProfiency())))){
             currentMarketCard.setPlayer(currentPlayer);
+            
+            AbilityType ability = (AbilityType) AbilityType.valueOf(currentMarketCard.getMarketCard().getType().toString());
+            List<AbilityCardInGame> ability_cards = abilityService.findAll().stream().filter(x -> x.getAbilityType().equals(ability)).map(card -> abilityService.createHandInPlayer(currentPlayer, card)).collect(Collectors.toList());
+            abilityService.saveAbilityCardInGame(ability_cards.get(0));
 
             marketHand.add(currentMarketCard); // Compramos la carta añadiendola a la lista de cartas de mercado del jugador
             marketService.addCardToMarket(currentMarketCard, gameId);

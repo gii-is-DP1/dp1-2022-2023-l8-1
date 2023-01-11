@@ -4,6 +4,7 @@ package org.springframework.samples.notimeforheroes.turn;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -31,8 +32,8 @@ public class Turn {
     private int id;
 
 
-    // @Column(name="damageReduction")
-	// private int damageReduction;
+    @Column(name="damageReduction")
+	private int damageReduction;
 
 
     @OneToMany(mappedBy="turn")
