@@ -37,6 +37,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 /**
  * @author Juergen Hoeller
@@ -80,68 +81,32 @@ public class UserController {
 		ModelAndView mav = new ModelAndView("admins/admin");
 		return mav;
 	}
+
 	@GetMapping(value = "/admins/users")
-	public String showUserList(Map<String, Object> model, HttpSession session) {
-		Users users = new Users();
-		users.getUserList().addAll(this.userService.findUsers());
+	public String getUsers(@RequestParam(defaultValue = "0") int page, ModelMap model) {
+		List<User> usersList =(List<User>) userService.findUsers();
 
-		int usersSize = users.getUserList().size();
+		if(page<0){
+			page = 0;
+		}
+		
+        Pageable pageable = PageRequest.of(page, 4);
+        Page<User> usersPage = userService.getAll(pageable);
 
-		Pageable pageRequest = PageRequest.of(0, 4);
+        if (!usersList.isEmpty() && usersPage.isEmpty()) {
+            page = usersList.size() / 4;
+            pageable = PageRequest.of(page, 4);
+            usersPage = userService.getAll(pageable);
+        }
+        model.put("isNext", usersPage.hasNext());
+        model.addAttribute("users", usersPage.getContent());
+        model.put("page", page);
+        model.put("size", usersPage.getTotalPages());
+        
+        return "admins/usersLists";
+    }
 
-		Page<User> pages = userService.getAll(pageRequest);
-		session.setAttribute("pages", pages);
-
-
-		List<User> ls = pages.toList();
-		int size = pages.getTotalPages();
-		Integer currentPage = pages.getNumber();
-
-
-
-		model.put("users", ls);
-		model.put("size", size);
-		model.put("currentPage", currentPage+1);
-
-		return "admins/usersLists";
-	}
-
-	@GetMapping("/admins/users/next")
-	public String nextPage(Map<String, Object> model,  HttpSession session){
-
-		Page<User> pages = (Page<User>) session.getAttribute("pages");
-		pages = userService.getAll(pages.nextOrLastPageable());
-
-		List<User> ls = pages.toList();
-		int size = pages.getTotalPages();
-		int currentPage = pages.getNumber();
-
-
-		model.put("users", ls);
-		model.put("size", size);
-		model.put("currentPage", currentPage+1);
-
-		return "admins/usersLists";
-	}
-
-	@GetMapping("/admins/users/previous")
-	public String previousPage(Map<String, Object> model, HttpSession session){
-		Page<User> pages = (Page<User>) session.getAttribute("pages");
-		pages = userService.getAll(pages.previousOrFirstPageable());
-
-		List<User> ls = pages.toList();
-		int size = pages.getTotalPages();
-		Integer currentPage = pages.getNumber();
-
-
-		model.put("users", ls);
-		model.put("size", size);
-		model.put("currentPage", currentPage+1);
-
-		return "admins/usersLists";
-
-	}
-
+	
 	@GetMapping(value="/admins/users/{userId}")
 	public ModelAndView showUser(@PathVariable("userId")int userId) {
 		ModelAndView model = new ModelAndView("admins/userDetails");
