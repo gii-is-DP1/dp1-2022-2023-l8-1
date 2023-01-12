@@ -562,7 +562,13 @@ public class GameService {
 
             card.setEnemyInGame(enemy); // Relacionar carta con enemigo
             card.setTurn(turn); // Relaciona con el turno
-            card.setPlayerDiscard(turn.getPlayer()); // Al descarte
+            if((card.getAbilityCard().getAbilityType().equals(AbilityType.DAGA_ELFICA) && 
+            		(turn.getPlayer().getProfiency()==Profiency.PERICIA || turn.getPlayer().getSecondProfiency()==Profiency.PERICIA))){
+            	// Caso especial de uso de carta, la Daga Élfica se recupera directamente si el Héroe que la usa tiene Pericia como Profiency
+            	card.setPlayerPile(turn.getPlayer());
+            }else {
+            	card.setPlayerDiscard(turn.getPlayer()); // Al descarte
+            }
             card.setPlayer(null); // Fuera de la mano
             cards_used.add(card); // Añadir a la lista de cartas usadas usadas este truno
             cards_played_on.add(card); // Añadir a la lista de cartas sobre el enemigo
@@ -574,11 +580,11 @@ public class GameService {
             enemyService.saveEnemyInGame(enemy); // Guardo los cambios del enemigo
             abilityService.saveAbilityCardInGame(card); // // Guardo los cambios de LA CARTA
 
-            if(card.getAbilityCard().getAbilityType().equals(AbilityType.DAGA_ELFICA) && 
-            (turn.getPlayer().getProfiency()==Profiency.PERICIA || turn.getPlayer().getSecondProfiency()==Profiency.PERICIA)){
-                // Caso especial de uso de carta, la Daga Élfica se recupera directamente si el Héroe que la usa tiene Pericia como Profiency
-                recoverCard(card.getId(), turn.getPlayer());
-            }
+//            if(card.getAbilityCard().getAbilityType().equals(AbilityType.DAGA_ELFICA) && 
+//            (turn.getPlayer().getProfiency()==Profiency.PERICIA || turn.getPlayer().getSecondProfiency()==Profiency.PERICIA)){
+//                // Caso especial de uso de carta, la Daga Élfica se recupera directamente si el Héroe que la usa tiene Pericia como Profiency
+//                recoverCard(card.getId(), turn.getPlayer());
+//            }
 
         }else{
 
@@ -849,12 +855,13 @@ public class GameService {
                 break;
             }
 
-			case DAGA_ELFICA: {//Daño 2, Coste 3, Si el héroe tiene como Proficiency "Pericia" se recupera tras jugarla, PROFICIENCIAS:  Distancia, Pericia, Melee
+			case DAGA_ELFICA: {//Daño 2, Coste 3, Si el héroe tiene como Proficiency "Pericia" se recupera tras jugarla, PROFICIENCIAS:  Distancia, Pericia, Melee --Fin--
                 damageEnemy(current_player, enemy, card, total_damage, 0);
+                
                 break;
             }
 
-			case ALABARDA_ORCA: {//Daño 4, Coste 5, PROFICIENCIAS: Melee
+			case ALABARDA_ORCA: {//Daño 4, Coste 5, PROFICIENCIAS: Melee --Fin--
             if(current_player.getSecondProfiency().equals(Profiency.MELEE)){
                 bonus--;
             }
@@ -862,7 +869,7 @@ public class GameService {
                 break;
             }  
 
-			case ARCO_COMPUESTO: {//Daño 4, Coste 5, PROFICIENCIAS: Distancia
+			case ARCO_COMPUESTO: {//Daño 4, Coste 5, PROFICIENCIAS: Distancia --Fin--
             if(current_player.getSecondProfiency().equals(Profiency.DISTANCIA)){
                 bonus--;
             }
@@ -913,8 +920,8 @@ public class GameService {
                 break;
             }
 
-			case VOZ_DE_ALIENTO: {// Todos Recuperan 2 cartas, Roba 1 carta y gana 1 de Gloria
-                List<Player> players = turn.getGame().getPlayer();
+			case VOZ_DE_ALIENTO: {// Todos Recuperan 2 cartas, Roba 1 carta y gana 1 de Gloria --Fin--	
+                List<Player> players = findById(currentGameId).get().getPlayer();
                 for (Player player:players){
                         regainCards(player, 2);
                 }

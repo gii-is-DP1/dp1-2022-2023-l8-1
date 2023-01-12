@@ -237,16 +237,7 @@
 			</div>
 
 			<div class="enemyPile">
-				<h4>EnemyPile</h4>
-			</div>
-			<div class="marketPile">
-				<h4>MarketPile</h4>
-			</div>
-			<div class="player">
-				<h4>Other Player</h4>
-			</div>
-			<div class="player">
-				<h4>Other Player</h4>
+				<h4>EnemyPile ${player.enemy_kills }</h4>
 			</div>
 		</div>
 	</body>
