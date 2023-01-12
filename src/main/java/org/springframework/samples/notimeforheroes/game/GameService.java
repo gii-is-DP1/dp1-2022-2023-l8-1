@@ -556,6 +556,8 @@ public class GameService {
 
             card.setEnemyInGame(enemy); // Relacionar carta con enemigo
             card.setTurn(turn); // Relaciona con el turno
+            card.setPlayerDiscard(turn.getPlayer()); // Al descarte
+            card.setPlayer(null); // Fuera de la mano
             cards_used.add(card); // Añadir a la lista de cartas usadas usadas este truno
             cards_played_on.add(card); // Añadir a la lista de cartas sobre el enemigo
 
@@ -577,7 +579,7 @@ public class GameService {
 
                 Player currentPlayer = turn.getPlayer(); // Jugador actual
                 List<AbilityCardInGame> currentAbilityHand = currentPlayer.getAbilityHand();
-                
+
                 currentAbilityHand.remove(card); // La quitamos de la lista
                 card.setPlayer(null); // La desrelacionamos con la mano
                 abilityService.saveAbilityCardInGame(card); // Guardamos los cambios en la carta
@@ -589,6 +591,8 @@ public class GameService {
 
                 card.setTurn(turn); // Relaciona con el turno
                 cards_used.add(card); // Añadir a la lista de cartas usadas usadas este truno
+                card.setPlayerDiscard(turn.getPlayer()); // Al descarte
+                card.setPlayer(null); // Fuera de la mano
 
                 turn.setCardsPlayed(cards_used); // Setear la lista de cartas usadas este turno
 
