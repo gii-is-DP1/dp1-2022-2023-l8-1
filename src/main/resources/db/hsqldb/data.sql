@@ -49,7 +49,7 @@ INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('LLU
 INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('RECOGER_FLECHAS', 0, 'EXPLORADOR_MASCULINO', false);
 INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('RECOGER_FLECHAS', 0, 'EXPLORADOR_MASCULINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('SUPERVIVENCIA', 0, 'EXPLORADOR_MASCULINO', true);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('SUPERVIVENCIA', 0, 'EXPLORADOR_MASCULINO', false);
 
 
 INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('COMPANERO_LOBO', 2, 'EXPLORADOR_FEMENINO', true);
@@ -124,7 +124,7 @@ INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('VOZ
 -- MAGOS
 INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('AURA_PROTECTORA', 0, 'MAGO_MASCULINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('BOLA_DE_FUEGO', 2, 'MAGO_MASCULINO', false);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('BOLA_DE_FUEGO', 2, 'MAGO_MASCULINO',false);
 
 INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_GELIDO', 1, 'MAGO_MASCULINO', true);
 INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('DISPARO_GELIDO', 1, 'MAGO_MASCULINO', true);
