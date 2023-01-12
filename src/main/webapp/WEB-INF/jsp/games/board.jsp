@@ -94,11 +94,11 @@
 													<c:choose>
 														<c:when test="${cardInGame.abilityCard.target == true}">
 															<c:forEach var="enemies" items="${game.monsterField}">
-																<button class="btn-danger">Enemigo con id ${enemies.id}</button>
+																<input type="button" class="btn-danger">Enemigo con id ${enemies.id}</input>
 															</c:forEach>
 														</c:when>
 														<c:otherwise>
-															<button class="btn-danger">USAR CARTA</button>
+															<input type="button" class="btn-danger">USAR CARTA</input>
 														</c:otherwise>
 													</c:choose>
 										</c:when>
