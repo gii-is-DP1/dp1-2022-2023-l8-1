@@ -459,7 +459,7 @@ public class GameController {
                 maxGlory = player.getGlory();
                 winner = player;
             } else if (player.getGlory() == maxGlory) {
-                if(winner.getWounds()<player.getWounds()) {//cambiar a número de enemigos matados
+                if(winner.getEnemy_kills()<player.getEnemy_kills()) {
                     winner = player;
                 }
             }
