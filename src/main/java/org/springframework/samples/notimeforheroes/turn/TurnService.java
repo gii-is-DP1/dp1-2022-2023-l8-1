@@ -43,6 +43,7 @@ public class TurnService {
         turn.setGame(game);
         turn.setPlayer(player);
         turn.setType(phaseType);
+        turn.setCardsPlayed(List.of());
         save(turn);
 
     }
