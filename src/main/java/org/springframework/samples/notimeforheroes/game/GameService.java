@@ -712,12 +712,14 @@ public class GameService {
             }
 
 			case DISPARO_GELIDO: {// Daño 1, El enemigo afectado no causa daño este turno, Roba 1 --Fin--
-                if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
-                    bonus--;
-                }
-                if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
-                    bonus -= 2;
-                }
+                if(enemy.getEnemy().getCondition() != null){
+                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
+                                        bonus--;
+                        }
+                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
+                                        bonus -= 2;
+                        }
+                    }
                 for(AbilityCardInGame c:enemy.getCardsPlayed()){
                     if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
                         bonus++;
@@ -732,12 +734,14 @@ public class GameService {
             }
 
 			case FLECHA_CORROSIVA: {// Daño 1, Las siguientes cartas que dañen a este enemigo le hacen 1 más de daño, Pierdes 1 carta --Fin--
-                if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
-                    bonus--;
-                }
-                if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
-                    bonus -= 2;
-                }
+                if(enemy.getEnemy().getCondition() != null){
+                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
+                                        bonus--;
+                        }
+                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
+                                        bonus -= 2;
+                        }
+                    }
                 for(AbilityCardInGame c:enemy.getCardsPlayed()){
                     if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
                         bonus++;
@@ -752,11 +756,13 @@ public class GameService {
             }
 
 			case GOLPE_DE_BASTON: {// Daño 1, Si no es el primer "Golpe de bastón" usado contra este enemigo en lugar de 1 esta carta hace 2 de daño
+            if(enemy.getEnemy().getCondition() != null){
                 if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
-                    bonus--;
-                }
+                                    bonus--;
+                    }
                 if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
-                    bonus -= 2;
+                                    bonus -= 2;
+                    }
                 }
                 for(AbilityCardInGame c:enemy.getCardsPlayed()){
                     if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
@@ -774,12 +780,14 @@ public class GameService {
             }
 
 			case PROYECTIL_IGNEO: {// Daño 2, Gana 1 de Gloria --Fin--
-                if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
-                    bonus--;
-                }
-                if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
-                    bonus -= 2;
-                }
+                if(enemy.getEnemy().getCondition() != null){
+                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
+                                        bonus--;
+                        }
+                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
+                                        bonus -= 2;
+                        }
+                    }
                 for(AbilityCardInGame c:enemy.getCardsPlayed()){
                     if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
                         bonus++;
@@ -795,12 +803,14 @@ public class GameService {
             }
 
 			case TORRENTE_DE_LUZ: {// Daño 2, Todos menos tú recuperan 2, Ganas 1 de Gloria --Fin--
-                if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
-                    bonus--;
-                }
-                if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
-                    bonus -= 2;
-                }
+                if(enemy.getEnemy().getCondition() != null){
+                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
+                                        bonus--;
+                        }
+                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
+                                        bonus -= 2;
+                        }
+                    }
                 for(AbilityCardInGame c:enemy.getCardsPlayed()){
                     if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
                         bonus++;
@@ -937,12 +947,14 @@ public class GameService {
                 List<EnemyInGame> field = turn.getGame().getMonsterField();
                 for (EnemyInGame e:field){
                     bonus = 0;
-                    if(e.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
-                        bonus--;
-                    }
-                    if(e.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
-                        bonus -= 2;
-                    }
+                    if(enemy.getEnemy().getCondition() != null){
+                        if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
+                                            bonus--;
+                            }
+                        if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
+                                            bonus -= 2;
+                            }
+                        }
                     for(AbilityCardInGame c:e.getCardsPlayed()){
                         if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
                             bonus++;
