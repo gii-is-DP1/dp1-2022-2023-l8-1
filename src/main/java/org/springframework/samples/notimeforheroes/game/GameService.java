@@ -475,13 +475,13 @@ public class GameService {
 
                 playerService.savePlayer(player); // Actualizo el jugador en la DB
 
-                List<EnemyInGame> field = enemy.getGameField().getMonsterField(); // Me traigo el campo de Batalla
-                field.remove(enemy);
-                player.getGame().setMonsterField(field); // Actualizo el monsterfield donde se encontraba el enemigo en el Game
+//                List<EnemyInGame> field = enemy.getGameField().getMonsterField(); // Me traigo el campo de Batalla
+//                field.remove(enemy);
+                //player.getGame().setMonsterField(field); // Actualizo el monsterfield donde se encontraba el enemigo en el Game NO HACE FALTA
                 enemy.setGameField(null); // Elimino la relación del enemigo con el campo
 
                 enemyService.saveEnemyInGame(enemy);
-                gameRepository.save(player.getGame()); //Actualizo el enemigo y el game
+                //gameRepository.save(player.getGame()); //Actualizo el enemigo y el game NO HACE FALTA
 
                 List<AbilityCardInGame> cards_used_on = enemy.getCardsPlayed();
                 for (AbilityCardInGame c:cards_used_on){
