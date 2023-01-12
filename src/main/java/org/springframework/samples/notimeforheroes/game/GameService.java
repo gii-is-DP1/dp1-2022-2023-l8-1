@@ -296,15 +296,15 @@ public class GameService {
     // Mover carta del fondo del mazo de descartes al del de robo
     // RECUPERAR "N" CARTAS
     public void regainCards(Player player, int number_of_cards){
+
         List<AbilityCardInGame> pile = player.getAbilityPile(); //La pila de robo
         List<AbilityCardInGame> discard = player.getDiscardPile(); //La pila de descartes
-
         if(discard.size()<number_of_cards){
             number_of_cards= discard.size();
         }
 
         for(int i = 0; i < number_of_cards; i++){
-            AbilityCardInGame card = player.getDiscardPile().get(0); // La carta que está en el fondo de la pila de descartes
+            AbilityCardInGame card = discard.get(0); // La carta que está en el fondo de la pila de descartes
 
             pile.add(card); // La pongo en el fondo del mazo de robo
             discard.remove(card); // La quito de la lista de los descartes
@@ -934,8 +934,9 @@ public class GameService {
                 break;
             }
 
-			case ORBE_CURATIVO: {// Daño 0, Todos Recuperan 2 cartas, Eliminas 1 herida de tu héroe, Elimina esta carta del juego
-            List<Player> players = turn.getGame().getPlayer();
+			case ORBE_CURATIVO: {// Daño 0, Todos Recuperan 2 cartas, Eliminas 1 herida de tu héroe, Elimina esta carta del juego --Fin--
+                
+                List<Player> players = findById(currentGameId).get().getPlayer();
                 for (Player player:players){
                         regainCards(player, 2);
                 }

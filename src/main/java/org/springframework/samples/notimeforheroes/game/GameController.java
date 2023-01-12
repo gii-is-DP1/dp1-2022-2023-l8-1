@@ -573,7 +573,7 @@ public class GameController {
         Game currentGame = service.findById(gameId).get();
         Turn thisTurn =  currentGame.getTurn().get(currentGame.getTurn().size()-1);
         AbilityCardInGame card = abilityService.findById(cardId);
-        service.playAbilityCard(thisTurn, card, currentGame.getMonsterField().get(0), gameId);
+        service.playAbilityCard(thisTurn, card, new EnemyInGame(), gameId);
         
         return "redirect:/games/board/"+gameId;
     }
