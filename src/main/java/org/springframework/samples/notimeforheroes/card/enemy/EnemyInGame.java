@@ -50,6 +50,7 @@ public class EnemyInGame {
     	EnemyInGame enemyIG = new EnemyInGame();
     	enemyIG.setEnemy(enemy);
     	enemyIG.setGame(game);
+    	enemyIG.setCardsPlayed(List.of());
 		return enemyIG;
     }
 
