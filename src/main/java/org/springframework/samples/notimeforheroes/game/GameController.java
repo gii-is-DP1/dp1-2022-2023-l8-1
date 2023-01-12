@@ -362,8 +362,12 @@ public class GameController {
         if(currentTurn.getType() == PhaseType.ATAQUE){
             service.endAttack(currentPlayerGaming, currentTurn);
         }else if(currentTurn.getType() == PhaseType.MERCADO){
+
             turnService.newTurn(currentGame, currentPlayerGaming, PhaseType.RESTABLECIMIENTO);
         }else{
+            while((currentPlayerGaming.getAbilityHand().size() + Math.abs(currentPlayerGaming.getMarketHand().size() - currentPlayerGaming.getMarketDiscardPile().size())) < 4){
+                service.stealCard(currentPlayerGaming);
+            }
         	service.resupplyEnemies(gameId);
             if((currentPlayerGaming.getAbilityHand().size() + Math.abs(currentPlayerGaming.getMarketHand().size() - currentPlayerGaming.getMarketDiscardPile().size())) <= 4){
                 turnService.newTurn(currentGame, nextPlayerToGame, PhaseType.ATAQUE);
