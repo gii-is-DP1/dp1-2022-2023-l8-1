@@ -211,6 +211,7 @@
 				<div class="myCard yourHeroCard">
 					<img
 						src="<spring:url value="/resources/images/Cards/Heroes/${player.hero}.jpg" htmlEscape="true" />">
+						<h4>vida del héroe: ${player.wounds}</h4>
 				</div>
 				<div class="myCard enemyPileDefeated">
 					<img
