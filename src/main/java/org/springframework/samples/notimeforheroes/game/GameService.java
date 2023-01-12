@@ -913,7 +913,7 @@ public class GameService {
             }
 
 			case BOLA_DE_FUEGO: {//Daño 2, Daña a todos los enemigos, El resto de héroes sufren 1 de Daño
-                List<EnemyInGame> field = turn.getGame().getMonsterField();
+                List<EnemyInGame> field = findById(currentGameId).get().getMonsterField();
                 for (EnemyInGame e:field){
                     bonus = 0;
                     for(AbilityCardInGame c:e.getCardsPlayed()){
@@ -921,10 +921,10 @@ public class GameService {
                             bonus++;
                         }
                     }
-                    damageEnemy(current_player, e, card, total_damage + bonus, 0);
+                    damageEnemy(current_player, e, card, total_damage + bonus, 0); 
                 }
 
-                List<Player> jugadores = turn.getGame().getPlayer();
+                List<Player> jugadores = findById(currentGameId).get().getPlayer();
                 for(Player p:jugadores){
                     if(!p.equals(current_player)){
                         p.setWounds(p.getWounds()-1);
