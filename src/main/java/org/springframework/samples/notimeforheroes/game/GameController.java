@@ -128,6 +128,7 @@ public class GameController {
                 if(p.getUser().getUsername() == currentUser.getUsername()){
                     p.setHero(heroType);
                     abilityService.addAbilityCards(p, heroType);
+                    p.setWounds(abilityService.getWoundsHero(heroType));
                     playerService.savePlayer(p);
                 }
             }
@@ -458,7 +459,7 @@ public class GameController {
                 maxGlory = player.getGlory();
                 winner = player;
             } else if (player.getGlory() == maxGlory) {
-                if(winner.getWounds()<player.getWounds()) {
+                if(winner.getEnemy_kills()<player.getEnemy_kills()) {
                     winner = player;
                 }
             }
@@ -467,7 +468,6 @@ public class GameController {
         for(Player player:players) {
             if(player.getWounds()>0) {
                 acum += 1;
-
             }
         }
         if(acum == 0) {

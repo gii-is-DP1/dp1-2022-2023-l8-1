@@ -5,18 +5,29 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.persistence.EnumType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
+import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGameRepository;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityService;
 import org.springframework.samples.notimeforheroes.card.enemy.Enemy;
+import org.springframework.samples.notimeforheroes.card.ability.AbilityType;
 import org.springframework.samples.notimeforheroes.card.enemy.EnemyInGame;
 import org.springframework.samples.notimeforheroes.card.enemy.EnemyService;
+import org.springframework.samples.notimeforheroes.card.enemy.EnemyType;
 import org.springframework.samples.notimeforheroes.card.market.MarketCard;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
+import org.springframework.samples.notimeforheroes.card.market.MarketCardType;
 import org.springframework.samples.notimeforheroes.card.market.MarketService;
 import org.springframework.samples.notimeforheroes.player.Player;
 import org.springframework.samples.notimeforheroes.player.PlayerService;
+import org.springframework.samples.notimeforheroes.player.Profiency;
+import org.springframework.samples.notimeforheroes.turn.Turn;
+import org.springframework.samples.notimeforheroes.turn.TurnRepository;
+import org.springframework.samples.notimeforheroes.turn.TurnService;
 import org.springframework.samples.notimeforheroes.user.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,6 +47,8 @@ public class GameService {
     private PlayerService playerService;
     @Autowired
     private AbilityService abilityService;
+    @Autowired
+    private TurnService turnService;
     
     @Autowired
     public GameService(GameRepository repository){
@@ -68,7 +81,7 @@ public class GameService {
     //poblar los enemigos de la partida según el número de jugadores
     //2players:19enemies, 3players:23enemies, 4players:27enemies
     public void insertMonsterPile(int numPlayers) {
-    	int lastId = gameList().size();//TODO METER EL ID DEL JUEGO COMO VARIABLE A LA FUNCION
+    	int lastId = gameList().size(); //TODO METER EL ID DEL JUEGO COMO VARIABLE A LA FUNCION
     	int numCards=0;
     	switch(numPlayers) {
 	    	case 2:{
@@ -135,7 +148,6 @@ public class GameService {
 
         }
         
-
         return bestPlayerBet;
     }
 
@@ -143,9 +155,8 @@ public class GameService {
     public Player getCurrentPlayer(User user, int gameId){
         
         Game game = gameRepository.findById(gameId).get();
-
 	    List<Player> players = game.getPlayer();
-	    Player player = players.stream().filter(x->x.getUser().equals(user)).findFirst().get();
+	    Player player = players.stream().filter(x -> x.getUser().equals(user)).findFirst().get();
 
         return player;
 
@@ -156,12 +167,10 @@ public class GameService {
 
         Player currentPlayer = getCurrentPlayer(user, gameId);
         
-
         List<MarketCardInGame> marketHand = currentPlayer.getMarketHand(); // Obtengo la lista de cartas de mercado que tiene el jugador
         
         MarketCardInGame currentMarketCard = marketService.findById(marketCardId); // Obtengo la carta seleccionada para comprar dado su id
         MarketCard marketCard = currentMarketCard.getMarketCard();
-
 
         // Comprobamos si el jugador tiene suficiente oro para comprar la carta y si su héroe es compatible con la carta
         if((currentPlayer.getGold() >= marketCard.getPrice()) && 
@@ -170,6 +179,10 @@ public class GameService {
         (marketCard.getProfiency3().equals(currentPlayer.getProfiency())) ||
         (marketCard.getProfiency4().equals(currentPlayer.getProfiency())))){
             currentMarketCard.setPlayer(currentPlayer);
+            
+            AbilityType ability = (AbilityType) AbilityType.valueOf(currentMarketCard.getMarketCard().getType().toString());
+            List<AbilityCardInGame> ability_cards = abilityService.findAll().stream().filter(x -> x.getAbilityType().equals(ability)).map(card -> abilityService.createHandInPlayer(currentPlayer, card)).collect(Collectors.toList());
+            abilityService.saveAbilityCardInGame(ability_cards.get(0));
 
             marketHand.add(currentMarketCard); // Compramos la carta añadiendola a la lista de cartas de mercado del jugador
             marketService.addCardToMarket(currentMarketCard, gameId);
@@ -186,21 +199,19 @@ public class GameService {
     
     public void discardAbilityCard(User user, int gameId, int abilityCardId){
 
-        Player currentPlayer = getCurrentPlayer(user, gameId);
+        Player currentPlayer = getCurrentPlayer(user, gameId); // Jugador actual
 
-        List<AbilityCardInGame> currentAbilityHand = currentPlayer.getAbilityHand();
+        List<AbilityCardInGame> currentAbilityHand = currentPlayer.getAbilityHand(); //Cartas en mano
 
-        AbilityCardInGame currentCard = abilityService.findById(abilityCardId);
-        currentAbilityHand.remove(currentCard);
+        AbilityCardInGame currentCard = abilityService.findById(abilityCardId); // Carta a mandar al descarte
+        currentAbilityHand.remove(currentCard); // La quitamos de la lista
         
-        currentCard.setPlayerDiscard(currentPlayer);
-        currentCard.setPlayer(null);
-        abilityService.saveAbilityCardInGame(currentCard);
+        currentCard.setPlayerDiscard(currentPlayer); // La relacionamos con el descarte
+        currentCard.setPlayer(null); // La desrelacionamos con la mano
+        abilityService.saveAbilityCardInGame(currentCard); // Guardamos los cambios en la carta
 
-        currentPlayer.setAbilityHand(currentAbilityHand);
-        playerService.savePlayer(currentPlayer);
-
-
+        currentPlayer.setAbilityHand(currentAbilityHand); // Reasignamos la mano al jugador
+        playerService.savePlayer(currentPlayer); // Guardamos los cambios
     }
 
     public void discardMarketCard(User user, int gameId, int marketCardId) {
@@ -220,8 +231,6 @@ public class GameService {
 
         int i = 0;
         Math.abs(i);
-
-
     }
 
     public void stealCard(Player player){
@@ -243,9 +252,6 @@ public class GameService {
             }
             // player.setAbilityPile(pile);
             // player.setDiscardPile(discards);
-
-
-
             playerService.savePlayer(player);
         }
 
@@ -258,11 +264,10 @@ public class GameService {
         
         abilityService.saveAbilityCardInGame(card);
         playerService.savePlayer(player);
-
-
-
     }
 
+    // Mueve una carta específica del mazo a la mano
+    //
     public void recoverCard(int cardId, Player player){
         AbilityCardInGame card = abilityService.findById(cardId);
 
@@ -281,6 +286,209 @@ public class GameService {
         abilityService.saveAbilityCardInGame(card);
         
     }
+
+    // Mover carta del fondo del mazo de descartes al del de robo
+    // RECUPERAR "N" CARTAS
+    public void regainCards(Player player, int number_of_cards){
+        List<AbilityCardInGame> pile = player.getAbilityPile(); //La pila de robo
+        List<AbilityCardInGame> discard = player.getDiscardPile(); //La pila de descartes
+
+        for(int i = 0; i < number_of_cards; i++){
+            AbilityCardInGame card = player.getDiscardPile().get(0); // La carta que está en el fondo de la pila de descartes
+
+            pile.add(card); // La pongo en el fondo del mazo de robo
+            discard.remove(card); // La quito de la lista de los descartes
+
+            card.setPlayerDiscard(null); // La quito del descarte
+            card.setPlayerPile(player); // Le asigno la pila de robo
+            abilityService.saveAbilityCardInGame(card); // Guardo los datos
+        }
+
+        player.setAbilityPile(pile); 
+        player.setDiscardPile(discard); //Actualizo las listas de robo y descarte
+
+        playerService.savePlayer(player); // Guardo al jugador con las nuevas listas
+        
+    }
+
+    // Robar cartas del mazo, contando conque si voy a robar más de lo que hay en el mazo tengo que barajar primero para seguir robando
+    // ROBA N CARTAS
+    public void drawCards(Player player, int number_of_cards){
+
+        List<AbilityCardInGame> pile = player.getAbilityPile();
+        List<AbilityCardInGame> hand = player.getAbilityHand();
+        List<AbilityCardInGame> discards= player.getDiscardPile(); // Saco las listas de la pila de robo, la mano y el mazo de descartes
+        int cards_drawn = 0; // Esto servirá para en caso de que el mazo de robo sea más pequeño que el número de cartas a robar pueda limitar el robo al rebarajarlo
+
+        if(pile.size() < number_of_cards){ // Si voy a robar más cartas de las que tengo en el mazo
+            for(int i = 0; i < pile.size(); i++){ // Aquí robo las cartas que quedan en la pila de robo
+                pile.get(0).setPlayer(player);
+                hand.add(pile.get(0)); //Me meto la carta en la lista de la mano
+
+                pile.get(0).setPlayerPile(null);
+                pile.remove(pile.get(i)); // Elimino la cartas que he robado de la pila
+
+                abilityService.saveAbilityCardInGame(pile.get(0)); //Guardo los cambios de la carta
+                cards_drawn++; //Contador de cartas robadas
+
+            } // Aquí la pile de robo debería estar vacía
+
+            for(int i = 0; i < discards.size(); i++){ //Recorro las cartas del desgaste
+                discards.get(0).setPlayerPile(player);
+                pile.add(discards.get(0)); //Meto la carta en el mazo de robo
+
+                discards.get(0).setPlayerDiscard(null);
+                discards.remove(discards.get(0)); // Las elimino de la pila de descartes
+
+                abilityService.saveAbilityCardInGame(discards.get(0)); //Guardo los cambios en la carta
+
+            }
+
+            Collections.shuffle(pile); //Barajo el mazo de robo
+            player.setWounds(player.getWounds()+1); //Añado una herida a mi héroe por haber barajado
+            player.setDiscardPile(discards); //Asigno la pila de descarte recompuesta al player
+        }
+
+        for(int i = 0; i < number_of_cards-cards_drawn; i++){ // Aqui robo de la pila de robo barajada las cartas restantes a la mano
+            AbilityCardInGame card = pile.get(0);
+
+            card.setPlayer(player);
+            hand.add(card); // Me la llevo a la mano
+
+            card.setPlayerPile(null);
+            pile.remove(card); // La quito de la pila de robo
+            
+            abilityService.saveAbilityCardInGame(card);
+        }
+        player.setAbilityPile(pile); //Asigno la pila de robo recompuesta al player
+        player.setAbilityHand(hand); //Asigno la mano recompuesta al player
+        playerService.savePlayer(player); //Guardo aqui los cambios a las 3 relaciones de player
+
+    }
+
+    // Mover carta del fondo del mazo de descartes al fondo del robo
+    // RECUPERAR "N" CARTAS
+    public void loseCards(Player player, int number_of_cards){
+
+        List<AbilityCardInGame> pile = player.getAbilityPile();
+        List<AbilityCardInGame> discards= player.getDiscardPile(); // Saco las listas de la pila de robo, la mano y el mazo de descartes
+        int cards_lost = 0; // Esto servirá para en caso de que el mazo de robo sea más pequeño que el número de cartas a robar pueda limitar el robo al rebarajarlo
+
+        if(pile.size() < number_of_cards){ // Si voy a perder más cartas de las que tengo en el mazo
+            for(int i = 0; i < pile.size(); i++){ // Aquí robo las cartas que quedan en la pila de robo
+                pile.get(0).setPlayerDiscard(player);
+                discards.add(pile.get(0)); //Me meto la carta en la lista de la pila de desgaste
+
+                pile.get(0).setPlayerPile(null);
+                pile.remove(pile.get(i)); // Elimino la cartas que he perdido de la pila
+
+                abilityService.saveAbilityCardInGame(pile.get(0)); //Guardo los cambios de la carta
+                cards_lost++; //Contador de cartas robadas
+
+            } // Aquí la pile de robo debería estar vacía
+
+            for(int i = 0; i < discards.size(); i++){ //Recorro las cartas del desgaste
+                discards.get(0).setPlayerPile(player);
+                pile.add(discards.get(0)); //Meto la carta en el mazo de robo
+
+                discards.get(0).setPlayerDiscard(null);
+                discards.remove(discards.get(0)); // Las elimino de la pila de descartes
+
+                abilityService.saveAbilityCardInGame(discards.get(0)); //Guardo los cambios en la carta
+
+            } // Aquí debería de estar lleno el robo y vacío los descartes
+
+            Collections.shuffle(pile); //Barajo el mazo de robo
+            player.setWounds(player.getWounds()+1); //Añado una herida a mi héroe por haber barajado
+            player.setDiscardPile(discards); //Asigno la pila de descarte recompuesta al player
+        }
+
+        for(int i = 0; i < number_of_cards-cards_lost; i++){ // Aqui robo de la pila de robo barajada las cartas restantes a la mano
+            AbilityCardInGame card = pile.get(0);
+
+            card.setPlayerDiscard(player);
+            discards.add(card); // Me la llevo al descarte
+
+            card.setPlayerPile(null);
+            pile.remove(card); // La quito de la pila de robo
+            
+            abilityService.saveAbilityCardInGame(card);
+        }
+        player.setAbilityPile(pile); //Asigno la pila de robo recompuesta al player
+        player.setDiscardPile(discards); //Asigno la pila de descarte recompuesta al player
+        playerService.savePlayer(player); //Guardo aqui los cambios a las 3 relaciones de player
+        
+    }
+
+    @Transactional
+    //Dañar a un enemigo y si fuera a matarlo me otorga su gloria y oro, sumandome su baja, considerando los efectos de los bosses
+	public void damageEnemy (Player player, EnemyInGame enemy, AbilityCardInGame card, int damage, int addGold){ 
+        //Jugador que ataca, enemigo al que ataca, Carta que usa, Daño de la carta bajo las condiciones pertienentes, Oro adicional que 
+        //pueda ser necesario si el enemigo fue asesinado por una carta en específico como ATAQUE_FURTIVO
+
+		int current_enemy_wounds = enemy.getWounds(); // Las heridas que tiene mi enemigo
+        int endurance = enemy.getEnemy().getEndurance(); // La fortitud del mismo
+        int life_total = endurance-current_enemy_wounds; // El daño necesario para matarlo
+        int glory = player.getGlory(); // Gloria actual del jugador
+
+        if (life_total > damage){ // Caso donde el enemigo sobrevive
+                enemy.setWounds(current_enemy_wounds + damage); // Recalculo las heridas del enemigo
+                enemyService.saveEnemyInGame(enemy); // Guardo la actualización del enemy
+            if(enemy.getEnemy().getIsBoss()){ // Es un boss){
+
+                player.setGlory(glory + 1); // Como he dañado a un jefe gano 1 de Gloria
+                playerService.savePlayer(player); // Guardo los cambios a player
+
+                if(enemy.getEnemy().getType().equals(EnemyType.GURDRUG)){ // Si atacas a GUDRUG pierdes 1 carta
+                    loseCards(player, 1);
+                }else if(enemy.getEnemy().getType().equals(EnemyType.SHRIEKKNIFER) && damage == 1){ // Si atacas a SHRIEKKNIFER con cartas de 1 de daño recuperas 1 carta
+                    regainCards(player, 1);
+                }
+            }
+        }else{  
+            if(enemy.getEnemy().getIsBoss()){ // Es un boss){
+                glory++; //Incremento la gloria que le voy a asignar luego
+                if(enemy.getEnemy().getType().equals(EnemyType.GURDRUG)){ // Si atacas a GUDRUG pierdes 1 carta
+                    loseCards(player, 1);
+                }else if(enemy.getEnemy().getType().equals(EnemyType.SHRIEKKNIFER) && damage == 1){ // Si atacas a SHRIEKKNIFER con cartas de que le hagan 1 punto de daño recuperas 1 carta
+                    regainCards(player, 1);
+                }
+            }
+                int kills = player.getEnemy_kills(); 
+                int gold= player.getGold(); // Recojo las kills y el oro
+
+                player.setEnemy_kills(kills + 1);
+                player.setGlory( glory + enemy.getEnemy().getGlory());
+                player.setGold( gold + enemy.getEnemy().getGold() + addGold); // Recalculo los campos del jugador
+
+                playerService.savePlayer(player); // Actualizo el jugador en la DB
+
+                List<EnemyInGame> field = enemy.getGameField().getMonsterField(); // Me traigo el campo de Batalla
+                field.remove(enemy);
+                player.getGame().setMonsterField(field); // Actualizo el monsterfield donde se encontraba el enemigo en el Game
+                enemy.setGameField(null); // Elimino la relación del enemigo con el campo
+
+                enemyService.saveEnemyInGame(enemy);
+                gameRepository.save(player.getGame()); //Actualizo el enemigo y el game
+
+                List<AbilityCardInGame> cards_used_on = enemy.getCardsPlayed();
+                for (AbilityCardInGame c:cards_used_on){
+                    c.setEnemyInGame(null);
+                    abilityService.saveAbilityCardInGame(c); //Elimino la relación de cada carta con el Enemy que fue derrotado
+
+                }
+                enemy.setCardsPlayed(null);
+                enemyService.saveEnemyInGame(enemy);
+        }
+	}
+    
+    @Transactional
+	public void reduceDamage (Turn turn, int reduction){ //Asigno el número de daño a reducir este turno, entra el turno y número fijo a sumar
+		turn.setDamageReduction(turn.getDamageReduction() + reduction);
+		turnService.save(turn);
+        // TODO REVISAR EL SAVE DE TURN
+
+		}
 
     public void recoverMarketCard(int marketCardId, Player player){
         MarketCardInGame card = marketService.findById(marketCardId);
@@ -331,7 +539,227 @@ public class GameService {
 
 
     }
+    
+    @Transactional
+    public void registerCardUsage(Turn turn, EnemyInGame enemy, AbilityCardInGame card){
 
+        List<AbilityCardInGame> cards_used = turn.getCardsPlayed(); // Cartas jugadas este turno
 
+        if(card.getAbilityCard().getTarget()){
+            List<AbilityCardInGame> cards_played_on = enemy.getCardsPlayed(); // Cartas jugadas sobre el enemigo actualmente
 
+            card.setEnemyInGame(enemy); // Relacionar carta con enemigo
+            cards_used.add(card); // Añadir a la lista de cartas usadas usadas este truno
+            cards_played_on.add(card); // Añadir a la lista de cartas sobre el enemigo
+
+            turn.setCardsPlayed(cards_used); // Setear la lista de cartas usadas este turno
+            enemy.setCardsPlayed(cards_played_on); // Setear la lista de cartas usadas sobre el enemigo
+
+            turnService.save(turn); // Guardo los cambios en el turno
+            enemyService.saveEnemyInGame(enemy); // Guardo los cambios del enemigo
+            abilityService.saveAbilityCardInGame(card); // // Guardo los cambios de LA CARTA
+
+            discardAbilityCard(turn.getPlayer().getUser(), turn.getGame().getId(), card.getId()); // Mando la carta de la mano al desgaste
+
+            if(card.getAbilityCard().getAbilityType().equals(AbilityType.DAGA_ELFICA) && 
+            (turn.getPlayer().getProfiency()==Profiency.PERICIA || turn.getPlayer().getSecondProfiency()==Profiency.PERICIA)){
+                // Caso especial de uso de carta, la Daga Élfica se recupera directamente si el Héroe que la usa tiene Pericia como Profiency
+                recoverCard(card.getId(), turn.getPlayer());
+
+        }else{
+            cards_used.add(card); // Añadir a la lista de cartas usadas usadas este truno
+
+            turn.setCardsPlayed(cards_used); // Setear la lista de cartas usadas este turno
+
+            turnService.save(turn); // Guardo los cambios en el turno
+
+            discardAbilityCard(turn.getPlayer().getUser(), turn.getGame().getId(), card.getId()); // Mando la carta de la mano al desgaste
+        }
+
+        }
+    }
+
+        @Transactional
+	public void playAbilityCard(Turn turn, AbilityCardInGame card, EnemyInGame enemy){
+		AbilityType card_type = card.getAbilityCard().getAbilityType(); // Tipo de carta usada
+		// HAY QUE PONER UN BREAK; AL FINAL DE CADA UNO
+        // En las cartas de mercado hay que mirar la segunda proficiencia del héroe para ver si hay que restar
+        // Checkear si el enemigo tiene reducción al daño en las cartas mágicas
+
+        Player current_player = turn.getPlayer(); // Jugador actual
+        List<AbilityCardInGame> turn_cards = turn.getCardsPlayed(); // Las cartas que se han jugado este turno
+        List<AbilityCardInGame> enemy_cards = enemy.getCardsPlayed(); // Las cartas que se jugaron sobre el enemigo este turno
+		int my_wounds = current_player.getWounds(); // Las heridas que tengo
+		int my_dmg_reduction = turn.getDamageReduction(); // Cuanto daño me reduzco actualmente
+		List<AbilityCardInGame> mazo_actual = current_player.getAbilityPile(); // Las cartas de mi mazo actualmente
+        int card_damage = card.getAbilityCard().getDamage(); // Daño de la carta usada
+        int plain_add_dmg = (int) turn_cards.stream().filter(x->x.getAbilityCard().getAbilityType().equals(AbilityType.PIEDRA_DE_AMOLAR)).count(); // Cuento las piedras de amolar para sumar daño
+        int total_damage = card_damage + plain_add_dmg; // Daño total tras la suma
+        int bonus = 0;
+		switch (card_type) {
+			case COMPANERO_LOBO: // Daño 2, Previenes 2 de Daño
+				damageEnemy(current_player, enemy, card, card_damage + plain_add_dmg, 0);
+				reduceDamage(turn, my_dmg_reduction + 2);
+                break;
+
+			case DISPARO_CERTERO: // Daño 3, Pierdes 1 cartas, Finalizas tu ataque
+				damageEnemy(current_player, enemy, card, total_damage, 0);
+				loseCards(current_player, 1);
+                // Finalizar ataque hay que coordinarlo con Miguel para ver como lo hacemos
+                break;
+
+			case DISPARO_RAPIDO: // Daño 1, Roba 1 si es "Disparo rápido" úsala, sino ponla al fondo del mazo de Habilidad
+                for(AbilityCardInGame c:mazo_actual){
+                    if(c.getAbilityCard().getAbilityType().equals(AbilityType.DISPARO_RAPIDO)){
+                        bonus++;
+                    }else{
+                        break;
+                    }
+                drawCards(current_player, bonus);
+                for(int i = 0; i < bonus; i++)
+                    damageEnemy(current_player, enemy, card, total_damage, 0);
+                }
+                // Le pongo un pin a esto y luego vuelvo la clave esta en el robo y descarte
+                break;
+
+			case EN_LA_DIANA: // Daño 4, Gana 1 de Gloria, Pierdes 1 carta
+                damageEnemy(current_player, enemy, card, total_damage, 0);
+                current_player.setGlory(current_player.getGlory()+1);
+                playerService.savePlayer(current_player);
+                loseCards(current_player, 1);
+                break;
+			case LLUVIA_DE_FLECHAS: // Daño 2, Esta carta daña a 2 enemigos y al héroe con menos heridas, en empate tú eliges
+            //Le pongo un pin luego volvemos
+
+			case ATAQUE_BRUTAL: // Daño 3, Pierdes 1 carta
+                damageEnemy(current_player, enemy, card, total_damage, 0);
+                loseCards(current_player, 1);
+                break;
+
+			case CARGA_CON_ESCUDO: // Daño 2, Previenes 2 de Daño
+                damageEnemy(current_player, enemy, card, total_damage, 0);
+                reduceDamage(turn, my_dmg_reduction + 2);
+                break;
+
+			case DOBLE_ESPADAZO: // Daño 2, Pierdes 1 carta
+                damageEnemy(current_player, enemy, card, total_damage, 0);
+                loseCards(current_player, 1);
+                break;
+
+			case ESPADAZO: // Daño 1, si el primer "Espadazo" que juegas Roba 1
+                damageEnemy(current_player, enemy, card, total_damage, 0);
+                if(turn_cards.stream().filter(x->x.getAbilityCard().getAbilityType().equals(card.getAbilityCard().getAbilityType())).count() == 1){
+                    drawCards(current_player, 1);
+                }
+                break;
+
+			case TODO_O_NADA: // Daño 1, Roba 1 carta y súmale su daño a esta carta, Recupera la carta que robaste
+                AbilityCardInGame top_card = mazo_actual.get(0); //Carta del Top del Mazo
+                mazo_actual.remove(top_card); 
+                mazo_actual.add(top_card); // Esto la manda para abajo
+                current_player.setAbilityPile(mazo_actual);
+                playerService.savePlayer(current_player); // Guardo los cambios en la pila
+                damageEnemy(current_player, enemy, card, total_damage + top_card.getAbilityCard().getDamage(), 0);
+                break;
+
+			case DISPARO_GELIDO: // Daño 1, El enemigo afectado no causa daño este turno, Roba 1
+                for(AbilityCardInGame c:enemy.getCardsPlayed()){
+                    if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
+                        bonus++;
+                    }
+                }
+                damageEnemy(current_player, enemy, card, total_damage + bonus, 0);
+                drawCards(current_player, 1);
+                // CHECKEAR LA NEGACIÓN DEL DAÑO EN LA LISTA AL TRANSICIONAR DE FASE
+                break;
+
+			case FLECHA_CORROSIVA: // Daño 1, Las siguientes cartas que dañen a este enemigo le hacen 1 más de daño, Pierdes 1 carta
+                for(AbilityCardInGame c:enemy.getCardsPlayed()){
+                    if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
+                        bonus++;
+                    }
+                }
+                damageEnemy(current_player, enemy, card, total_damage + bonus, 0);
+                loseCards(current_player, 1);
+                break;
+
+			case GOLPE_DE_BASTON: // Daño 1, Si no es el primer "Golpe de bastón" usado contra este enemigo en lugar de 1 esta carta hace 2 de daño
+                for(AbilityCardInGame c:enemy.getCardsPlayed()){
+                    if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
+                        bonus++;
+                    }
+                }
+                if(turn_cards.stream().filter(x->x.getAbilityCard().getAbilityType().equals(card.getAbilityCard().getAbilityType())).count() == 1){
+                    bonus++;
+                }
+                damageEnemy(current_player, enemy, card, total_damage + bonus, 0);
+                break;
+
+			case PROYECTIL_IGNEO: // Daño 2, Gana 1 de Gloria
+                for(AbilityCardInGame c:enemy.getCardsPlayed()){
+                    if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
+                        bonus++;
+                    }
+                }
+                damageEnemy(current_player, enemy, card, total_damage + bonus, 0);
+                current_player.setGlory(current_player.getGlory() + 1);
+                playerService.savePlayer(current_player);
+                break;
+
+			case TORRENTE_DE_LUZ: // Daño 2, Todos menos tú recuperan 2, Ganas 1 de Gloria
+                for(AbilityCardInGame c:enemy.getCardsPlayed()){
+                    if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
+                        bonus++;
+                    }
+                }
+                damageEnemy(current_player, enemy, card, total_damage + bonus, 0);
+                List<Player> not_you = turn.getGame().getPlayer();
+                for (Player player:not_you){
+                    if(!current_player.equals(player)){
+                        regainCards(player, 2);
+                    }
+                }
+                current_player.setGlory(current_player.getGlory() + 1);
+                playerService.savePlayer(current_player);
+                break;
+
+			case AL_CORAZON: // Daño 4, Si derrotas un enemigo con esto gana 1 Moneda si el primer "Al Corazón" del turno, Pierdes 1 carta
+            if(turn_cards.stream().filter(x->x.getAbilityCard().getAbilityType().equals(card.getAbilityCard().getAbilityType())).count() == 1 && 
+                enemy.getEnemy().getEndurance()-enemy.getWounds() > total_damage){
+                bonus++;
+            }
+            damageEnemy(current_player, enemy, card, total_damage, bonus);
+            loseCards(current_player, bonus);
+			case ATAQUE_FURTIVO: // Daño 2, Si derrotas un enemigo con esto gana 1 Moneda si el primer "Ataque Furtivo" del turno
+			case BALLESTA_PRECISA: // Daño 2, Si ya usaste "Ballesta precisa" contra ese enemigo hace 1 punto más de daño
+			case EN_LAS_SOMBRAS: // Daño 1, Previenes 2 de Daño
+			case DAGA_ELFICA: //Daño 2, Coste 3, Si el héroe tiene como Proficiency "Pericia" se recupera tras jugarla, PROFICIENCIAS:  Distancia, Pericia, Melee
+			case ALABARDA_ORCA: //Daño 4, Coste 5, PROFICIENCIAS: Melee
+			case ARCO_COMPUESTO: //Daño 4, Coste 5, PROFICIENCIAS: Distancia
+			///// Hacen target pero no daño
+			case SUPERVIVENCIA: // Daño 0, Cambia 1 enemigo por el siguiente en el mazo de Horda
+			case ESCUDO: // Previenes el daño de un enemigo, Finalizas tu ataque
+			case ENGANAR: // Daño 0, Cuesta 2 monedas, El enemigo elegido no hace daño este turno
+			case CAPA_ELFICA: // Daño 0, Coste 3, El enemigo seleccionado no hace daño este turno, PROFICIENCIAS : Distancia, Magia
+			///// No requieren de obejtivo
+			case RECOGER_FLECHAS: // Daño 0, Recupera un "Disparo Rápido", Baraja tu mazo de Habildades, Gana 1 moneda
+			case PASO_ATRAS: // Daño 0, Roba 2
+			case VOZ_DE_ALIENTO: // Todos Recuperan 2 cartas, Roba 1 carta y gana 1 de Gloria
+			case AURA_PROTECTORA: //Daño 0, Cancela el daño del próximo ataque sufrido, Pierdes X cartas donde X es el número de enemigos en el campo
+			case BOLA_DE_FUEGO: //Daño 2, Daña a todos los enemigos, El resto de héroes sufren 1 de Daño
+			case ORBE_CURATIVO: // Daño 0, Todos Recuperan 2 cartas, Eliminas 1 herida de tu héroe, Elimina esta carta del juego
+			case RECONSTITUCION: // Daño 0, Roba 1 carta, Recupera 2 cartas
+			case ROBAR_BOLSILLOS: //Daño 0, Roba 1 moneda a cada héroe
+			case SAQUEO: //Daño 0, Gana 1 moneda por cada Enemigo en el campo, Ganas 1 de Gloria
+			case TRAMPA: // Daño 0, Al resolver el ataque de la horda derrotas al enemigo de mayor Fortaleza pero su botín se anula
+			case POCION_CURATIVA: //Daño 0, Coste 8, Retira una herida de tu héroe, Eliminala del juego
+			case PIEDRA_DE_AMOLAR: // Daño 0. Coste 4, Todas tus cartas hacen 1 más de daño este turno si hacían al menos 1 de Daño
+			case VIAL_DE_CONJURACION: // Daño 0, Coste 5, Busca una carta de tu pila de Desgaste y ponla en tu mano
+			case ELIXIR_DE_CONCENTRACION: // Daño 0, Coste 3, Roba 3 cartas
+			case ARMADURA_DE_PLACAS: //Daño 0, Coste 4, Recuperas 4 cartas, PROFICIENCIAS: Melee
+		  }
+
+          registerCardUsage(turn, enemy, card); // Registra el uso de la carta
+
+	}
 }

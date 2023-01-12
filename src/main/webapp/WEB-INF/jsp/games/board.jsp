@@ -81,28 +81,33 @@
 								</c:when>
 								<c:otherwise>
 									<img src= "/resources/images/Cards/Abilities/${cardInGame.abilityCard.abilityType}.jpg" width="100"/>
-									<c:choose>
-										<c:when test="${isMyTurn && fase.toString() == 'ATAQUE'}">
-											<button onclick="Event">
-												<select class="selector">
-													<option>NO USAR CARTA</option>
-													<c:forEach var="enemies" items="${game.monsterField}">
-														<option>Enemigo con id ${enemies.id}</option>
-													</c:forEach>
-												</select>
-											</button>
-										</c:when>
-										<c:otherwise>
-											<button onclick="Event">
-												<h3>No es tu turno/fase de ataque</h3>
-											</button>
-										</c:otherwise>
-									</c:choose>
+									
 
 								</c:otherwise>
 							</c:choose>
 							
 							<h4 class="cardplayer">Damage:<c:out value=" ${cardInGame.abilityCard.damage}"/></h4>
+						</div>
+						<div>
+									<c:choose>
+										<c:when test="${isMyTurn && fase.toString() == 'ATAQUE'}">
+													<c:choose>
+														<c:when test="${cardInGame.abilityCard.target == true}">
+															<c:forEach var="enemies" items="${game.monsterField}">
+																<input type="button" class="btn-danger">Enemigo con id ${enemies.id}</input>
+															</c:forEach>
+														</c:when>
+														<c:otherwise>
+															<input type="button" class="btn-danger">USAR CARTA</input>
+														</c:otherwise>
+													</c:choose>
+										</c:when>
+										<c:otherwise>
+											<button onclick="Event" class="btn-danger">
+												<h3>No es tu turno/fase de ataque</h3>
+											</button>
+										</c:otherwise>
+									</c:choose>
 						</div>
 						
 				</c:forEach>
@@ -206,6 +211,7 @@
 				<div class="myCard yourHeroCard">
 					<img
 						src="<spring:url value="/resources/images/Cards/Heroes/${player.hero}.jpg" htmlEscape="true" />">
+						<h4>vida del héroe: ${player.wounds}</h4>
 				</div>
 				<div class="myCard enemyPileDefeated">
 					<img
