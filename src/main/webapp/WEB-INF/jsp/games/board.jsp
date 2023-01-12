@@ -108,6 +108,11 @@
 															</c:forEach>
 														</c:when>
 														<c:otherwise>
+															<spring:url value="/games/{gameId}/cardAction/{abilityCardInGameId}" var="useCard">
+																	<spring:param name="abilityCardInGameId" value="${cardInGame.id}"></spring:param>
+																	<spring:param name="gameId" value="${game.id}"></spring:param>
+
+															</spring:url>
 															<a href="${fn:escapeXml(useCard)}">
 															<input type="button" class="btn-danger" value="USAR CARTA"></input>
 															</a>

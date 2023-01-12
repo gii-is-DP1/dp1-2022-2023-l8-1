@@ -299,6 +299,10 @@ public class GameService {
         List<AbilityCardInGame> pile = player.getAbilityPile(); //La pila de robo
         List<AbilityCardInGame> discard = player.getDiscardPile(); //La pila de descartes
 
+        if(discard.size()<number_of_cards){
+            number_of_cards= discard.size();
+        }
+
         for(int i = 0; i < number_of_cards; i++){
             AbilityCardInGame card = player.getDiscardPile().get(0); // La carta que está en el fondo de la pila de descartes
 
@@ -556,6 +560,8 @@ public class GameService {
 
             card.setEnemyInGame(enemy); // Relacionar carta con enemigo
             card.setTurn(turn); // Relaciona con el turno
+            card.setPlayerDiscard(turn.getPlayer()); // Al descarte
+            card.setPlayer(null); // Fuera de la mano
             cards_used.add(card); // Añadir a la lista de cartas usadas usadas este truno
             cards_played_on.add(card); // Añadir a la lista de cartas sobre el enemigo
 
@@ -577,7 +583,7 @@ public class GameService {
 
                 Player currentPlayer = turn.getPlayer(); // Jugador actual
                 List<AbilityCardInGame> currentAbilityHand = currentPlayer.getAbilityHand();
-                
+
                 currentAbilityHand.remove(card); // La quitamos de la lista
                 card.setPlayer(null); // La desrelacionamos con la mano
                 abilityService.saveAbilityCardInGame(card); // Guardamos los cambios en la carta
@@ -588,7 +594,9 @@ public class GameService {
             }else{
 
                 card.setTurn(turn); // Relaciona con el turno
-                cards_used.add(card); // Añadir a la lista de cartas usadas usadas este truno
+                cards_used.add(card); // Añadir a la lista de cartas usadas usadas este turno
+                card.setPlayerDiscard(turn.getPlayer()); // Al descarte
+                card.setPlayer(null); // Fuera de la mano
 
                 turn.setCardsPlayed(cards_used); // Setear la lista de cartas usadas este turno
 
@@ -602,7 +610,7 @@ public class GameService {
     // Terminar prematuramente el turno
     public void endAttack(Player player, Turn turn) {
         List<EnemyInGame> field = turn.getGame().getMonsterField(); // Cojo los enemigos
-        List<AbilityType> damage_nullifiers = Arrays.asList(AbilityType.ESCUDO, AbilityType.DISPARO_GELIDO,AbilityType.ENGANAR, AbilityType.CAPA_ELFICA, AbilityType.AURA_PROTECTORA); //Anuladores de daño
+        List<AbilityType> damage_nullifiers = Arrays.asList(AbilityType.ESCUDO, AbilityType.DISPARO_GELIDO,AbilityType.ENGANAR, AbilityType.CAPA_ELFICA); //Anuladores de daño
         int damage_taken = 0; // Aquí guardo el daño a sufrir
         for (EnemyInGame e:field){ 
             List<AbilityType> lista_tipos = e.getCardsPlayed().stream().map(x->x.getAbilityCard().getAbilityType()).collect(Collectors.toList()); // Ver si le han usado algun anulador de daño
@@ -617,6 +625,15 @@ public class GameService {
             loseCards(player, damage_taken); //Pierdo cartas igual al número de daños sufridos
             turnService.newTurn(turn.getGame(), player, PhaseType.MERCADO); // Cambio de fase
         }
+        // Hay qye meter esto en el endAttack considerando el heroType del player cuando recibe el daño
+        /* if(enemy.getEnemy().getCondition() != null){
+            if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
+                                bonus--;
+                }
+            if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
+                                bonus -= 2;
+                }
+            } */
     }
     @Transactional
 	public void playAbilityCard(Turn turn, AbilityCardInGame card, EnemyInGame enemy){
@@ -627,15 +644,15 @@ public class GameService {
 
         Player current_player = turn.getPlayer(); // Jugador actual
         List<AbilityCardInGame> turn_cards = turn.getCardsPlayed(); // Las cartas que se han jugado este turno
-        List<AbilityCardInGame> enemy_cards = enemy.getCardsPlayed(); // Las cartas que se jugaron sobre el enemigo este turno
-		int my_wounds = current_player.getWounds(); // Las heridas que tengo
-		int my_dmg_reduction = turn.getDamageReduction(); // Cuanto daño me reduzco actualmente
+        List<AbilityCardInGame> enemy_cards = null;
+        if(!enemy.equals(null)){
+            enemy_cards = enemy.getCardsPlayed(); // Las cartas que se jugaron sobre el enemigo este turno
+        }
 		List<AbilityCardInGame> mazo_actual = current_player.getAbilityPile(); // Las cartas de mi mazo actualmente
         int card_damage = card.getAbilityCard().getDamage(); // Daño de la carta usada
         int plain_add_dmg = (int) turn_cards.stream().filter(x->x.getAbilityCard().getAbilityType().equals(AbilityType.PIEDRA_DE_AMOLAR)).count(); // Cuento las piedras de amolar para sumar daño
         int total_damage = card_damage + plain_add_dmg; // Daño total tras la suma
         int bonus = 0;
-        int enemy_life_total = enemy.getEnemy().getEndurance() - enemy.getWounds();
 
 		switch (card_type) {
 			case COMPANERO_LOBO: {
@@ -714,21 +731,10 @@ public class GameService {
             }
 
 			case DISPARO_GELIDO: {// Daño 1, El enemigo afectado no causa daño este turno, Roba 1 --Fin--
-                if(enemy.getEnemy().getCondition() != null){
-                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
-                                        bonus--;
-                        }
-                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
-                                        bonus -= 2;
-                        }
-                    }
                 for(AbilityCardInGame c:enemy.getCardsPlayed()){
                     if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
                         bonus++;
                     }
-                }
-                if(total_damage+bonus<0){
-                    total_damage = 0;
                 }
                 damageEnemy(current_player, enemy, card, total_damage, 0);
                 drawCards(current_player, 1);
@@ -736,21 +742,10 @@ public class GameService {
             }
 
 			case FLECHA_CORROSIVA: {// Daño 1, Las siguientes cartas que dañen a este enemigo le hacen 1 más de daño, Pierdes 1 carta --Fin--
-                if(enemy.getEnemy().getCondition() != null){
-                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
-                                        bonus--;
-                        }
-                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
-                                        bonus -= 2;
-                        }
-                    }
                 for(AbilityCardInGame c:enemy.getCardsPlayed()){
                     if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
                         bonus++;
                     }
-                }
-                if(total_damage+bonus<0){
-                    total_damage = 0;
                 }
                 damageEnemy(current_player, enemy, card, total_damage, 0);
                 loseCards(current_player, 1);
@@ -758,14 +753,6 @@ public class GameService {
             }
 
 			case GOLPE_DE_BASTON: {// Daño 1, Si no es el primer "Golpe de bastón" usado contra este enemigo en lugar de 1 esta carta hace 2 de daño
-            if(enemy.getEnemy().getCondition() != null){
-                if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
-                                    bonus--;
-                    }
-                if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
-                                    bonus -= 2;
-                    }
-                }
                 for(AbilityCardInGame c:enemy.getCardsPlayed()){
                     if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
                         bonus++;
@@ -774,29 +761,15 @@ public class GameService {
                 if(turn_cards.stream().filter(x->x.getAbilityCard().getAbilityType().equals(card.getAbilityCard().getAbilityType())).count() >= 1){
                     bonus++;
                 }
-                if(total_damage+bonus<0){
-                    total_damage = 0;
-                }
                 damageEnemy(current_player, enemy, card, total_damage, 0);
                 break;
             }
 
 			case PROYECTIL_IGNEO: {// Daño 2, Gana 1 de Gloria --Fin--
-                if(enemy.getEnemy().getCondition() != null){
-                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
-                                        bonus--;
-                        }
-                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
-                                        bonus -= 2;
-                        }
-                    }
                 for(AbilityCardInGame c:enemy.getCardsPlayed()){
                     if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
                         bonus++;
                     }
-                }
-                if(total_damage+bonus<0){
-                    total_damage = 0;
                 }
                 damageEnemy(current_player, enemy, card, total_damage, 0);
                 current_player.setGlory(current_player.getGlory() + 1);
@@ -805,14 +778,7 @@ public class GameService {
             }
 
 			case TORRENTE_DE_LUZ: {// Daño 2, Todos menos tú recuperan 2, Ganas 1 de Gloria --Fin--
-                if(enemy.getEnemy().getCondition() != null){
-                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
-                                        bonus--;
-                        }
-                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
-                                        bonus -= 2;
-                        }
-                    }
+                
                 for(AbilityCardInGame c:enemy.getCardsPlayed()){
                     if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
                         bonus++;
@@ -835,7 +801,7 @@ public class GameService {
 
 			case AL_CORAZON: {// Daño 4, Si derrotas un enemigo con esto gana 1 Moneda si el primer "Al Corazón" del turno, Pierdes 1 carta --Fin--
                 if(turn_cards.stream().filter(x->x.getAbilityCard().getAbilityType().equals(card.getAbilityCard().getAbilityType())).count() == 0 && 
-                    enemy.getEnemy().getEndurance()-enemy.getWounds() >= total_damage){
+                    enemy.getEnemy().getEndurance()-enemy.getWounds() <= total_damage){
                     bonus++;
                 }
                 damageEnemy(current_player, enemy, card, total_damage, bonus);
@@ -845,7 +811,7 @@ public class GameService {
 
 			case ATAQUE_FURTIVO: {// Daño 2, Si derrotas un enemigo con esto gana 1 Moneda si el primer "Ataque Furtivo" del turno --Fin--
                 if(turn_cards.stream().filter(x->x.getAbilityCard().getAbilityType().equals(card.getAbilityCard().getAbilityType())).count() == 0 && 
-                    enemy.getEnemy().getEndurance()- enemy.getWounds() >= total_damage){
+                    enemy.getEnemy().getEndurance() - enemy.getWounds() <= total_damage){
                     bonus++;
                 }
                 damageEnemy(current_player, enemy, card, total_damage, bonus);
@@ -949,21 +915,10 @@ public class GameService {
                 List<EnemyInGame> field = turn.getGame().getMonsterField();
                 for (EnemyInGame e:field){
                     bonus = 0;
-                    if(enemy.getEnemy().getCondition() != null){
-                        if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
-                                            bonus--;
-                            }
-                        if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
-                                            bonus -= 2;
-                            }
-                        }
                     for(AbilityCardInGame c:e.getCardsPlayed()){
                         if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
                             bonus++;
                         }
-                    }
-                    if(total_damage+bonus<0){
-                        total_damage = 0;
                     }
                     damageEnemy(current_player, e, card, total_damage + bonus, 0);
                 }
