@@ -9,6 +9,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityService;
+import org.springframework.samples.notimeforheroes.card.enemy.Enemy;
+import org.springframework.samples.notimeforheroes.card.enemy.EnemyInGame;
 import org.springframework.samples.notimeforheroes.card.enemy.EnemyService;
 import org.springframework.samples.notimeforheroes.card.market.MarketCard;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
@@ -297,6 +299,19 @@ public class GameService {
         playerService.savePlayer(player);
         marketService.saveMarketCardInGame(card);
         
+    }
+
+    public void roghkiller(Game game){
+
+        List<EnemyInGame> enemies = game.getMonsterField();
+
+        for(EnemyInGame e: enemies){
+            Enemy enemy = e.getEnemy();
+            enemy.setEndurance(enemy.getEndurance()+1);
+            e.setEnemy(enemy);
+            enemyService.saveEnemyInGame(e);
+        }
+
     }
 
 

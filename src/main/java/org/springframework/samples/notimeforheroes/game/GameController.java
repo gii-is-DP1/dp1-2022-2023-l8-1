@@ -535,5 +535,14 @@ public class GameController {
 
     }
 
+    @GetMapping("/{gameId}/roghkiller")
+    public String roghkiller(@PathVariable("gameId") int gameId){
+
+        Game currentGame = service.findById(gameId).get();
+        service.roghkiller(currentGame);
+        return "redirect:/games/board/"+gameId;
+    }
+
+
 
 }
