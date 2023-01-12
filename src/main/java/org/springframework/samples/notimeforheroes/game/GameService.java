@@ -555,6 +555,7 @@ public class GameService {
             List<AbilityCardInGame> cards_played_on = enemy.getCardsPlayed(); // Cartas jugadas sobre el enemigo actualmente
 
             card.setEnemyInGame(enemy); // Relacionar carta con enemigo
+            card.setTurn(turn); // Relaciona con el turno
             cards_used.add(card); // Añadir a la lista de cartas usadas usadas este truno
             cards_played_on.add(card); // Añadir a la lista de cartas sobre el enemigo
 
@@ -564,8 +565,6 @@ public class GameService {
             turnService.save(turn); // Guardo los cambios en el turno
             enemyService.saveEnemyInGame(enemy); // Guardo los cambios del enemigo
             abilityService.saveAbilityCardInGame(card); // // Guardo los cambios de LA CARTA
-
-            discardAbilityCard(turn.getPlayer().getUser(), turn.getGame().getId(), card.getId()); // Mando la carta de la mano al desgaste
 
             if(card.getAbilityCard().getAbilityType().equals(AbilityType.DAGA_ELFICA) && 
             (turn.getPlayer().getProfiency()==Profiency.PERICIA || turn.getPlayer().getSecondProfiency()==Profiency.PERICIA)){
@@ -578,6 +577,7 @@ public class GameService {
 
                 Player currentPlayer = turn.getPlayer(); // Jugador actual
                 List<AbilityCardInGame> currentAbilityHand = currentPlayer.getAbilityHand();
+                
                 currentAbilityHand.remove(card); // La quitamos de la lista
                 card.setPlayer(null); // La desrelacionamos con la mano
                 abilityService.saveAbilityCardInGame(card); // Guardamos los cambios en la carta
@@ -586,13 +586,15 @@ public class GameService {
                 playerService.savePlayer(currentPlayer); // Guardamos los cambios
 
             }else{
+
+                card.setTurn(turn); // Relaciona con el turno
                 cards_used.add(card); // Añadir a la lista de cartas usadas usadas este truno
 
                 turn.setCardsPlayed(cards_used); // Setear la lista de cartas usadas este turno
 
                 turnService.save(turn); // Guardo los cambios en el turno
+                abilityService.saveAbilityCardInGame(card); // // Guardo los cambios de LA CARTA
 
-                discardAbilityCard(turn.getPlayer().getUser(), turn.getGame().getId(), card.getId()); // Mando la carta de la mano al desgaste
             }
         }
     }
