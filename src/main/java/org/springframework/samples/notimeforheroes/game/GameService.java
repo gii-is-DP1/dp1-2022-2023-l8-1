@@ -888,7 +888,6 @@ public class GameService {
                     break;
                 }else{
                     registerCardUsage(turn, enemy, card);
-                    endAttack(current_player, turn);
                     break;
                 }
             }
@@ -1027,12 +1026,12 @@ public class GameService {
 			case ARMADURA_DE_PLACAS: {//Daño 0, Coste 4, Recuperas 4 cartas, PROFICIENCIAS: Melee --Fin--
                 regainCards(pcurrent_player, 4);
 		    }
+        }
 
-        
         if(card.getAbilityCard().getAbilityType().equals(AbilityType.ENGANAR)){
-          }else{
-            registerCardUsage(turn, enemy, card); // Registra el uso de la carta
-          }
+            
+        }else{
+          registerCardUsage(turn, enemy, card); // Registra el uso de la carta
         }
     }
 }
