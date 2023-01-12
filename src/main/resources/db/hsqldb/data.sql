@@ -23,10 +23,10 @@ INSERT INTO friends(id,user1_id,user2_id,friend_state) VALUES (3,3,1,1);
 INSERT INTO games(start_time, end_time, has_scenes, max_players,min_players, state, username,user_id) VALUES --, winner_id 
 ('2022-11-10', '2022-11-10', 0, 4, 2, 'TERMINADO', 'admin',1); --,1
 
-INSERT INTO players(glory, gold, wounds, evasion, profiency, hero_type, user_id, game_id) VALUES (5, 50, 20, TRUE, 'MAGIA', 'MAGO_MASCULINO', 1, 1);
-INSERT INTO players(glory, gold, wounds, evasion, profiency, hero_type, user_id, game_id) VALUES (5, 9, 20, TRUE, 'MAGIA', 'MAGO_MASCULINO',2, 1);
-INSERT INTO players(glory, gold, wounds, evasion, profiency, hero_type, user_id, game_id) VALUES (4, 9, 20, TRUE, 'MAGIA', 'GUERRERO_FEMENINO',3, 1);
-INSERT INTO players(glory, gold, wounds, evasion, profiency, hero_type, user_id, game_id) VALUES (4, 9, 20, TRUE, 'MAGIA', 'PICARO_MASCULINO',4, 1);
+INSERT INTO players(glory, gold, wounds, enemy_kills, evasion, profiency, second_profiency, hero_type, user_id, game_id) VALUES (5, 50, 20, 0, TRUE, 'MAGIA', 'INCOMPATIBLE', 'MAGO_MASCULINO', 1, 1);
+INSERT INTO players(glory, gold, wounds, enemy_kills, evasion, profiency, second_profiency, hero_type, user_id, game_id) VALUES (5, 9, 20, 0, TRUE, 'MAGIA', 'INCOMPATIBLE','MAGO_MASCULINO',2, 1);
+INSERT INTO players(glory, gold, wounds, enemy_kills, evasion, profiency, second_profiency, hero_type, user_id, game_id) VALUES (4, 9, 20, 0, TRUE, 'MELEE', 'INCOMPATIBLE','GUERRERO_FEMENINO',3, 1);
+INSERT INTO players(glory, gold, wounds, enemy_kills, evasion, profiency, second_profiency, hero_type, user_id, game_id) VALUES (4, 9, 20, 0, TRUE, 'PERICIA', 'DISTANCIA','PICARO_MASCULINO',4, 1);
 
 
 -- EXPLORADORES    
@@ -308,10 +308,10 @@ INSERT INTO enemies(endurance, glory, gold, type, is_boss) VALUES (8, 0, 0, 'GUR
 INSERT INTO enemies(endurance, glory, gold, type, is_boss) VALUES (9, 0, 0, 'ROGHKILLER',true);
 INSERT INTO enemies(endurance, glory, gold, type, is_boss) VALUES (10, 0, 0, 'SHRIEKKNIFER',true);
 
-INSERT INTO enemy_in_game(enemy_id, game_field_id) VALUES (1,1);
-INSERT INTO enemy_in_game(enemy_id, game_field_id) VALUES (3,1);
-INSERT INTO enemy_in_game(enemy_id, game_id) VALUES (2,1);
-INSERT INTO enemy_in_game(enemy_id, game_id) VALUES (4,1);
+INSERT INTO enemy_in_game(wounds, enemy_id, game_field_id) VALUES (0, 1, 1);
+INSERT INTO enemy_in_game(wounds, enemy_id, game_field_id) VALUES (0, 3, 1);
+INSERT INTO enemy_in_game(wounds, enemy_id, game_id) VALUES (0, 2, 1);
+INSERT INTO enemy_in_game(wounds, enemy_id, game_id) VALUES (0, 4, 1);
 
 
 --Cartas de Mercado
@@ -373,12 +373,12 @@ INSERT INTO users(username, password, email, birth_date, enabled) VALUES
 ('migbayan', 'miguel', 'migbayan@user.com','2000-10-01', 1);--7playerId
 INSERT INTO authorities(id,user_id,username,authority) VALUES (9,9,'migbayan', 'user');
 
-INSERT INTO players(glory, gold, wounds, evasion, profiency, hero_type, user_id, game_id) VALUES 
-(2, 7, 0, TRUE, 'MELEE', 'MAGO_MASCULINO', 5, 2);
-INSERT INTO players(glory, gold, wounds, evasion, profiency, hero_type, user_id, game_id) VALUES 
-(4, 9, 0, TRUE, 'MAGIA', 'GUERRERO_FEMENINO',6, 2);
-INSERT INTO players(glory, gold, wounds, evasion, profiency, hero_type, user_id, game_id) VALUES 
-(4, 9, 0, TRUE, 'DISTANCIA', 'EXPLORADOR_MASCULINO',7, 2);
+INSERT INTO players(glory, gold, wounds, enemy_kills, evasion, profiency, second_profiency, hero_type, user_id, game_id) VALUES 
+(2, 7, 0, 0, TRUE, 'MAGIA','INCOMPATIBLE', 'MAGO_MASCULINO', 5, 2);
+INSERT INTO players(glory, gold, wounds, enemy_kills, evasion, profiency, second_profiency, hero_type, user_id, game_id) VALUES 
+(4, 9, 0, 0, TRUE, 'MELEE','INCOMPATIBLE', 'GUERRERO_FEMENINO',6, 2);
+INSERT INTO players(glory, gold, wounds, enemy_kills, evasion, profiency, second_profiency, hero_type, user_id, game_id) VALUES 
+(4, 9, 0, 0, TRUE, 'DISTANCIA', 'MELEE', 'EXPLORADOR_MASCULINO',7, 2);
 
 --player user4 ->userId=5 playerId=3
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (31, 5);
@@ -399,10 +399,10 @@ INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (3, 7);
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (4, 7);
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_discard_id) VALUES (5, 7);
 --ENEMIGOS DE GAME 2
-INSERT INTO ENEMY_IN_GAME(enemy_id, game_field_id) VALUES (1,2);
-INSERT INTO ENEMY_IN_GAME(enemy_id, game_field_id) VALUES (2,2);
-INSERT INTO ENEMY_IN_GAME(enemy_id, game_field_id) VALUES (3,2);
-INSERT INTO ENEMY_IN_GAME(enemy_id, game_id) VALUES (4,2);
+INSERT INTO ENEMY_IN_GAME(wounds, enemy_id, game_field_id) VALUES (0, 1, 2);
+INSERT INTO ENEMY_IN_GAME(wounds, enemy_id, game_field_id) VALUES (0, 2, 2);
+INSERT INTO ENEMY_IN_GAME(wounds, enemy_id, game_field_id) VALUES (0 ,3, 2);
+INSERT INTO ENEMY_IN_GAME(wounds, enemy_id, game_id) VALUES (0, 4, 2);
 --INSERT INTO GAMES_MONSTER_FIELD(game_id, monster_field_id) VALUES(2,2);
 
 --CARTAS DE MERCADO A LA VENTA

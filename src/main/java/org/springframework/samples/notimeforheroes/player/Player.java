@@ -52,11 +52,19 @@ public class Player{
     private int wounds;
 
     @NotNull
+    @Min(0)
+    private int enemy_kills;
+
+    @NotNull
     private boolean evasion;
 
     @Enumerated(EnumType.STRING)
     @Column(name="profiency")
     private Profiency profiency;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="secondProfiency")
+    private Profiency secondProfiency;
 
     @Enumerated(EnumType.STRING)
     @Column(name="heroType")
