@@ -801,7 +801,7 @@ public class GameService {
 
 			case AL_CORAZON: {// Daño 4, Si derrotas un enemigo con esto gana 1 Moneda si el primer "Al Corazón" del turno, Pierdes 1 carta --Fin--
                 if(turn_cards.stream().filter(x->x.getAbilityCard().getAbilityType().equals(card.getAbilityCard().getAbilityType())).count() == 0 && 
-                    enemy.getEnemy().getEndurance()-enemy.getWounds() <= total_damage){
+                    ((enemy.getEnemy().getEndurance() - enemy.getWounds()) <= total_damage)){
                     bonus++;
                 }
                 damageEnemy(current_player, enemy, card, total_damage, bonus);
@@ -811,7 +811,7 @@ public class GameService {
 
 			case ATAQUE_FURTIVO: {// Daño 2, Si derrotas un enemigo con esto gana 1 Moneda si el primer "Ataque Furtivo" del turno --Fin--
                 if(turn_cards.stream().filter(x->x.getAbilityCard().getAbilityType().equals(card.getAbilityCard().getAbilityType())).count() == 0 && 
-                    enemy.getEnemy().getEndurance() - enemy.getWounds() <= total_damage){
+                    ((enemy.getEnemy().getEndurance() - enemy.getWounds()) <= total_damage)){
                     bonus++;
                 }
                 damageEnemy(current_player, enemy, card, total_damage, bonus);
