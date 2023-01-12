@@ -153,6 +153,7 @@ public class GameController {
         Game currentGame = service.findById(gameId).get();
         currentGame.setState(GameState.ESCOGER_LIDER);
         service.saveGame(currentGame);
+
         
         //Una vez se llega aquí suponemos que ya están en la partida todos los jugadores que van a jugar
         //Poblamos el juego de enemigos respecto el número de jugadores
@@ -164,13 +165,29 @@ public class GameController {
         for(Player p : players){
             if(p.getUser().getUsername() == currentUser.getUsername()){
                 currentPlayer = p;
-                abilityService.addStartingHand(p);
+                if(currentPlayer.getAbilityHand().isEmpty()){
+                    abilityService.addStartingHand(p);
+                }
+                
                 playerService.savePlayer(p);
             }
+
         }
+
+        Boolean todosPujan = false;
+        if(players.stream().allMatch(p -> p.getCartasPuja().size()>=1)){
+            todosPujan = true;
+        }else{
+            mav.addObject("message", "Todos los jugadores deben de pujar al menos una carta");
+
+        }
+
+        
+
         mav.addObject("cardInGames", currentPlayer.getAbilityHand());
         mav.addObject("game", currentGame);
         mav.addObject("players", players);
+        mav.addObject("todosPujan", todosPujan);
         return mav;
     }
 
@@ -197,13 +214,20 @@ public class GameController {
         System.out.println("=================================Jugador actual " + currentPlayer.getUser().getUsername());
         // System.out.println("=================================Errores " + currentPlayer.getUser().getUsername());
 
+        Boolean todosPujan = false;
+        if(players.stream().allMatch(p -> p.getCartasPuja().size()>=1)){
+            todosPujan = true;
+        }else{
+            mav.addObject("message", "Todos los jugadores deben de pujar al menos una carta");
 
+        }
 
         mav.addObject("cartasPuja", currentPlayer.getCartasPuja());
         mav.addObject("cardInGames", currentPlayer.getAbilityHand());
         mav.addObject("players", players);
         mav.addObject("game", currentGame);
         mav.addObject("currentPlayer", currentPlayer);
+        mav.addObject("todosPujan", todosPujan);
 
         return mav;
 
