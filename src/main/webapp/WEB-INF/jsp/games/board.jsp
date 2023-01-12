@@ -19,7 +19,7 @@
 			<c:forEach items="${game.monsterField}" var="enemyInGame">
 					<div class="enemy">
 						<img src="/resources/images/Cards/Enemies/${enemyInGame.enemy.type}.jpg" width="200" />
-						<h4>Endurance: <c:out value=" ${enemyInGame.enemy.endurance}"/></h4>
+						<h4>Endurance: <c:out value=" ${enemyInGame.enemy.endurance - enemyInGame.wounds}"/></h4>
 						<h4>Id: <c:out value=" ${enemyInGame.id}"/></h4>
 					</div>
 			</c:forEach>
