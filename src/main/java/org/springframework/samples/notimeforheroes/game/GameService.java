@@ -579,7 +579,8 @@ public class GameService {
             }
 
         }else{
-            if(card.getAbilityCard().getCondition().equals(ConditionType.USO_UNICO)){
+
+            if(card.getAbilityCard().getCondition()!=null && card.getAbilityCard().getCondition().equals(ConditionType.USO_UNICO)){
 
                 Player currentPlayer = turn.getPlayer(); // Jugador actual
                 List<AbilityCardInGame> currentAbilityHand = currentPlayer.getAbilityHand();
@@ -636,7 +637,7 @@ public class GameService {
             } */
     }
     @Transactional
-	public void playAbilityCard(Turn turn, AbilityCardInGame card, EnemyInGame enemy){
+	public void playAbilityCard(Turn turn, AbilityCardInGame card, EnemyInGame enemy, Integer currentGameId){
 		AbilityType card_type = card.getAbilityCard().getAbilityType(); // Tipo de carta usada
 		// HAY QUE PONER UN BREAK; AL FINAL DE CADA UNO
         // En las cartas de mercado hay que mirar la segunda proficiencia del héroe para ver si hay que restar
@@ -962,8 +963,8 @@ public class GameService {
                 break;
             }
 
-			case SAQUEO: { //Daño 0, Gana 1 moneda por cada Enemigo en el campo, Ganas 1 de Gloria
-                List<EnemyInGame> field = enemy.getGameField().getMonsterField();
+			case SAQUEO: { //Daño 0, Gana 1 moneda por cada Enemigo en el campo, Ganas 1 de Gloria --Fin--
+                List<EnemyInGame> field = findById(currentGameId).get().getMonsterField();
                 current_player.setGold(current_player.getGold() + field.size());
                 current_player.setGlory(current_player.getGlory() + 1);
                 playerService.savePlayer(current_player);
