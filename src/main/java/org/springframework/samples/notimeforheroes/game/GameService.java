@@ -673,6 +673,7 @@ public class GameService {
 
 			case LLUVIA_DE_FLECHAS: {// Daño 2, Esta carta daña a 2 enemigos y al héroe con menos heridas, en empate tú eliges
             //Le pongo un pin luego volvemos
+                break;
             }
 			case ATAQUE_BRUTAL: {// Daño 3, Pierdes 1 carta --Fin--
                 damageEnemy(current_player, enemy, card, total_damage, 0);
@@ -897,7 +898,7 @@ public class GameService {
 
 			///// No requieren de obejetivo
 			case RECOGER_FLECHAS: {// Daño 0, Recupera un "Disparo Rápido", Baraja tu mazo de Habildades, Gana 1 moneda --Fin--
-                AbilityCard disparo = current_player.getDiscardPile().stream().filter(x->x.getAbilityCard().getAbilityType().equals(AbilityType.DISPARO_RAPIDO))findFirst();
+                AbilityCardInGame disparo = current_player.getDiscardPile().stream().filter(x->x.getAbilityCard().getAbilityType().equals(AbilityType.DISPARO_RAPIDO)).findFirst().get();
                 List<AbilityCardInGame> descarte = current_player.getDiscardPile();
                 descarte.remove(disparo);
                 descarte.add(0, disparo);
@@ -950,7 +951,7 @@ public class GameService {
                     if(total_damage+bonus<0){
                         total_damage = 0;
                     }
-                    damageEnemy(player, enemy, card, total_damage + bonus, 0);
+                    damageEnemy(current_player, enemy, card, total_damage + bonus, 0);
                 }
 
                 List<Player> jugadores = turn.getGame().getPlayer();
@@ -981,8 +982,8 @@ public class GameService {
 
 			case ROBAR_BOLSILLOS: {//Daño 0, Roba 1 moneda a cada héroe
             List<Player> players = turn.getGame().getPlayer();
-                for (Player player:players){
-                    if(!p.getGold > 1){
+                for (Player p:players){
+                    if(!(p.getGold() > 1)){
                         p.setGold(p.getGold() - 1);
                         playerService.savePlayer(p);
                         current_player.setGold(current_player.getGold() + 1);
@@ -1024,7 +1025,7 @@ public class GameService {
             }
 
 			case ARMADURA_DE_PLACAS: {//Daño 0, Coste 4, Recuperas 4 cartas, PROFICIENCIAS: Melee --Fin--
-                regainCards(pcurrent_player, 4);
+                regainCards(current_player, 4);
 		    }
         }
 
