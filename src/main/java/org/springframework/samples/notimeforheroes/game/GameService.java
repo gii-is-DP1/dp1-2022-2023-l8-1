@@ -928,7 +928,7 @@ public class GameService {
                 break;
             }
 
-			case BOLA_DE_FUEGO: {//Daño 2, Daña a todos los enemigos, El resto de héroes sufren 1 de Daño
+			case BOLA_DE_FUEGO: {//Daño 2, Daña a todos los enemigos, El resto de héroes sufren 1 de Daño --Fin--
                 List<EnemyInGame> field = findById(currentGameId).get().getMonsterField();
                 for (EnemyInGame e:field){
                     bonus = 0;
