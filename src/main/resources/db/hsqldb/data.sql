@@ -412,8 +412,8 @@ INSERT INTO MARKET_CARD_IN_GAME (game_id,market_card_id) VALUES (2,4);
 INSERT INTO MARKET_CARD_IN_GAME (game_id,market_card_id) VALUES (2,5);
 INSERT INTO MARKET_CARD_IN_GAME (game_id,market_card_id) VALUES (2,6);
 
-INSERT INTO TURN(type, game_id, player_id,damage_reduction) VALUES ('ATAQUE', 1, 1,0);
-INSERT INTO TURN(type, game_id, player_id,damage_reduction) VALUES ('ATAQUE', 2, 5,0);
+INSERT INTO TURN(type, game_id, player_id, damage_reduction) VALUES ('ATAQUE', 1, 1,0);
+INSERT INTO TURN(type, game_id, player_id, damage_reduction) VALUES ('ATAQUE', 2, 5,0);
 -- INSERT INTO TURN(type, game_id, player_id) VALUES ('MERCADO', 1, 2);
 -- INSERT INTO TURN(type, game_id, player_id) VALUES ('RESTABLECIMIENTO', 1, 3);
 -- INSERT INTO TURN(type, game_id, player_id) VALUES ('ATAQUE', 1, 4);

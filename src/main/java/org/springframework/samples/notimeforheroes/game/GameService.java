@@ -461,7 +461,7 @@ public class GameService {
                 }
             }
                 int kills = player.getEnemy_kills(); 
-                int gold= player.getGold(); // Recojo las kills y el oro
+                int gold = player.getGold(); // Recojo las kills y el oro
 
                 player.setEnemy_kills(kills + 1);
                 player.setGlory( glory + enemy.getEnemy().getGlory());
@@ -483,7 +483,9 @@ public class GameService {
                     abilityService.saveAbilityCardInGame(c); //Elimino la relación de cada carta con el Enemy que fue derrotado
 
                 }
-                enemy.setCardsPlayed(null);
+                List<AbilityCardInGame> void_list = enemy.getCardsPlayed();
+                void_list.clear();
+                enemy.setCardsPlayed(void_list);
                 enemyService.saveEnemyInGame(enemy);
         }
 	}
@@ -492,8 +494,6 @@ public class GameService {
 	public void reduceDamage (Turn turn, int reduction){ //Asigno el número de daño a reducir este turno, entra el turno y número fijo a sumar
 		turn.setDamageReduction(turn.getDamageReduction() + reduction);
 		turnService.save(turn);
-        // TODO REVISAR EL SAVE DE TURN
-
 		}
 
     public void recoverMarketCard(int marketCardId, Player player){
@@ -937,13 +937,13 @@ public class GameService {
                 List<EnemyInGame> field = turn.getGame().getMonsterField();
                 for (EnemyInGame e:field){
                     bonus = 0;
-                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
+                    if(e.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
                         bonus--;
                     }
-                    if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
+                    if(e.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
                         bonus -= 2;
                     }
-                    for(AbilityCardInGame c:enemy.getCardsPlayed()){
+                    for(AbilityCardInGame c:e.getCardsPlayed()){
                         if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
                             bonus++;
                         }
@@ -951,7 +951,7 @@ public class GameService {
                     if(total_damage+bonus<0){
                         total_damage = 0;
                     }
-                    damageEnemy(current_player, enemy, card, total_damage + bonus, 0);
+                    damageEnemy(current_player, e, card, total_damage + bonus, 0);
                 }
 
                 List<Player> jugadores = turn.getGame().getPlayer();
