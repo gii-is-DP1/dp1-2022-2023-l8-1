@@ -59,6 +59,7 @@
 
 			<div class="totalGold">
 				<h2>ORO: ${player.gold}</h2>
+				<h2>GLORIA: ${player.glory}</h2>
 			</div>
 
 			<div class="yourCards">
