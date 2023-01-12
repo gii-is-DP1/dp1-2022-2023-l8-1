@@ -563,7 +563,7 @@ public class GameController {
         Turn thisTurn =  currentGame.getTurn().get(currentGame.getTurn().size()-1);
         AbilityCardInGame card = abilityService.findById(cardId);
         EnemyInGame enemy = eService.findById(enemyId).get();
-        service.playAbilityCard(thisTurn, card, enemy);
+        service.playAbilityCard(thisTurn, card, enemy, gameId);
         
         return "redirect:/games/board/"+gameId;
     }
@@ -573,7 +573,7 @@ public class GameController {
         Game currentGame = service.findById(gameId).get();
         Turn thisTurn =  currentGame.getTurn().get(currentGame.getTurn().size()-1);
         AbilityCardInGame card = abilityService.findById(cardId);
-        service.playAbilityCard(thisTurn, card, null);
+        service.playAbilityCard(thisTurn, card, new EnemyInGame(), gameId);
         
         return "redirect:/games/board/"+gameId;
     }

@@ -297,6 +297,7 @@ public class GameService {
     // Mover carta del fondo del mazo de descartes al del de robo
     // RECUPERAR "N" CARTAS
     public void regainCards(Player player, int number_of_cards){
+
         List<AbilityCardInGame> pile = player.getAbilityPile(); //La pila de robo
         List<AbilityCardInGame> discard = player.getDiscardPile(); //La pila de descartes
 
@@ -305,7 +306,7 @@ public class GameService {
         }
 
         for(int i = 0; i < number_of_cards; i++){
-            AbilityCardInGame card = player.getDiscardPile().get(0); // La carta que está en el fondo de la pila de descartes
+            AbilityCardInGame card = discard.get(0); // La carta que está en el fondo de la pila de descartes
 
             pile.add(card); // La pongo en el fondo del mazo de robo
             discard.remove(card); // La quito de la lista de los descartes
@@ -580,7 +581,8 @@ public class GameService {
             }
 
         }else{
-            if(card.getAbilityCard().getCondition().equals(ConditionType.USO_UNICO)){
+
+            if(card.getAbilityCard().getCondition()!=null && card.getAbilityCard().getCondition().equals(ConditionType.USO_UNICO)){
 
                 Player currentPlayer = turn.getPlayer(); // Jugador actual
                 List<AbilityCardInGame> currentAbilityHand = currentPlayer.getAbilityHand();
@@ -651,7 +653,7 @@ public class GameService {
 
     }
     @Transactional
-	public void playAbilityCard(Turn turn, AbilityCardInGame card, EnemyInGame enemy){
+	public void playAbilityCard(Turn turn, AbilityCardInGame card, EnemyInGame enemy, Integer currentGameId){
 		AbilityType card_type = card.getAbilityCard().getAbilityType(); // Tipo de carta usada
 		// HAY QUE PONER UN BREAK; AL FINAL DE CADA UNO
         // En las cartas de mercado hay que mirar la segunda proficiencia del héroe para ver si hay que restar
@@ -948,8 +950,9 @@ public class GameService {
                 break;
             }
 
-			case ORBE_CURATIVO: {// Daño 0, Todos Recuperan 2 cartas, Eliminas 1 herida de tu héroe, Elimina esta carta del juego
-            List<Player> players = turn.getGame().getPlayer();
+			case ORBE_CURATIVO: {// Daño 0, Todos Recuperan 2 cartas, Eliminas 1 herida de tu héroe, Elimina esta carta del juego --Fin--
+                
+                List<Player> players = findById(currentGameId).get().getPlayer();
                 for (Player player:players){
                         regainCards(player, 2);
                 }
@@ -977,8 +980,8 @@ public class GameService {
                 break;
             }
 
-			case SAQUEO: { //Daño 0, Gana 1 moneda por cada Enemigo en el campo, Ganas 1 de Gloria
-                List<EnemyInGame> field = enemy.getGameField().getMonsterField();
+			case SAQUEO: { //Daño 0, Gana 1 moneda por cada Enemigo en el campo, Ganas 1 de Gloria --Fin--
+                List<EnemyInGame> field = findById(currentGameId).get().getMonsterField();
                 current_player.setGold(current_player.getGold() + field.size());
                 current_player.setGlory(current_player.getGlory() + 1);
                 playerService.savePlayer(current_player);
