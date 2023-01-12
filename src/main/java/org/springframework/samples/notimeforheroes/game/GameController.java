@@ -11,6 +11,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityService;
+import org.springframework.samples.notimeforheroes.card.enemy.EnemyInGame;
+import org.springframework.samples.notimeforheroes.card.enemy.EnemyService;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
 import org.springframework.samples.notimeforheroes.friends.Friends;
 import org.springframework.samples.notimeforheroes.friends.FriendsService;
@@ -56,18 +58,20 @@ public class GameController {
     private final TurnService turnService;
 
     private final AbilityService abilityService;
+    private final EnemyService eService;
 
     @Autowired
     private final PlayerService playerService;
 
     @Autowired
-    public GameController(GameService gameService, PlayerService playerService, FriendsService fs, UserService uService, TurnService tService, AbilityService aService){
+    public GameController(GameService gameService, PlayerService playerService, FriendsService fs, UserService uService, TurnService tService, AbilityService aService, EnemyService eService){
         this.service = gameService;
         this.playerService = playerService;
         this.friendsService = fs;
         this.userService = uService;
         this.turnService = tService;
         this.abilityService = aService;
+        this.eService = eService;
     }
 
     // @GetMapping('/')
@@ -541,6 +545,17 @@ public class GameController {
 
 
         service.changeEnemy(enemyId, gameId);
+        return "redirect:/games/board/"+gameId;
+    }
+
+    @GetMapping("/{gameId}/cardAction/{abilityCardInGameId}/{enemyInGameId}")
+    public String useCards(@PathVariable("gameId") int gameId, @PathVariable("abilityCardInGameId") int cardId, @PathVariable("enemyInGameId") int enemyId)  {
+        Game currentGame = service.findById(gameId).get();
+        Turn thisTurn =  currentGame.getTurn().get(currentGame.getTurn().size()-1);
+        AbilityCardInGame card = abilityService.findById(cardId);
+        EnemyInGame enemy = eService.findById(enemyId).get();
+        service.playAbilityCard(thisTurn, card, enemy);
+        
         return "redirect:/games/board/"+gameId;
     }
 }
