@@ -36,20 +36,27 @@
             </c:forEach>
         </tbody>
     </table>
-    <div class="text-center">
+    <!-- <div class="text-center">
         <spring:url value="/admins/users/next" var="next"/>
         <spring:url value="/admins/users/previous" var="previous"/>
-        <a href="${previous}">Anterior</a> &nbsp; P&aacutegina ${currentPage} de ${size} &nbsp; <a href="${next}">Siguiente</a>
-    </div>
+        <a href="${previous}">Anterior</a> &nbsp; P&aacutegina ${currentPage} de ${size} &nbsp; <a href="${fn:escapeXml(next)}">Siguiente</a>
+    </div> -->
+    <div class="text-center">
+
+    <c:if test="${page > 0}">
+        <spring:url value="/admins/users?page={previous}" var="previous">
+            <spring:param name="previous" value="${page-1}"/>
+        </spring:url>
+        <a href="${fn:escapeXml(previous)}" class="btn btn-default">Previous</a>
+    </c:if>
+            ${page+1} de ${size}
+    <c:if test="${isNext}">
+        <spring:url value="/admins/users?page={next}" var="next">
+            <spring:param name="next" value="${page+1}"/>
+        </spring:url>
+        <a href="${fn:escapeXml(next)}" class="btn btn-default">Next</a>
+    </c:if>
+</div>
 
 
-    <%-- <table class="table-buttons">
-        <tr>
-            <td>
-
-
-                <a href="<spring:url value="/admins/users.xml" htmlEscape="true" />">View as XML</a>
-            </td>            
-        </tr>
-    </table> --%>
 </petclinic:layout>

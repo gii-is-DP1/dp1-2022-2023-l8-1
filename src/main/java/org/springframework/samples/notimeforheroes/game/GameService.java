@@ -17,6 +17,7 @@ import org.springframework.samples.notimeforheroes.card.ConditionType;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGameRepository;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityService;
+import org.springframework.samples.notimeforheroes.card.enemy.Enemy;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityType;
 import org.springframework.samples.notimeforheroes.card.enemy.EnemyInGame;
 import org.springframework.samples.notimeforheroes.card.enemy.EnemyService;
@@ -514,6 +515,17 @@ public class GameService {
         
     }
 
+    public void roghkiller(Game game){
+
+        List<EnemyInGame> enemies = game.getMonsterField();
+
+        for(EnemyInGame e: enemies){
+            Enemy enemy = e.getEnemy();
+            enemy.setEndurance(enemy.getEndurance()+1);
+            e.setEnemy(enemy);
+            enemyService.saveEnemyInGame(e);
+        }
+        }
     public void changeEnemy(int enemyId, int gameId){
 
         Game game = findById(gameId).get();

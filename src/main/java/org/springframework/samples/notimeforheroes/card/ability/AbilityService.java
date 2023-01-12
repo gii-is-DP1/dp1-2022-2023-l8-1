@@ -152,5 +152,13 @@ public class AbilityService {
 		
 
 	}
-    
+    public int getWoundsHero(HeroType hero) {
+    	int wounds =0;
+    	if(hero==HeroType.MAGO_MASCULINO||hero==HeroType.MAGO_FEMENINO||hero==HeroType.PICARO_FEMENINO||hero==HeroType.PICARO_MASCULINO) {
+    		wounds=2;
+    	}else {
+    		wounds=3;
+    	}
+    	return wounds;
+    }
 }
