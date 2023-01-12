@@ -293,7 +293,7 @@ public class GameController {
     //Controlador vista para el tablero de un juego
     @GetMapping(value = "/board/{gameId}")
     public ModelAndView showBoard(@PathVariable("gameId") int gameId, HttpServletResponse response){
-        // response.addHeader("Refresh", "1"); // Autorefresco
+        //response.addHeader("Refresh", "4"); // Autorefresco
     	
         ModelAndView mav = new ModelAndView("games/board");
         Game game =service.findById(gameId).get();
@@ -360,7 +360,7 @@ public class GameController {
         }
         
         if(currentTurn.getType() == PhaseType.ATAQUE){
-            turnService.newTurn(currentGame, currentPlayerGaming, PhaseType.MERCADO);
+            service.endAttack(currentPlayerGaming, currentTurn);
         }else if(currentTurn.getType() == PhaseType.MERCADO){
             turnService.newTurn(currentGame, currentPlayerGaming, PhaseType.RESTABLECIMIENTO);
         }else{
@@ -564,6 +564,16 @@ public class GameController {
         AbilityCardInGame card = abilityService.findById(cardId);
         EnemyInGame enemy = eService.findById(enemyId).get();
         service.playAbilityCard(thisTurn, card, enemy);
+        
+        return "redirect:/games/board/"+gameId;
+    }
+
+    @GetMapping("/{gameId}/cardAction/{abilityCardInGameId}")
+    public String useCards(@PathVariable("gameId") int gameId, @PathVariable("abilityCardInGameId") int cardId)  {
+        Game currentGame = service.findById(gameId).get();
+        Turn thisTurn =  currentGame.getTurn().get(currentGame.getTurn().size()-1);
+        AbilityCardInGame card = abilityService.findById(cardId);
+        service.playAbilityCard(thisTurn, card, null);
         
         return "redirect:/games/board/"+gameId;
     }
