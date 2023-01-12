@@ -311,6 +311,24 @@ public class GameService {
             e.setEnemy(enemy);
             enemyService.saveEnemyInGame(e);
         }
+        }
+    public void changeEnemy(int enemyId, int gameId){
+
+        Game game = findById(gameId).get();
+
+        EnemyInGame selectedEnemy = enemyService.findById(enemyId).get();
+        selectedEnemy.setGameField(null);
+        selectedEnemy.setGame(game);
+
+        List<EnemyInGame> enemies = game.getMonsterPile();
+        EnemyInGame nextEnemy = enemies.get(0); // Obtengo el enemigo al final del mazo
+        nextEnemy.setGameField(game);
+        nextEnemy.setGame(null);
+
+        enemyService.saveEnemyInGame(nextEnemy);
+        enemyService.saveEnemyInGame(selectedEnemy);
+        
+
 
     }
 

@@ -2,6 +2,7 @@ package org.springframework.samples.notimeforheroes.card.enemy;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,10 @@ public class EnemyService {
 	//Lista de los enemigos en un juego determinado
 	public List<EnemyInGame>  findAllByGame(Game game){
 		return enemyInGameRepository.findAllByGame(game);
+	}
+
+	public Optional<EnemyInGame> findById(int id){
+		return enemyInGameRepository.findById(id);
 	}
 
 	//Añade enemigos a un juego
