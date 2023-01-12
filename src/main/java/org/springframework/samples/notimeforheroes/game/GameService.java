@@ -1,7 +1,6 @@
 package org.springframework.samples.notimeforheroes.game;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -9,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 import javax.persistence.EnumType;
 
@@ -26,6 +26,7 @@ import org.springframework.samples.notimeforheroes.card.market.MarketCard;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardType;
 import org.springframework.samples.notimeforheroes.card.market.MarketService;
+import org.springframework.samples.notimeforheroes.player.HeroType;
 import org.springframework.samples.notimeforheroes.player.Player;
 import org.springframework.samples.notimeforheroes.player.PlayerService;
 import org.springframework.samples.notimeforheroes.player.Profiency;
@@ -299,7 +300,8 @@ public class GameService {
 
         List<AbilityCardInGame> pile = player.getAbilityPile(); //La pila de robo
         List<AbilityCardInGame> discard = player.getDiscardPile(); //La pila de descartes
-        if(discard.size()<number_of_cards){
+
+        if(discard.size() < number_of_cards){
             number_of_cards= discard.size();
         }
 
@@ -610,31 +612,45 @@ public class GameService {
     @Transactional
     // Terminar prematuramente el turno
     public void endAttack(Player player, Turn turn) {
+        List<AbilityCardInGame> void_list = new ArrayList<AbilityCardInGame>();
+        void_list.clear(); //Lista vacía con la que limpiar las cartas de los EnemyInGame
         List<EnemyInGame> field = turn.getGame().getMonsterField(); // Cojo los enemigos
         List<AbilityType> damage_nullifiers = Arrays.asList(AbilityType.ESCUDO, AbilityType.DISPARO_GELIDO,AbilityType.ENGANAR, AbilityType.CAPA_ELFICA); //Anuladores de daño
         int damage_taken = 0; // Aquí guardo el daño a sufrir
-        for (EnemyInGame e:field){ 
+        for (EnemyInGame e:field){
+            for(AbilityCardInGame a: e.getCardsPlayed()){
+                a.setEnemyInGame(null);
+                abilityService.saveAbilityCardInGame(a); //Cancelamos las realciones con el enemigo que tuvieran las cartas que se le lanzaron con este script
+                }
+            }
+        int magic_tax = 0; //Daño que me restaré si el enemigo me hace daño y tiene la condión de mágico siendo yo el héroe mago
+        for (EnemyInGame e:field){
+            if(e.getEnemy().getCondition() != null && (player.getHero().equals(HeroType.MAGO_FEMENINO) || player.getHero().equals(HeroType.MAGO_MASCULINO))){ //Compruebo el heroe mágico
+                if(e.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
+                    magic_tax--;
+                    }
+                if(e.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
+                    magic_tax -= 2;
+                    }
+                }
             List<AbilityType> lista_tipos = e.getCardsPlayed().stream().map(x->x.getAbilityCard().getAbilityType()).collect(Collectors.toList()); // Ver si le han usado algun anulador de daño
             if(!lista_tipos.stream().anyMatch(damage_nullifiers.stream().collect(Collectors.toSet())::contains)){
-                damage_taken = damage_taken + e.getEnemy().getEndurance() - e.getWounds();
+                damage_taken = damage_taken + e.getEnemy().getEndurance() - e.getWounds() + magic_tax;
+                e.setCardsPlayed(void_list);
+                enemyService.saveEnemyInGame(e);
                 } // Voy sumando y acumulando
             }
         if (turn.getCardsPlayed().stream().filter(x->x.getAbilityCard().getAbilityType().equals(AbilityType.AURA_PROTECTORA)).count() > 0){
             loseCards(player, field.size());
             turnService.newTurn(turn.getGame(), player, PhaseType.MERCADO);
+            
         }else{
-            loseCards(player, damage_taken); //Pierdo cartas igual al número de daños sufridos
+            if (damage_taken>=1){ // Si el daño es negativo no se quita
+                loseCards(player, damage_taken); //Pierdo cartas igual al número de daños sufridos
+            }
             turnService.newTurn(turn.getGame(), player, PhaseType.MERCADO); // Cambio de fase
         }
-        // Hay qye meter esto en el endAttack considerando el heroType del player cuando recibe el daño
-        /* if(enemy.getEnemy().getCondition() != null){
-            if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_1)){
-                                bonus--;
-                }
-            if(enemy.getEnemy().getCondition().equals(ConditionType.MAGO_2)){
-                                bonus -= 2;
-                }
-            } */
+
     }
     @Transactional
 	public void playAbilityCard(Turn turn, AbilityCardInGame card, EnemyInGame enemy, Integer currentGameId){
