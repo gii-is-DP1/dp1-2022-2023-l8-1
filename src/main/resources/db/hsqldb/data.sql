@@ -212,8 +212,8 @@ INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ENG
 
 INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('ROBAR_BOLSILLOS', 0, 'PICARO_FEMENINO', false);
 
-INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('SAQUEO', 1, 'PICARO_FEMENINO', false);
-INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('SAQUEO', 1, 'PICARO_FEMENINO', false);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('SAQUEO', 0, 'PICARO_FEMENINO', false);
+INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('SAQUEO', 0, 'PICARO_FEMENINO', false);
 
 INSERT INTO ability_cards(ability_type, damage,  hero_type, target) VALUES ('TRAMPA', 0, 'PICARO_FEMENINO', false);
 -- Cartas de Mercado como Cartas de Habilidad
@@ -299,9 +299,9 @@ INSERT INTO enemies(endurance, glory, gold, type, condition_type) VALUES (5, 3, 
 INSERT INTO enemies(endurance, glory, gold, type, condition_type) VALUES (5, 3, 2, 'NIGROMANTE', 'MAGO_2');
 INSERT INTO enemies(endurance, glory, gold, type, condition_type) VALUES (5, 3, 0, 'NIGROMANTE', 'MAGO_2');
 
-INSERT INTO enemies(endurance, glory, gold, type ) VALUES (6, 4, 1,'BERSEKER');
-INSERT INTO enemies(endurance, glory, gold, type ) VALUES (6, 4, 0,'BERSEKER');
-INSERT INTO enemies(endurance, glory, gold, type ) VALUES (6, 4, 0,'BERSEKER');
+INSERT INTO enemies(endurance, glory, gold, type ) VALUES (6, 4, 1,'BERSERKER');
+INSERT INTO enemies(endurance, glory, gold, type ) VALUES (6, 4, 0,'BERSERKER');
+INSERT INTO enemies(endurance, glory, gold, type ) VALUES (6, 4, 0,'BERSERKER');
 
 -- Cartas de Señores de la Guerra
 INSERT INTO enemies(endurance, glory, gold, type, is_boss) VALUES (8, 0, 0, 'GURDRUG',true);
@@ -370,8 +370,8 @@ INSERT INTO users(username, password, email, birth_date, enabled) VALUES
 ('samalbort', 'samuel', 'samalbort@user.com','2000-10-01', 1);--6 playerId
 INSERT INTO authorities(id,user_id,username,authority) VALUES (8,8,'samalbort', 'user');
 INSERT INTO users(username, password, email, birth_date, enabled) VALUES
-('migbayan', 'miguel', 'migbayan@user.com','2000-10-01', 1);--7playerId
-INSERT INTO authorities(id,user_id,username,authority) VALUES (9,9,'migbayan', 'user');
+('migybaman', 'miguel', 'migybaman@user.com','2000-10-01', 1);--7playerId
+INSERT INTO authorities(id,user_id,username,authority) VALUES (9,9,'migybaman', 'user');
 
 INSERT INTO players(glory, gold, wounds, enemy_kills, evasion, profiency, second_profiency, hero_type, user_id, game_id) VALUES 
 (2, 7, 0, 0, TRUE, 'MAGIA','INCOMPATIBLE', 'MAGO_MASCULINO', 5, 2);

@@ -484,7 +484,7 @@ public class GameService {
     @Transactional
 	public void reduceDamage (Turn turn, int reduction){ //Asigno el número de daño a reducir este turno, entra el turno y número fijo a sumar
 		turn.setDamageReduction(turn.getDamageReduction() + reduction);
-		TurnService.save(turn);
+		turnService.save(turn);
         // TODO REVISAR EL SAVE DE TURN
 
 		}
