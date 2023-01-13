@@ -317,7 +317,7 @@ INSERT INTO enemies(endurance, glory, gold, type, is_boss) VALUES (8, 0, 0, 'GUR
 INSERT INTO enemies(endurance, glory, gold, type, is_boss) VALUES (9, 0, 0, 'ROGHKILLER',true);
 INSERT INTO enemies(endurance, glory, gold, type, is_boss) VALUES (10, 0, 0, 'SHRIEKKNIFER',true);
 
-INSERT INTO enemy_in_game(wounds, enemy_id, game_field_id) VALUES (0, 1, 1);
+INSERT INTO enemy_in_game(wounds, enemy_id, game_field_id) VALUES (0, 6, 1);
 INSERT INTO enemy_in_game(wounds, enemy_id, game_field_id) VALUES (0, 3, 1);
 INSERT INTO enemy_in_game(wounds, enemy_id, game_field_id) VALUES (0, 27, 1);
 INSERT INTO enemy_in_game(wounds, enemy_id, game_id) VALUES (0, 2, 1);

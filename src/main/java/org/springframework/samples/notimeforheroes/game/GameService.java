@@ -117,6 +117,12 @@ public class GameService {
   		Game currentGame = findById(gameId).get();
   		int currentNumEnemies = currentGame.getMonsterField().size();//los que quedan
   		int enemiesToAdd=0;//los que habría que añadir
+        for(EnemyInGame e:currentGame.getMonsterField()) {
+            if(e.getEnemy().getCondition()==ConditionType.REGENERACION) {
+                e.setWounds(0);
+                enemyService.saveEnemyInGame(e);
+            }
+        }
   		if (currentNumEnemies==0) {
   			enemiesToAdd=3;
   		}else if(currentNumEnemies==1 || currentNumEnemies==2) {
