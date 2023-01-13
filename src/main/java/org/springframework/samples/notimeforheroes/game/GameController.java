@@ -19,6 +19,7 @@ import org.springframework.samples.notimeforheroes.friends.FriendsService;
 import org.springframework.samples.notimeforheroes.player.HeroType;
 import org.springframework.samples.notimeforheroes.player.Player;
 import org.springframework.samples.notimeforheroes.player.PlayerService;
+import org.springframework.samples.notimeforheroes.player.Profiency;
 import org.springframework.samples.notimeforheroes.turn.PhaseType;
 import org.springframework.samples.notimeforheroes.turn.Turn;
 import org.springframework.samples.notimeforheroes.turn.TurnService;
@@ -133,6 +134,48 @@ public class GameController {
                     p.setHero(heroType);
                     abilityService.addAbilityCards(p, heroType);
                     p.setWounds(abilityService.getWoundsHero(heroType));
+                    switch(heroType) {
+                    case MAGO_MASCULINO:{
+                    	p.setProfiency(Profiency.MAGIA);
+                    	break;
+                    }
+                    case MAGO_FEMENINO:{
+                    	p.setProfiency(Profiency.MAGIA);
+                    	break;
+                    }
+                    case EXPLORADOR_MASCULINO:{
+                    	p.setProfiency(Profiency.DISTANCIA);
+                    	p.setSecondProfiency(Profiency.MELEE);
+                    	break;
+                    }
+                    case EXPLORADOR_FEMENINO:{
+                    	p.setProfiency(Profiency.DISTANCIA);
+                    	p.setSecondProfiency(Profiency.MELEE);
+                    	break;
+                    }
+                    case PICARO_MASCULINO:{
+                    	p.setProfiency(Profiency.PERICIA);
+                    	p.setSecondProfiency(Profiency.DISTANCIA);
+                    	break;
+                    }
+                    case PICARO_FEMENINO:{
+                    	p.setProfiency(Profiency.PERICIA);
+                    	p.setSecondProfiency(Profiency.DISTANCIA);
+                    	break;
+                    }
+                    case GUERRERO_MASCULINO:{
+                    	p.setProfiency(Profiency.MELEE);
+                    	break;
+                    }
+                    case GUERRERO_FEMENINO:{
+                    	p.setProfiency(Profiency.MELEE);
+                    	p.setSecondProfiency(null);
+                    	break;
+                    }
+                    case SIN_HEROE:{
+                    	break;
+                    }
+                    }
                     playerService.savePlayer(p);
                 }
             }
@@ -153,6 +196,7 @@ public class GameController {
         Game currentGame = service.findById(gameId).get();
         currentGame.setState(GameState.ESCOGER_LIDER);
         service.saveGame(currentGame);
+
         
         //Una vez se llega aquí suponemos que ya están en la partida todos los jugadores que van a jugar
         //Poblamos el juego de enemigos respecto el número de jugadores
@@ -164,13 +208,29 @@ public class GameController {
         for(Player p : players){
             if(p.getUser().getUsername() == currentUser.getUsername()){
                 currentPlayer = p;
-                abilityService.addStartingHand(p);
+                if(currentPlayer.getAbilityHand().isEmpty()){
+                    abilityService.addStartingHand(p);
+                }
+                
                 playerService.savePlayer(p);
             }
+
         }
+
+        Boolean todosPujan = false;
+        if(players.stream().allMatch(p -> p.getCartasPuja().size()>=1)){
+            todosPujan = true;
+        }else{
+            mav.addObject("message", "Todos los jugadores deben de pujar al menos una carta");
+
+        }
+
+        
+
         mav.addObject("cardInGames", currentPlayer.getAbilityHand());
         mav.addObject("game", currentGame);
         mav.addObject("players", players);
+        mav.addObject("todosPujan", todosPujan);
         return mav;
     }
 
@@ -197,13 +257,20 @@ public class GameController {
         System.out.println("=================================Jugador actual " + currentPlayer.getUser().getUsername());
         // System.out.println("=================================Errores " + currentPlayer.getUser().getUsername());
 
+        Boolean todosPujan = false;
+        if(players.stream().allMatch(p -> p.getCartasPuja().size()>=1)){
+            todosPujan = true;
+        }else{
+            mav.addObject("message", "Todos los jugadores deben de pujar al menos una carta");
 
+        }
 
         mav.addObject("cartasPuja", currentPlayer.getCartasPuja());
         mav.addObject("cardInGames", currentPlayer.getAbilityHand());
         mav.addObject("players", players);
         mav.addObject("game", currentGame);
         mav.addObject("currentPlayer", currentPlayer);
+        mav.addObject("todosPujan", todosPujan);
 
         return mav;
 
@@ -293,7 +360,7 @@ public class GameController {
     //Controlador vista para el tablero de un juego
     @GetMapping(value = "/board/{gameId}")
     public ModelAndView showBoard(@PathVariable("gameId") int gameId, HttpServletResponse response){
-        //response.addHeader("Refresh", "4"); // Autorefresco
+        response.addHeader("Refresh", "4"); // Autorefresco
     	
         ModelAndView mav = new ModelAndView("games/board");
         Game game =service.findById(gameId).get();
@@ -362,10 +429,14 @@ public class GameController {
         if(currentTurn.getType() == PhaseType.ATAQUE){
             service.endAttack(currentPlayerGaming, currentTurn);
         }else if(currentTurn.getType() == PhaseType.MERCADO){
+
             turnService.newTurn(currentGame, currentPlayerGaming, PhaseType.RESTABLECIMIENTO);
         }else{
+            while((currentPlayerGaming.getAbilityHand().size() - currentPlayerGaming.getMarketDiscardPile().size()) < 4){
+                service.stealCard(currentPlayerGaming);
+            }
         	service.resupplyEnemies(gameId);
-            if((currentPlayerGaming.getAbilityHand().size() + Math.abs(currentPlayerGaming.getMarketHand().size() - currentPlayerGaming.getMarketDiscardPile().size())) <= 4){
+            if((currentPlayerGaming.getAbilityHand().size()) <= 4){
                 turnService.newTurn(currentGame, nextPlayerToGame, PhaseType.ATAQUE);
             }
         }
@@ -379,26 +450,29 @@ public class GameController {
     public String userEvasion(@PathVariable("gameId") int gameId,  ModelMap modelMap){
         Game currentGame = service.findById(gameId).get();
         Turn currentTurn = currentGame.getTurn().get(currentGame.getTurn().size()-1);
-
         Player currentPlayerGaming = currentTurn.getPlayer();
         Player nextPlayerToGame = new Player();
-
-        try{
-            nextPlayerToGame = currentGame.getPlayer().get(currentGame.getPlayer().indexOf(currentPlayerGaming)+1);
-
-        }catch (Exception e){
-            nextPlayerToGame = currentGame.getPlayer().get(0);
+        if(currentPlayerGaming.isEvasion()) {//si no puede usarlo no hace nada 
+	        
+	        currentPlayerGaming.setEvasion(false);//evasion a false, ya no puede volver a usarlo
+	        
+	        try{
+	        	
+	            nextPlayerToGame = currentGame.getPlayer().get(currentGame.getPlayer().indexOf(currentPlayerGaming)+1);
+	        	
+	        }catch (Exception e){
+	            nextPlayerToGame = currentGame.getPlayer().get(0);
+	        }
+	
+	        if(currentPlayerGaming.getAbilityHand().size() >1){ // Al hacer la evasión se descartan 2 cartas
+	            int cardId1 = currentPlayerGaming.getAbilityHand().get(0).getId();
+	            int cardId2 = currentPlayerGaming.getAbilityHand().get(1).getId();
+	            service.discardAbilityCard(currentPlayerGaming.getUser(), gameId, cardId1);
+	            service.discardAbilityCard(currentPlayerGaming.getUser(), gameId, cardId2);
+	        }
+	        playerService.savePlayer(currentPlayerGaming);
+	        turnService.newTurn(currentGame, nextPlayerToGame, PhaseType.ATAQUE);
         }
-
-        if(currentPlayerGaming.getAbilityHand().size() >1){ // Al hacer la evasión se descartan 2 cartas
-            int cardId1 = currentPlayerGaming.getAbilityHand().get(0).getId();
-            int cardId2 = currentPlayerGaming.getAbilityHand().get(1).getId();
-            service.discardAbilityCard(currentPlayerGaming.getUser(), gameId, cardId1);
-            service.discardAbilityCard(currentPlayerGaming.getUser(), gameId, cardId2);
-        }
-        
-        turnService.newTurn(currentGame, nextPlayerToGame, PhaseType.ATAQUE);
-        
         return "redirect:/games/board/"+gameId;
     }
 

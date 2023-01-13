@@ -98,11 +98,7 @@ public class UserServiceTest {
     	Collection<User> ls= userService.findUsers();
         assertNotNull(ls);
         assertFalse(ls.isEmpty());
-        assertEquals(7,ls.size());//modificar si metemos más users en los inserts
+        assertEquals(9,ls.size());//modificar si metemos más users en los inserts
     }
     
-//    @Test
-//    public void registerUserPositive() {
-//    	
-//    }
 }

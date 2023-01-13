@@ -10,10 +10,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.game.Game;
 import org.springframework.samples.notimeforheroes.game.GameService;
+import org.springframework.samples.notimeforheroes.user.User;
 import org.springframework.samples.notimeforheroes.user.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -130,14 +130,15 @@ public class PlayerController {
 	public String joinGame(@PathVariable("gameId")int gameId) {
 		Optional<Game> game= gameService.findById(gameId);
 	  	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    User currentUser = (User) auth.getPrincipal();
+	  	String currentUserName = auth.getName();
+	    User currentUser = userService.findByUsername(currentUserName);
+	    
 	    List<Player> playersInGame = playerService.findPlayersInGame();
 		if(playersInGame.stream().anyMatch(x->x.getUser()==userService.findByUsername(currentUser.getUsername()))) {
 			return "redirect:/games/";
 		}
 		Player newPlayer = new Player();
-		org.springframework.samples.notimeforheroes.user.User user = userService.findByUsername(currentUser.getUsername());
-		playerService.createPlayer(newPlayer, game.get(), user);
+		playerService.createPlayer(newPlayer, game.get(), currentUser);
 		
 	    return "redirect:/games/"+gameId+"/lobby";
 	}
@@ -156,6 +157,7 @@ public class PlayerController {
 	}
 
 
+	
     
 }
 
