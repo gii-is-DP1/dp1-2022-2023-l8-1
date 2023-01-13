@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
@@ -691,6 +692,11 @@ public class GameService {
         int plain_add_dmg = (int) turn_cards.stream().filter(x->x.getAbilityCard().getAbilityType().equals(AbilityType.PIEDRA_DE_AMOLAR)).count(); // Cuento las piedras de amolar para sumar daño
         int total_damage = card_damage + plain_add_dmg; // Daño total tras la suma
         int bonus = 0;
+        for(AbilityCardInGame a:turn.getCardsPlayed()) {
+            if(a.getAbilityCard().getAbilityType().equals(AbilityType.PIEDRA_DE_AMOLAR)) {
+                bonus++;
+            }
+        }
 
 		switch (card_type) {
 			case COMPANERO_LOBO: {
@@ -903,7 +909,8 @@ public class GameService {
             }
 
 			///// Hacen target pero no daño
-			case SUPERVIVENCIA: {// Daño 0, Cambia 1 enemigo por el siguiente en el mazo de Horda
+			case SUPERVIVENCIA: {// Daño 0, Cambia 1 enemigo por el siguiente en el mazo de Horda --Fin--
+                changeEnemy(enemy.getId(), currentGameId);
                 break;
             }
 			case ESCUDO: {// Previenes el daño de un enemigo, Finalizas tu ataque --Fin--
@@ -957,6 +964,7 @@ public class GameService {
             }
 
 			case AURA_PROTECTORA: {//Daño 0, Cancela el daño del próximo ataque sufrido, Pierdes X cartas donde X es el número de enemigos en el campo
+
                 break;
             }
 
@@ -1029,11 +1037,14 @@ public class GameService {
                 break;
             }
 
-			case PIEDRA_DE_AMOLAR: {// Daño 0. Coste 4, Todas tus cartas hacen 1 más de daño este turno si hacían al menos 1 de Daño
+			case PIEDRA_DE_AMOLAR: {// Daño 0. Coste 4, Todas tus cartas hacen 1 más de daño este turno si hacían al menos 1 de Daño --Fin--
                 break;
             }
 
-			case VIAL_DE_CONJURACION: {// Daño 0, Coste 5, Busca una carta de tu pila de Desgaste y ponla en tu mano
+			case VIAL_DE_CONJURACION: {// Daño 0, Coste 5, Recupera una carta de tu pila de Desgaste y ponla en tu mano --Fin--
+                Random rand = new Random();
+                int x = rand.nextInt((current_player.getDiscardPile().size()-1) - 0) + 1;
+                recoverCard(current_player.getDiscardPile().get(x).getId(), current_player);
                 break;
             }
                 //Se ha implementado por Martín
