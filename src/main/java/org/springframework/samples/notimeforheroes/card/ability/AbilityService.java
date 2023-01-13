@@ -8,12 +8,9 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.notimeforheroes.card.enemy.EnemyInGame;
-import org.springframework.samples.notimeforheroes.game.Game;
 import org.springframework.samples.notimeforheroes.player.HeroType;
 import org.springframework.samples.notimeforheroes.player.Player;
 import org.springframework.samples.notimeforheroes.player.PlayerService;
-import org.springframework.samples.notimeforheroes.turn.Turn;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -70,61 +67,6 @@ public class AbilityService {
 			System.out.println(" =============Estado tras reasignacióno=============== " + player.getAbilityPile());
 			return ability;
 		}
-	}
-
-	@Transactional
-	public void playAbilityCard(Turn turn, AbilityCardInGame card, EnemyInGame enemy){
-		AbilityType carta = card.getAbilityCard().getAbilityType();
-		int damage = card.getAbilityCard().getDamage(); // HAY QUE PONER UN BREAK; AL FINAL DE CADA UNO
-		List<AbilityCardInGame> turn_cards = turn.getCardsPlayed();
-		List<AbilityCardInGame> enemy_cards = enemy.getCardsPlayed();
-		switch (carta) {
-			case COMPANERO_LOBO: // Daño 2, Previenes 2 de Daño
-
-			case DISPARO_CERTERO: // Daño 3, Pierdes 1 cartas, Finalizas tu ataque
-			case DISPARO_RAPIDO: // Daño 1, Roba 1 si es "Disparo rápido" úsala, sino ponla al fondo del mazo de Habilidad
-			case EN_LA_DIANA: // Daño 4, Gana 1 de Gloria, Pierdes 1 carta
-			case LLUVIA_DE_FLECHAS: // Daño 2, Esta carta daña a 2 enemigos y al héroe con menos heridas, en empate tú eliges
-			case ATAQUE_BRUTAL: // Daño 3, Pierdes 1 carta
-			case CARGA_CON_ESCUDO: // Daño 2, Previenes 2 de Daño
-			case DOBLE_ESPADAZO: // Daño 2, Pierdes 1 carta
-			case ESPADAZO: // Daño 1, si el primer "Espadazo" que juegas Roba 1
-			case TODO_O_NADA: // Daño 1, Roba 1 carta y súmale su daño a esta carta, Recupera la carta que robaste
-			case DISPARO_GELIDO: // Daño 1, El enemigo afectado no causa daño este turno, Roba 1
-			case FLECHA_CORROSIVA: // Daño 1, Las siguientes cartas que dañen a este enemigo le hacen 1 más de daño, Pierdes 1 carta
-			case GOLPE_DE_BASTON: // Daño 1, Si no es el primer "Golpe de bastón" usado contra este enemigo en lugar de 1 esta carta hace 2 de daño
-			case PROYECTIL_IGNEO: // Daño 2, Gana 1 de Gloria
-			case TORRENTE_DE_LUZ: // Daño 2, Todos menos tú recuperan 2, Ganas 1 de Gloria
-			case AL_CORAZON: // Daño 4, Si derrotas un enemigo con esto gana 1 Moneda si el primer "Al Corazón" del turno, Pierdes 1 carta
-			case ATAQUE_FURTIVO: // Daño 2, Si derrotas un enemigo con esto gana 1 Moneda si el primer "Ataque Furtivo" del turno
-			case BALLESTA_PRECISA: // Daño 2, Si ya usaste "Ballesta precisa" contra ese enemigo hace 1 punto más de daño
-			case EN_LAS_SOMBRAS: // Daño 1, Previenes 2 de Daño
-			case DAGA_ELFICA: //Daño 2, Coste 3, Si el héroe tiene como Proficiency "Pericia" se recupera tras jugarla, PROFICIENCIAS:  Distancia, Pericia, Melee
-			case ALABARDA_ORCA: //Daño 4, Coste 5, PROFICIENCIAS: Melee
-			case ARCO_COMPUESTO: //Daño 4, Coste 5, PROFICIENCIAS: Distancia
-			///// Hacen target pero no daño
-			case SUPERVIVENCIA: // Daño 0, Cambia 1 enemigo por el siguiente en el mazo de Horda
-			case ESCUDO: // Previenes el daño de un enemigo, Finalizas tu ataque
-			case ENGANAR: // Daño 0, Cuesta 2 monedas, El enemigo elegido no hace daño este turno
-			case CAPA_ELFICA: // Daño 0, Coste 3, El enemigo seleccionado no hace daño este turno, PROFICIENCIAS : Distancia, Magia
-			///// No requieren de obejtivo
-			case RECOGER_FLECHAS: // Daño 0, Recupera un "Disparo Rápido", Baraja tu mazo de Habildades, Gana 1 moneda
-			case PASO_ATRAS: // Daño 0, Roba 2
-			case VOZ_DE_ALIENTO: // Todos Recuperan 2 cartas, Roba 1 carta y gana 1 de Gloria
-			case AURA_PROTECTORA: //Daño 0, Cancela el daño del próximo ataque sufrido, Pierdes X cartas donde X es el número de enemigos en el campo
-			case BOLA_DE_FUEGO: //Daño 2, Daña a todos los enemigos, El resto de héroes sufren 1 de Daño
-			case ORBE_CURATIVO: // Daño 0, Todos Recuperan 2 cartas, Eliminas 1 herida de tu héroe, Elimina esta carta del juego
-			case RECONSTITUCION: // Daño 0, Roba 1 carta, Recupera 2 cartas
-			case ROBAR_BOLSILLOS: //Daño 0, Roba 1 moneda a cada héroe
-			case SAQUEO: //Daño 0, Gana 1 moneda por cada Enemigo en el campo, Ganas 1 de Gloria
-			case TRAMPA: // Daño 0, Al resolver el ataque de la horda derrotas al enemigo de mayor Fortaleza pero su botín se anula
-			case POCION_CURATIVA: //Daño 0, Coste 8, Retira una herida de tu héroe, Eliminala del juego
-			case PIEDRA_DE_AMOLAR: // Daño 0. Coste 4, Todas tus cartas hacen 1 más de daño este turno si hacían al menos 1 de Daño
-			case VIAL_DE_CONJURACION: // Daño 0, Coste 5, Busca una carta de tu pila de Desgaste y ponla en tu mano
-			case ELIXIR_DE_CONCENTRACION: // Daño 0, Coste 3, Roba 3 cartas
-			case ARMADURA_DE_PLACAS: //Daño 0, Coste 4, Recuperas 4 cartas, PROFICIENCIAS: Melee
-		  }
-
 	}
 
 	@Transactional
@@ -210,5 +152,13 @@ public class AbilityService {
 		
 
 	}
-    
+    public int getWoundsHero(HeroType hero) {
+    	int wounds =0;
+    	if(hero==HeroType.MAGO_MASCULINO||hero==HeroType.MAGO_FEMENINO||hero==HeroType.PICARO_FEMENINO||hero==HeroType.PICARO_MASCULINO) {
+    		wounds=2;
+    	}else {
+    		wounds=3;
+    	}
+    	return wounds;
+    }
 }

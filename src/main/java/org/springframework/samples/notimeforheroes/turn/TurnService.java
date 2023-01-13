@@ -20,6 +20,10 @@ public class TurnService {
         this.repo = turnRepo;
     };
 
+    public void save(Turn turn) {
+		repo.save(turn);
+	}
+
     //
     public List<Player> setLeader(int gameId){
         List<Player> players = gameRepository.findPlayersInGame(gameId);
@@ -39,13 +43,9 @@ public class TurnService {
         turn.setGame(game);
         turn.setPlayer(player);
         turn.setType(phaseType);
+        turn.setCardsPlayed(List.of());
         save(turn);
 
-    }
-
-    //función save simple
-    public void save(Turn turn){
-        repo.save(turn);
     }
 
 }

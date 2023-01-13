@@ -11,6 +11,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityService;
+import org.springframework.samples.notimeforheroes.card.enemy.EnemyInGame;
+import org.springframework.samples.notimeforheroes.card.enemy.EnemyService;
 import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
 import org.springframework.samples.notimeforheroes.friends.Friends;
 import org.springframework.samples.notimeforheroes.friends.FriendsService;
@@ -56,18 +58,20 @@ public class GameController {
     private final TurnService turnService;
 
     private final AbilityService abilityService;
+    private final EnemyService eService;
 
     @Autowired
     private final PlayerService playerService;
 
     @Autowired
-    public GameController(GameService gameService, PlayerService playerService, FriendsService fs, UserService uService, TurnService tService, AbilityService aService){
+    public GameController(GameService gameService, PlayerService playerService, FriendsService fs, UserService uService, TurnService tService, AbilityService aService, EnemyService eService){
         this.service = gameService;
         this.playerService = playerService;
         this.friendsService = fs;
         this.userService = uService;
         this.turnService = tService;
         this.abilityService = aService;
+        this.eService = eService;
     }
 
     // @GetMapping('/')
@@ -128,6 +132,7 @@ public class GameController {
                 if(p.getUser().getUsername() == currentUser.getUsername()){
                     p.setHero(heroType);
                     abilityService.addAbilityCards(p, heroType);
+                    p.setWounds(abilityService.getWoundsHero(heroType));
                     playerService.savePlayer(p);
                 }
             }
@@ -288,7 +293,7 @@ public class GameController {
     //Controlador vista para el tablero de un juego
     @GetMapping(value = "/board/{gameId}")
     public ModelAndView showBoard(@PathVariable("gameId") int gameId, HttpServletResponse response){
-        // response.addHeader("Refresh", "1"); // Autorefresco
+        //response.addHeader("Refresh", "4"); // Autorefresco
     	
         ModelAndView mav = new ModelAndView("games/board");
         Game game =service.findById(gameId).get();
@@ -355,7 +360,7 @@ public class GameController {
         }
         
         if(currentTurn.getType() == PhaseType.ATAQUE){
-            turnService.newTurn(currentGame, currentPlayerGaming, PhaseType.MERCADO);
+            service.endAttack(currentPlayerGaming, currentTurn);
         }else if(currentTurn.getType() == PhaseType.MERCADO){
             turnService.newTurn(currentGame, currentPlayerGaming, PhaseType.RESTABLECIMIENTO);
         }else{
@@ -458,7 +463,7 @@ public class GameController {
                 maxGlory = player.getGlory();
                 winner = player;
             } else if (player.getGlory() == maxGlory) {
-                if(winner.getWounds()<player.getWounds()) {
+                if(winner.getEnemy_kills()<player.getEnemy_kills()) {
                     winner = player;
                 }
             }
@@ -467,7 +472,6 @@ public class GameController {
         for(Player player:players) {
             if(player.getWounds()>0) {
                 acum += 1;
-
             }
         }
         if(acum == 0) {
@@ -535,12 +539,42 @@ public class GameController {
 
     }
 
+    @GetMapping("/{gameId}/roghkiller")
+    public String roghkiller(@PathVariable("gameId") int gameId){
+
+        Game currentGame = service.findById(gameId).get();
+        service.roghkiller(currentGame);
+        return "redirect:/games/board/"+gameId;
+    }
+
+
     @GetMapping("/{gameId}/changeEnemy/{enemyId}")
     public String changeEnemy(@PathVariable("gameId") int gameId, @PathVariable("enemyId") int enemyId){
 
 
 
         service.changeEnemy(enemyId, gameId);
+        return "redirect:/games/board/"+gameId;
+    }
+
+    @GetMapping("/{gameId}/cardAction/{abilityCardInGameId}/{enemyInGameId}")
+    public String useCards(@PathVariable("gameId") int gameId, @PathVariable("abilityCardInGameId") int cardId, @PathVariable("enemyInGameId") int enemyId)  {
+        Game currentGame = service.findById(gameId).get();
+        Turn thisTurn =  currentGame.getTurn().get(currentGame.getTurn().size()-1);
+        AbilityCardInGame card = abilityService.findById(cardId);
+        EnemyInGame enemy = eService.findById(enemyId).get();
+        service.playAbilityCard(thisTurn, card, enemy, gameId);
+        
+        return "redirect:/games/board/"+gameId;
+    }
+
+    @GetMapping("/{gameId}/cardAction/{abilityCardInGameId}")
+    public String useCards(@PathVariable("gameId") int gameId, @PathVariable("abilityCardInGameId") int cardId)  {
+        Game currentGame = service.findById(gameId).get();
+        Turn thisTurn =  currentGame.getTurn().get(currentGame.getTurn().size()-1);
+        AbilityCardInGame card = abilityService.findById(cardId);
+        service.playAbilityCard(thisTurn, card, new EnemyInGame(), gameId);
+        
         return "redirect:/games/board/"+gameId;
     }
 }
