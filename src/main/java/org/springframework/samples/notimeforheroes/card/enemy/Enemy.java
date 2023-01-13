@@ -43,7 +43,6 @@ public class Enemy {
 
     @Enumerated(EnumType.STRING)
     @Column(name="conditionType")
-
     private ConditionType condition;
     
     @Column(columnDefinition = "boolean default false")

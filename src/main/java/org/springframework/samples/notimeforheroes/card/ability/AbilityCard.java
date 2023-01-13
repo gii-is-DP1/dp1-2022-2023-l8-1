@@ -37,21 +37,17 @@ public class AbilityCard {
     @Column(name="heroType")
     private HeroType hero;
 
-    
     @Enumerated(EnumType.STRING)
     @Column(name="conditionType")
     private ConditionType condition;
 
-
     @NotNull
     private Boolean target;
-
 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "abilityType")
     private AbilityType abilityType;
-
 
     @OneToMany(mappedBy="abilityCard")
     private List<AbilityCardInGame> abilityCardInGame;
