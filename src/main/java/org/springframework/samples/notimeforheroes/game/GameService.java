@@ -691,16 +691,18 @@ public class GameService {
                 break;
             }
 			case DISPARO_RAPIDO: {// Daño 1, Roba 1 si es "Disparo rápido" úsala, sino ponla al fondo del mazo de Habilidad
-                for(AbilityCardInGame c:mazo_actual){
-                    if(c.getAbilityCard().getAbilityType().equals(AbilityType.DISPARO_RAPIDO)){
-                        bonus++;
-                    }else{
-                        break;
-                    }
-                drawCards(current_player, bonus);
-                for(int i = 0; i < bonus; i++)
-                    damageEnemy(current_player, enemy, card, total_damage, 0);
-                }
+				damageEnemy(current_player, enemy, card, total_damage, 0);
+				drawCards(current_player, 1);
+//                for(AbilityCardInGame c:mazo_actual){
+//                    if(c.getAbilityCard().getAbilityType().equals(AbilityType.DISPARO_RAPIDO)){
+//                        bonus++;
+//                    }else{
+//                        break;
+//                    }
+//                
+//                for(int i = 0; i < bonus; i++)
+//                    damageEnemy(current_player, enemy, card, total_damage, 0);
+//                }
                 // Le pongo un pin a esto y luego vuelvo la clave esta en el robo y descarte
                 break;
             }
@@ -775,16 +777,17 @@ public class GameService {
                 break;
             }
 
-			case GOLPE_DE_BASTON: {// Daño 1, Si no es el primer "Golpe de bastón" usado contra este enemigo en lugar de 1 esta carta hace 2 de daño
+			case GOLPE_DE_BASTON: {// Daño 1, Si no es el primer "Golpe de bastón" usado contra este enemigo en lugar de 1 esta carta hace 2 de daño --Fin--
                 for(AbilityCardInGame c:enemy.getCardsPlayed()){
                     if(c.getAbilityCard().getAbilityType().equals(AbilityType.FLECHA_CORROSIVA)){
                         bonus++;
                     }
                 }
-                if(turn_cards.stream().filter(x->x.getAbilityCard().getAbilityType().equals(card.getAbilityCard().getAbilityType())).count() >= 1){
+                System.out.println("======================================="+enemy.getCardsPlayed().toString());
+                if(enemy.getCardsPlayed().stream().filter(x->x.getAbilityCard().getAbilityType().equals(card.getAbilityCard().getAbilityType())).count() >= 1){
                     bonus++;
                 }
-                damageEnemy(current_player, enemy, card, total_damage, 0);
+                damageEnemy(current_player, enemy, card, total_damage+bonus, 0);
                 break;
             }
 

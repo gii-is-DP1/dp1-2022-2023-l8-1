@@ -249,9 +249,9 @@ INSERT INTO ability_cards(hero_type,  ability_type, damage, target)
 
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (1, 1);
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (1, 1);
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (3, 1);
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (121, 1);
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_pile_id) VALUES (4, 1);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (2, 1);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (4, 1);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_pile_id) VALUES (64, 1);
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_pile_id) VALUES (5, 1);
 
 
@@ -319,6 +319,7 @@ INSERT INTO enemies(endurance, glory, gold, type, is_boss) VALUES (10, 0, 0, 'SH
 
 INSERT INTO enemy_in_game(wounds, enemy_id, game_field_id) VALUES (0, 1, 1);
 INSERT INTO enemy_in_game(wounds, enemy_id, game_field_id) VALUES (0, 3, 1);
+INSERT INTO enemy_in_game(wounds, enemy_id, game_field_id) VALUES (0, 27, 1);
 INSERT INTO enemy_in_game(wounds, enemy_id, game_id) VALUES (0, 2, 1);
 INSERT INTO enemy_in_game(wounds, enemy_id, game_id) VALUES (0, 4, 1);
 
