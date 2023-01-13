@@ -7,7 +7,7 @@ public enum EnemyType{
     GUERRERO,
     GUERRERO_BOTIN,
     NIGROMANTE,
-    BERSEKER,
+    BERSERKER,
     GURDRUG,
     ROGHKILLER,
     SHRIEKKNIFER

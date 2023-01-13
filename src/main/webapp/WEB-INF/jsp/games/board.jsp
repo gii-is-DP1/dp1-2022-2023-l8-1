@@ -15,12 +15,12 @@
 				<h1 >Turno de ${turn.player.user.username}</h1>
 				<!--Aquí iria el nombre de la fase en la que estamos (Ataque, mercado, reabastecimiento, espera)-->
 			</div>
-
 			<div class="enemies">
 			<c:forEach items="${game.monsterField}" var="enemyInGame">
 					<div class="enemy">
 						<img src="/resources/images/Cards/Enemies/${enemyInGame.enemy.type}.jpg" width="200" />
-						<h4>Endurance: <c:out value=" ${enemyInGame.enemy.endurance}"/></h4>
+						<h4>Endurance: <c:out value=" ${enemyInGame.enemy.endurance - enemyInGame.wounds}"/></h4>
+						<h4>Id: <c:out value=" ${enemyInGame.id}"/></h4>
 					</div>
 			</c:forEach>
 			</div>
@@ -59,6 +59,7 @@
 
 			<div class="totalGold">
 				<h2>ORO: ${player.gold}</h2>
+				<h2>GLORIA: ${player.glory}</h2>
 			</div>
 
 			<div class="yourCards">
@@ -81,11 +82,48 @@
 								</c:when>
 								<c:otherwise>
 									<img src= "/resources/images/Cards/Abilities/${cardInGame.abilityCard.abilityType}.jpg" width="100"/>
+									
 
 								</c:otherwise>
 							</c:choose>
 							
 							<h4 class="cardplayer">Damage:<c:out value=" ${cardInGame.abilityCard.damage}"/></h4>
+						</div>
+						<div>
+							
+									<c:choose>
+										<c:when test="${isMyTurn && fase.toString() == 'ATAQUE'}">
+													<c:choose>
+														<c:when test="${cardInGame.abilityCard.target == true}">
+															<c:forEach var="enemies" items="${game.monsterField}">
+																<spring:url value="/games/{gameId}/cardAction/{abilityCardInGameId}/{enemyInGameId}" var="useCard">
+																	<spring:param name="enemyInGameId" value="${enemies.id}"></spring:param>
+																	<spring:param name="abilityCardInGameId" value="${cardInGame.id}"></spring:param>
+																	<spring:param name="gameId" value="${game.id}"></spring:param>
+
+																</spring:url>
+																<a href="${fn:escapeXml(useCard)}">
+																<input type="button" class="btn-danger" value="Enemigo con id ${enemies.id}"></input>
+																</a>
+															</c:forEach>
+														</c:when>
+														<c:otherwise>
+															<spring:url value="/games/{gameId}/cardAction/{abilityCardInGameId}" var="useCard">
+																	<spring:param name="abilityCardInGameId" value="${cardInGame.id}"></spring:param>
+																	<spring:param name="gameId" value="${game.id}"></spring:param>
+
+															</spring:url>
+															<a href="${fn:escapeXml(useCard)}">
+															<input type="button" class="btn-danger" value="USAR CARTA"></input>
+															</a>
+														</c:otherwise>
+													</c:choose>
+										</c:when>
+										<c:otherwise>
+											<input type="button" class="btn-danger" value="No es tu turno/fase de ataque">
+											</input>
+										</c:otherwise>
+									</c:choose>
 						</div>
 						
 				</c:forEach>
@@ -189,6 +227,7 @@
 				<div class="myCard yourHeroCard">
 					<img
 						src="<spring:url value="/resources/images/Cards/Heroes/${player.hero}.jpg" htmlEscape="true" />">
+						<h4>vida del h�roe: ${player.wounds}</h4>
 				</div>
 				<div class="myCard enemyPileDefeated">
 					<img
@@ -198,16 +237,7 @@
 			</div>
 
 			<div class="enemyPile">
-				<h4>EnemyPile</h4>
-			</div>
-			<div class="marketPile">
-				<h4>MarketPile</h4>
-			</div>
-			<div class="player">
-				<h4>Other Player</h4>
-			</div>
-			<div class="player">
-				<h4>Other Player</h4>
+				<h4>EnemyPile ${player.enemy_kills }</h4>
 			</div>
 		</div>
 	</body>

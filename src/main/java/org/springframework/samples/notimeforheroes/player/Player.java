@@ -52,11 +52,19 @@ public class Player{
     private int wounds;
 
     @NotNull
+    @Min(0)
+    private int enemy_kills;
+
+    @NotNull
     private boolean evasion;
 
     @Enumerated(EnumType.STRING)
     @Column(name="profiency")
     private Profiency profiency;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="secondProfiency")
+    private Profiency secondProfiency;
 
     @Enumerated(EnumType.STRING)
     @Column(name="heroType")
@@ -85,8 +93,6 @@ public class Player{
     @OneToMany(mappedBy="playerPile")
     private List<AbilityCardInGame> abilityPile;
 
-
-    // TODO: Hay que añadirlo al UML
     @Size(max = 2, min = 0)
     @OneToMany()
     private List<AbilityCardInGame> cartasPuja;

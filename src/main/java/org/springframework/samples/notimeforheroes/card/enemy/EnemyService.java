@@ -2,6 +2,7 @@ package org.springframework.samples.notimeforheroes.card.enemy;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,10 @@ public class EnemyService {
 		return enemyInGameRepository.findAllByGame(game);
 	}
 
+	public Optional<EnemyInGame> findById(int id){
+		return enemyInGameRepository.findById(id);
+	}
+
 	//Añade enemigos a un juego
 	@Transactional()
 	public List<EnemyInGame> addEnemies(Game game,int numCards) {
@@ -51,7 +56,7 @@ public class EnemyService {
 		enemiesIG.add(boss);
 		return enemiesIG;
 	}
-	//añadir el número de enemigos que pida
+	//añadir el número de enemigos que pida al field
 	public void enemyToField(Game game,int numEnemies) {
 		List<EnemyInGame> pile = game.getMonsterPile();
 		try {

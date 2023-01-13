@@ -11,6 +11,9 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.card.ability.AbilityService;
+import org.springframework.samples.notimeforheroes.card.enemy.EnemyInGame;
+import org.springframework.samples.notimeforheroes.card.enemy.EnemyService;
+import org.springframework.samples.notimeforheroes.card.market.MarketCardInGame;
 import org.springframework.samples.notimeforheroes.friends.Friends;
 import org.springframework.samples.notimeforheroes.friends.FriendsService;
 import org.springframework.samples.notimeforheroes.player.HeroType;
@@ -55,18 +58,20 @@ public class GameController {
     private final TurnService turnService;
 
     private final AbilityService abilityService;
+    private final EnemyService eService;
 
     @Autowired
     private final PlayerService playerService;
 
     @Autowired
-    public GameController(GameService gameService, PlayerService playerService, FriendsService fs, UserService uService, TurnService tService, AbilityService aService){
+    public GameController(GameService gameService, PlayerService playerService, FriendsService fs, UserService uService, TurnService tService, AbilityService aService, EnemyService eService){
         this.service = gameService;
         this.playerService = playerService;
         this.friendsService = fs;
         this.userService = uService;
         this.turnService = tService;
         this.abilityService = aService;
+        this.eService = eService;
     }
 
     // @GetMapping('/')
@@ -89,7 +94,9 @@ public class GameController {
         ArrayList<HeroType> heroTypes = new ArrayList<>();
         String heroeAMostrar = "";
         for(HeroType h : HeroType.values()){
-            heroTypes.add(h);
+            if( h != HeroType.SIN_HEROE){
+                heroTypes.add(h);
+            }
         }
 
         for(Player player : players){
@@ -125,23 +132,13 @@ public class GameController {
                 if(p.getUser().getUsername() == currentUser.getUsername()){
                     p.setHero(heroType);
                     abilityService.addAbilityCards(p, heroType);
+                    p.setWounds(abilityService.getWoundsHero(heroType));
                     playerService.savePlayer(p);
                 }
             }
                 
             return "redirect:/games/"+gameId+"/lobby";
         }
-
-
-    // @GetMapping("/{gameId}/start")
-    // public ModelAndView startGame(@PathVariable("gameId") int gameId){
-    //     ModelAndView mav = new ModelAndView(VIEW_GAME_LOBBY);
-    //     Game game = service.findById(gameId).get();
-    //     game.setState(GameState.ESCOGER_LIDER);
-    //     service.saveGame(game);
-    //     mav.addObject("message", "Partida iniciada");
-    //     return mav;
-    // }
     
     //controlador y vista para la elección de un lider de partida dependiendo de la puntuación de cartas
     @GetMapping("{gameId}/chooseLeader")
@@ -296,7 +293,7 @@ public class GameController {
     //Controlador vista para el tablero de un juego
     @GetMapping(value = "/board/{gameId}")
     public ModelAndView showBoard(@PathVariable("gameId") int gameId, HttpServletResponse response){
-        // response.addHeader("Refresh", "1"); // Autorefresco
+        //response.addHeader("Refresh", "4"); // Autorefresco
     	
         ModelAndView mav = new ModelAndView("games/board");
         Game game =service.findById(gameId).get();
@@ -306,21 +303,14 @@ public class GameController {
 	    List<Player> players = game.getPlayer();
 	    Player player = players.stream().filter(x->x.getUser().equals(currentUser)).findFirst().get();
 	    
-        // turnService.newTurn(game, player, PhaseType.RESTABLECIMIENTO);
-
-        
         Turn currentTurn = game.getTurn().get(game.getTurn().size()-1); // Accedo al ultimo elemento de la lista de turnos
         
-        // System.out.println("Turno - "+turno + " de: "+player.getUser().getUsername());
-
-
         Boolean isMyTurn = false;
         Player myPlayer = service.getCurrentPlayer(currentUser, gameId);
 
         if(currentTurn.getPlayer() == myPlayer){ // Esto se hace para saber si es mi turno y poder pasar de turno.
             isMyTurn = true;
         }
-
 
         PhaseType fase = currentTurn.getType();
 
@@ -330,8 +320,6 @@ public class GameController {
         }
         
         
-
-	    
 	    mav.addObject("game",game);
 	    mav.addObject("player",player);
         mav.addObject("turn", currentTurn);
@@ -372,7 +360,7 @@ public class GameController {
         }
         
         if(currentTurn.getType() == PhaseType.ATAQUE){
-            turnService.newTurn(currentGame, currentPlayerGaming, PhaseType.MERCADO);
+            service.endAttack(currentPlayerGaming, currentTurn);
         }else if(currentTurn.getType() == PhaseType.MERCADO){
             turnService.newTurn(currentGame, currentPlayerGaming, PhaseType.RESTABLECIMIENTO);
         }else{
@@ -392,8 +380,6 @@ public class GameController {
         Game currentGame = service.findById(gameId).get();
         Turn currentTurn = currentGame.getTurn().get(currentGame.getTurn().size()-1);
 
-        
-
         Player currentPlayerGaming = currentTurn.getPlayer();
         Player nextPlayerToGame = new Player();
 
@@ -403,7 +389,6 @@ public class GameController {
         }catch (Exception e){
             nextPlayerToGame = currentGame.getPlayer().get(0);
         }
-
 
         if(currentPlayerGaming.getAbilityHand().size() >1){ // Al hacer la evasión se descartan 2 cartas
             int cardId1 = currentPlayerGaming.getAbilityHand().get(0).getId();
@@ -427,7 +412,6 @@ public class GameController {
 	    User currentUser = userService.findByUsername(currentUserName);
 
         service.buyCard(currentUser, gameId, marketCardId);
-
 
         return "redirect:/games/board/"+gameId;
     }
@@ -479,7 +463,7 @@ public class GameController {
                 maxGlory = player.getGlory();
                 winner = player;
             } else if (player.getGlory() == maxGlory) {
-                if(winner.getWounds()<player.getWounds()) {
+                if(winner.getEnemy_kills()<player.getEnemy_kills()) {
                     winner = player;
                 }
             }
@@ -488,7 +472,6 @@ public class GameController {
         for(Player player:players) {
             if(player.getWounds()>0) {
                 acum += 1;
-
             }
         }
         if(acum == 0) {
@@ -508,9 +491,90 @@ public class GameController {
 
     }
 
+    @GetMapping("/board/{gameId}/showDiscards")
+    public String showDiscards(@PathVariable("gameId") int gameId, ModelMap modelMap){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String currentUserName = auth.getName();
+	    User currentUser = userService.findByUsername(currentUserName);
+
+        Player currentPlayer = service.getCurrentPlayer(currentUser, gameId);
+
+        List<AbilityCardInGame> discardPile = currentPlayer.getDiscardPile();
+        List<MarketCardInGame> marketDiscardPile = currentPlayer.getMarketDiscardPile();
+
+        modelMap.addAttribute("discardPile", discardPile);
+        modelMap.addAttribute("marketDiscardPile", marketDiscardPile);
+        modelMap.addAttribute("game", service.findById(gameId).get());
+
+        return "games/showDiscards";
+    }
+
+    @GetMapping("/{gameId}/selectDiscard/{cardId}")
+    public String selectDiscard(@PathVariable("gameId") int gameId,@PathVariable("cardId") int cardId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String currentUserName = auth.getName();
+	    User currentUser = userService.findByUsername(currentUserName);
+
+        Player currentPlayer = service.getCurrentPlayer(currentUser, gameId);
+
+        service.recoverCard(cardId, currentPlayer);
+
+
+        return "redirect:/games/board/"+gameId;
+
+    }
+
+    @GetMapping("/{gameId}/selectMarketDiscard/{marketCardId}")
+    public String selectMarketDiscard(@PathVariable("gameId") int gameId, @PathVariable("marketCardId") int marketCardId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String currentUserName = auth.getName();
+	    User currentUser = userService.findByUsername(currentUserName);
+
+        Player currentPlayer = service.getCurrentPlayer(currentUser, gameId);
+
+        service.recoverMarketCard(marketCardId, currentPlayer);
+
+
+        return "redirect:/games/board/"+gameId;
+
+    }
+
+    @GetMapping("/{gameId}/roghkiller")
+    public String roghkiller(@PathVariable("gameId") int gameId){
+
+        Game currentGame = service.findById(gameId).get();
+        service.roghkiller(currentGame);
+        return "redirect:/games/board/"+gameId;
+    }
+
+
+    @GetMapping("/{gameId}/changeEnemy/{enemyId}")
+    public String changeEnemy(@PathVariable("gameId") int gameId, @PathVariable("enemyId") int enemyId){
 
 
 
+        service.changeEnemy(enemyId, gameId);
+        return "redirect:/games/board/"+gameId;
+    }
 
+    @GetMapping("/{gameId}/cardAction/{abilityCardInGameId}/{enemyInGameId}")
+    public String useCards(@PathVariable("gameId") int gameId, @PathVariable("abilityCardInGameId") int cardId, @PathVariable("enemyInGameId") int enemyId)  {
+        Game currentGame = service.findById(gameId).get();
+        Turn thisTurn =  currentGame.getTurn().get(currentGame.getTurn().size()-1);
+        AbilityCardInGame card = abilityService.findById(cardId);
+        EnemyInGame enemy = eService.findById(enemyId).get();
+        service.playAbilityCard(thisTurn, card, enemy, gameId);
+        
+        return "redirect:/games/board/"+gameId;
+    }
 
+    @GetMapping("/{gameId}/cardAction/{abilityCardInGameId}")
+    public String useCards(@PathVariable("gameId") int gameId, @PathVariable("abilityCardInGameId") int cardId)  {
+        Game currentGame = service.findById(gameId).get();
+        Turn thisTurn =  currentGame.getTurn().get(currentGame.getTurn().size()-1);
+        AbilityCardInGame card = abilityService.findById(cardId);
+        service.playAbilityCard(thisTurn, card, new EnemyInGame(), gameId);
+        
+        return "redirect:/games/board/"+gameId;
+    }
 }

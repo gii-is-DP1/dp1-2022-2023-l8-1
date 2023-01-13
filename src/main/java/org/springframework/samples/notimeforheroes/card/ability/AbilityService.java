@@ -98,6 +98,13 @@ public class AbilityService {
     	return cardIP;
     }
 
+	public AbilityCardInGame createHandInPlayer(Player player, AbilityCard card) { //Asociar AbilityCards a un Player
+    	AbilityCardInGame cardIP = new AbilityCardInGame();
+    	cardIP.setPlayer(player);
+    	cardIP.setAbilityCard(card);
+    	return cardIP;
+    }
+
 	public AbilityCardInGame addCardtoHandFromPile(Player player, AbilityCard card) { //Asociar AbilityCards a un Player
     	AbilityCardInGame cardIH = new AbilityCardInGame();
     	cardIH.setPlayer(player);
@@ -145,5 +152,13 @@ public class AbilityService {
 		
 
 	}
-    
+    public int getWoundsHero(HeroType hero) {
+    	int wounds =0;
+    	if(hero==HeroType.MAGO_MASCULINO||hero==HeroType.MAGO_FEMENINO||hero==HeroType.PICARO_FEMENINO||hero==HeroType.PICARO_MASCULINO) {
+    		wounds=2;
+    	}else {
+    		wounds=3;
+    	}
+    	return wounds;
+    }
 }
