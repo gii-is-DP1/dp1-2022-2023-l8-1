@@ -1046,6 +1046,7 @@ public class GameService {
             }
 
 			case PIEDRA_DE_AMOLAR: {// Daño 0. Coste 4, Todas tus cartas hacen 1 más de daño este turno si hacían al menos 1 de Daño --Fin--
+                //Implementada previamente al swicht
                 break;
             }
 
