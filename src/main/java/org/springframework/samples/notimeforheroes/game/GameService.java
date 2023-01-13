@@ -1056,8 +1056,7 @@ public class GameService {
                 List<Player> jugadores = findById(currentGameId).get().getPlayer();
                 for(Player p:jugadores){
                     if(!p.equals(current_player)){
-                        p.setWounds(p.getWounds()-1);
-                        playerService.savePlayer(p);
+                        loseCards(p, 1);
                     }
                 }
                 break;
