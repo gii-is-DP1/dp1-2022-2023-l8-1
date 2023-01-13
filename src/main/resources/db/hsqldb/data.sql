@@ -251,8 +251,8 @@ INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (1, 1);
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (1, 1);
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (2, 1);
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (4, 1);
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_pile_id) VALUES (64, 1);
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_pile_id) VALUES (5, 1);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_pile_id) VALUES (9, 1);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_pile_id) VALUES (11, 1);
 
 
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (15, 2);

@@ -221,6 +221,20 @@ public class GameService {
         playerService.savePlayer(currentPlayer); // Guardamos los cambios
     }
 
+    public void cardHandToPile(User user, int gameId, int abilityCardId){
+
+        Player currentPlayer = getCurrentPlayer(user, gameId); // Jugador actual
+
+        List<AbilityCardInGame> currentAbilityHand = currentPlayer.getAbilityHand(); //Cartas en mano
+
+        AbilityCardInGame currentCard = abilityService.findById(abilityCardId); // Carta a mandar al descarte
+        currentAbilityHand.remove(currentCard); // La quitamos de la lista
+        
+        currentCard.setPlayerPile(currentPlayer); // La relacionamos con el descarte
+        currentCard.setPlayer(null); // La desrelacionamos con la mano
+        abilityService.saveAbilityCardInGame(currentCard); // Guardamos los cambios en la carta
+    }
+
     public void discardMarketCard(User user, int gameId, int marketCardId) {
 
         Player currentPlayer = getCurrentPlayer(user, gameId);
@@ -690,20 +704,16 @@ public class GameService {
                 endAttack(current_player, turn);
                 break;
             }
-			case DISPARO_RAPIDO: {// Daño 1, Roba 1 si es "Disparo rápido" úsala, sino ponla al fondo del mazo de Habilidad
+			case DISPARO_RAPIDO: {// Daño 1, Roba 1 si es "Disparo rápido" úsala, sino ponla al fondo del mazo de Habilidad --Fin--
 				damageEnemy(current_player, enemy, card, total_damage, 0);
 				drawCards(current_player, 1);
-//                for(AbilityCardInGame c:mazo_actual){
-//                    if(c.getAbilityCard().getAbilityType().equals(AbilityType.DISPARO_RAPIDO)){
-//                        bonus++;
-//                    }else{
-//                        break;
-//                    }
-//                
-//                for(int i = 0; i < bonus; i++)
-//                    damageEnemy(current_player, enemy, card, total_damage, 0);
-//                }
-                // Le pongo un pin a esto y luego vuelvo la clave esta en el robo y descarte
+                if(current_player.getAbilityHand().get(current_player.getAbilityHand().size()-1)
+                            .getAbilityCard().getAbilityType().equals(AbilityType.DISPARO_RAPIDO)) {
+
+                            } else {
+                                cardHandToPile(current_player.getUser(), currentGameId, current_player.getAbilityHand().get(current_player.getAbilityHand().size()-1).getId());
+                            }
+
                 break;
             }
 
