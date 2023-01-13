@@ -1,9 +1,12 @@
 package org.springframework.samples.notimeforheroes.player;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.validation.ConstraintViolationException;
@@ -12,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.samples.notimeforheroes.card.ability.AbilityCardInGame;
 import org.springframework.samples.notimeforheroes.user.User;
 import org.springframework.samples.notimeforheroes.user.UserService;
 import org.springframework.stereotype.Service;
@@ -58,4 +62,21 @@ public class PlayerServiceTest {
     public void deletePlayerNegative() {
     	assertThrows(NoSuchElementException.class,()->playerService.delete(playerService.findPlayerById(100).get()));
     }
+
+	@Test void pujarCartaPositive(){
+		Player player = playerService.findPlayerById(2).get();
+		List<AbilityCardInGame> hand = player.getAbilityHand();
+		AbilityCardInGame card = hand.get(0);
+		playerService.pujarCarta(player, card.getId());
+		assertEquals(player.getCartasPuja().get(0), card);
+	}
+
+	
+	@Test void pujarCartaNegative(){
+		Player player = playerService.findPlayerById(2).get();
+		List<AbilityCardInGame> hand = player.getAbilityHand();
+		AbilityCardInGame card = hand.get(0);
+		playerService.pujarCarta(player, card.getId());
+		assertNotEquals(player.getCartasPuja().get(1), card);
+	}
 }
