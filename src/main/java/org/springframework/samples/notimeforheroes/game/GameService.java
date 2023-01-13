@@ -1069,7 +1069,19 @@ public class GameService {
                 for (Player player:players){
                         regainCards(player, 2);
                 }
-                current_player.setWounds(current_player.getWounds() + 1);
+                if(current_player.getHero() == HeroType.MAGO_FEMENINO || current_player.getHero() == HeroType.MAGO_MASCULINO ||
+                current_player.getHero() == HeroType.PICARO_FEMENINO || current_player.getHero() == HeroType.PICARO_MASCULINO) {
+                    if(current_player.getWounds() <2) {
+                        current_player.setWounds(current_player.getWounds() + 1);
+                    }
+                }
+                if(current_player.getHero() == HeroType.EXPLORADOR_FEMENINO || current_player.getHero() == HeroType.EXPLORADOR_MASCULINO ||
+                current_player.getHero() == HeroType.GUERRERO_MASCULINO || current_player.getHero() == HeroType.GUERRERO_FEMENINO) {
+                    if(current_player.getWounds() <3) {
+                        current_player.setWounds(current_player.getWounds() + 1);
+                    }
+                }
+                
                 playerService.savePlayer(current_player);
                 break;
             }
