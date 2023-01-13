@@ -129,7 +129,7 @@
 				</c:forEach>
 				
 				<!-- Mostrar cartas de mercado en mano -->
-				<c:forEach items="${player.marketHand}" var="marketCard">
+				<%-- <c:forEach items="${player.marketHand}" var="marketCard">
 					<spring:url value="/games/board/{gameId}/discardMarketCard/{marketCardId}" var="discardMarketCard">
 						<spring:param name="marketCardId" value="${marketCard.id}"></spring:param>
 
@@ -149,7 +149,7 @@
 					</c:choose>
 					</c:if>
 					
-				</c:forEach>
+				</c:forEach> --%>
 
 
 

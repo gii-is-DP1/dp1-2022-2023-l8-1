@@ -198,6 +198,7 @@ public class GameService {
             currentMarketCard.setPlayer(currentPlayer);
             
             AbilityType ability = (AbilityType) AbilityType.valueOf(currentMarketCard.getMarketCard().getType().toString());
+            System.out.println("HOLAMELLAMO"+ability.toString());
             List<AbilityCardInGame> ability_cards = abilityService.findAll().stream().filter(x -> x.getAbilityType().equals(ability)).map(card -> abilityService.createHandInPlayer(currentPlayer, card)).collect(Collectors.toList());
             abilityService.saveAbilityCardInGame(ability_cards.get(0));
 
