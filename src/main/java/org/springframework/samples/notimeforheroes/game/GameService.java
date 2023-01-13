@@ -1037,6 +1037,7 @@ public class GameService {
                     discardAbilityCard(current_player.getUser(), currentGameId, lista.get(0).getId());
                 }
                 reduceDamage(turn, 100);
+                turn.getCardsPlayed().add(card);
                 break;
             }
 
