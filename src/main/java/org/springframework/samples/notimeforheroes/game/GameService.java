@@ -513,6 +513,70 @@ public class GameService {
                 enemyService.saveEnemyInGame(enemy);
         }
 	}
+
+    @Transactional
+    //Dañar a un enemigo y si fuera a matarlo me otorga su gloria y oro, sumandome su baja, considerando los efectos de los bosses
+	public void damageEnemyNoBotin (Player player, EnemyInGame enemy, AbilityCardInGame card, int damage, int addGold){ 
+        //Jugador que ataca, enemigo al que ataca, Carta que usa, Daño de la carta bajo las condiciones pertienentes, Oro adicional que 
+        //pueda ser necesario si el enemigo fue asesinado por una carta en específico como ATAQUE_FURTIVO
+
+		int current_enemy_wounds = enemy.getWounds(); // Las heridas que tiene mi enemigo
+        int endurance = enemy.getEnemy().getEndurance(); // La fortitud del mismo
+        int life_total = endurance-current_enemy_wounds; // El daño necesario para matarlo
+        int glory = player.getGlory(); // Gloria actual del jugador
+
+        if (life_total > damage){ // Caso donde el enemigo sobrevive
+                enemy.setWounds(current_enemy_wounds + damage); // Recalculo las heridas del enemigo
+                enemyService.saveEnemyInGame(enemy); // Guardo la actualización del enemy
+            if(enemy.getEnemy().getIsBoss()){ // Es un boss){
+
+                player.setGlory(glory + 1); // Como he dañado a un jefe gano 1 de Gloria
+                playerService.savePlayer(player); // Guardo los cambios a player
+
+                if(enemy.getEnemy().getType().equals(EnemyType.GURDRUG)){ // Si atacas a GUDRUG pierdes 1 carta
+                    loseCards(player, 1);
+                }else if(enemy.getEnemy().getType().equals(EnemyType.SHRIEKKNIFER) && damage == 1){ // Si atacas a SHRIEKKNIFER con cartas de 1 de daño recuperas 1 carta
+                    regainCards(player, 1);
+                }
+            }
+        }else{  
+            if(enemy.getEnemy().getIsBoss()){ // Es un boss){
+                glory++; //Incremento la gloria que le voy a asignar luego
+                if(enemy.getEnemy().getType().equals(EnemyType.GURDRUG)){ // Si atacas a GUDRUG pierdes 1 carta
+                    loseCards(player, 1);
+                }else if(enemy.getEnemy().getType().equals(EnemyType.SHRIEKKNIFER) && damage == 1){ // Si atacas a SHRIEKKNIFER con cartas de que le hagan 1 punto de daño recuperas 1 carta
+                    regainCards(player, 1);
+                }
+            }
+                int kills = player.getEnemy_kills(); 
+                int gold = player.getGold(); // Recojo las kills y el oro
+
+                player.setEnemy_kills(kills + 1);
+                player.setGlory( glory );
+                player.setGold( gold ); // Recalculo los campos del jugador
+
+                playerService.savePlayer(player); // Actualizo el jugador en la DB
+
+//                List<EnemyInGame> field = enemy.getGameField().getMonsterField(); // Me traigo el campo de Batalla
+//                field.remove(enemy);
+                //player.getGame().setMonsterField(field); // Actualizo el monsterfield donde se encontraba el enemigo en el Game NO HACE FALTA
+                enemy.setGameField(null); // Elimino la relación del enemigo con el campo
+
+                enemyService.saveEnemyInGame(enemy);
+                //gameRepository.save(player.getGame()); //Actualizo el enemigo y el game NO HACE FALTA
+
+                List<AbilityCardInGame> cards_used_on = enemy.getCardsPlayed();
+                for (AbilityCardInGame c:cards_used_on){
+                    c.setEnemyInGame(null);
+                    abilityService.saveAbilityCardInGame(c); //Elimino la relación de cada carta con el Enemy que fue derrotado
+
+                }
+                List<AbilityCardInGame> void_list = enemy.getCardsPlayed();
+                void_list.clear();
+                enemy.setCardsPlayed(void_list);
+                enemyService.saveEnemyInGame(enemy);
+        }
+	}
     
     @Transactional
 	public void reduceDamage (Turn turn, int reduction){ //Asigno el número de daño a reducir este turno, entra el turno y número fijo a sumar
@@ -1036,7 +1100,26 @@ public class GameService {
                 break;
             }
 
-			case TRAMPA: {// Daño 0, Al resolver el ataque de la horda derrotas al enemigo de mayor Fortaleza pero su botín se anula
+			case TRAMPA: {// Daño 0, Al resolver el ataque de la horda derrotas al enemigo de mayor Fortaleza pero su botín se anula --Fin--
+                List<EnemyInGame> field = findById(currentGameId).get().getMonsterField();
+                List<Integer> listawounds = new ArrayList<>();
+                
+                Integer j = 0;
+                for (EnemyInGame e:field) {
+                     listawounds.add(e.getWounds());
+                }
+                for (Integer i:listawounds) {
+                    if(j<i) {
+                        j = i;
+                    }
+                }
+                EnemyInGame newenemy = new EnemyInGame();
+                for (EnemyInGame e:field) {
+                    if(e.getWounds()==j) {
+                        newenemy = e;
+                    }
+               }
+                damageEnemyNoBotin(current_player, newenemy, card, 100, 0);
                 break;
 
             }
