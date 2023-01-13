@@ -6,6 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
+<petclinic:layout pageName="games">
 <h4>EL GANADOR ES</h4>
 <c:choose>
     <c:when test="${winner==null}">
@@ -15,3 +16,4 @@
         <c:out value="${winner.user.username} con un total de ${winner.glory} puntos de gloria"></c:out>
     </c:otherwise>
 </c:choose>
+</petclinic:layout>
