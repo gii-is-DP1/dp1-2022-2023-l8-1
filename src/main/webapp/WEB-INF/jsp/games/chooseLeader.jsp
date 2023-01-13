@@ -57,7 +57,6 @@
 
         </div>
         <br>
-
         <c:choose>
             <c:when test="${bestBet > 0}">
                 <spring:url value="/games/board/{gameId}" var="tablero">
@@ -70,7 +69,15 @@
             	<spring:url value="/games/{gameId}/chooseLeader/compare" var="compare">
                     <spring:param name="gameId" value="${game.id}"/>
                 </spring:url>
-                <a href="${fn:escapeXml(compare)}" class="btn btn-default">Terminar puja</a>
+
+                <c:choose>
+                    <c:when test="${todosPujan}">
+                        <a href="${fn:escapeXml(compare)}" class="btn btn-default">Terminar puja</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="${fn:escapeXml(compare)}" class="btn btn-default" style="pointer-events: none;">Terminar puja</a>
+                    </c:otherwise>
+                </c:choose>
             </div>
             </c:otherwise>
         </c:choose>
