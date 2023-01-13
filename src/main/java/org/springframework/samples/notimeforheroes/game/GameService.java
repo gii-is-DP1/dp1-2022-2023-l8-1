@@ -1001,13 +1001,13 @@ public class GameService {
                 AbilityCardInGame disparo = current_player.getDiscardPile().stream().filter(x->x.getAbilityCard().getAbilityType().equals(AbilityType.DISPARO_RAPIDO)).findFirst().get();
                 List<AbilityCardInGame> descarte = current_player.getDiscardPile();
                 descarte.remove(disparo);
-                descarte.add(0, disparo);
-                current_player.setDiscardPile(descarte);
+                //descarte.add(0, disparo);
+                current_player.getAbilityPile().add(disparo);
                 playerService.savePlayer(current_player);
-                regainCards(current_player, 1);
+                //regainCards(current_player, 1);
                 List<AbilityCardInGame> mazo_nuevo = current_player.getAbilityPile();
                 Collections.shuffle(mazo_nuevo);
-                current_player.setAbilityPile(descarte);
+                current_player.setAbilityPile(mazo_nuevo);
                 current_player.setGold(current_player.getGold() + 1);
                 playerService.savePlayer(current_player);
                 break;
@@ -1081,8 +1081,9 @@ public class GameService {
 
 			case ROBAR_BOLSILLOS: {//Daño 0, Roba 1 moneda a cada héroe
             List<Player> players = turn.getGame().getPlayer();
+            players.remove(current_player);
                 for (Player p:players){
-                    if(!(p.getGold() > 1)){
+                    if(p.getGold() > 1){
                         p.setGold(p.getGold() - 1);
                         playerService.savePlayer(p);
                         current_player.setGold(current_player.getGold() + 1);
