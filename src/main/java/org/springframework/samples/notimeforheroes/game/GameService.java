@@ -149,8 +149,11 @@ public class GameService {
         List<Player> playersInGame = gameRepository.findPlayersInGame(gameId);
 
         for(Player player : playersInGame){
+            List<AbilityCardInGame> cartasPuja = player.getCartasPuja();
             int bet = 0;
-            for(AbilityCardInGame card : player.getCartasPuja()){
+
+            for(AbilityCardInGame card : cartasPuja){
+                
                 bet += card.getAbilityCard().getDamage();
             }
 
@@ -159,8 +162,16 @@ public class GameService {
                     bestBet = bet;
                     bestPlayerBet = player;
                 }
-            }else if(player.getUser().getBirthDate().isBefore(bestPlayerBet.getUser().getBirthDate())){
+            }else {
                 bestPlayerBet = player;
+                System.out.println("Fecha de nacimiento p1: "+player.getUser().getBirthDate());
+                System.out.println("Fecha de nacimiento p2: "+bestPlayerBet.getUser().getBirthDate());
+                Boolean esMenor = player.getUser().getBirthDate().isBefore(bestPlayerBet.getUser().getBirthDate());
+                if(esMenor){
+                    bestPlayerBet = player;
+            }else{
+                bestPlayerBet = player;
+            }
             }
 
         }

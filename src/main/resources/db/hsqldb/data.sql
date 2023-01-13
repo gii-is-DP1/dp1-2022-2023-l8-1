@@ -378,12 +378,12 @@ INSERT INTO users(username, password, email, birth_date, enabled) VALUES
 ('samalbort', 'samuel', 'samalbort@user.com','2000-10-01', 1);--6 playerId
 INSERT INTO authorities(id,user_id,username,authority) VALUES (8,8,'samalbort', 'user');
 INSERT INTO users(username, password, email, birth_date, enabled) VALUES
-('migybaman', 'miguel', 'migybaman@user.com','2000-10-01', 1);--7playerId
+('migybaman', 'miguel', 'migybaman@user.com','2000-10-09', 1);--7playerId
 INSERT INTO authorities(id,user_id,username,authority) VALUES (9,9,'migybaman', 'user');
 
 
-INSERT INTO TURN(type, game_id, player_id, damage_reduction) VALUES ('MERCADO', 1, 1,0);
-INSERT INTO TURN(type, game_id, player_id, damage_reduction) VALUES ('ATAQUE', 2, 5,0);
+-- INSERT INTO TURN(type, game_id, player_id, damage_reduction) VALUES ('MERCADO', 1, 1,0);
+-- INSERT INTO TURN(type, game_id, player_id, damage_reduction) VALUES ('ATAQUE', 2, 5,0);
 -- INSERT INTO TURN(type, game_id, player_id) VALUES ('MERCADO', 1, 2);
 -- INSERT INTO TURN(type, game_id, player_id) VALUES ('RESTABLECIMIENTO', 1, 3);
 -- INSERT INTO TURN(type, game_id, player_id) VALUES ('ATAQUE', 1, 4);
