@@ -2,6 +2,7 @@ package org.springframework.samples.notimeforheroes.game;
 
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.ArrayList;
 
 import javax.persistence.EnumType;
@@ -963,8 +965,14 @@ public class GameService {
                 break;
             }
 
-			case AURA_PROTECTORA: {//Daño 0, Cancela el daño del próximo ataque sufrido, Pierdes X cartas donde X es el número de enemigos en el campo
-
+			case AURA_PROTECTORA: {//Daño 0, Cancela el daño del próximo ataque sufrido, Pierdes X cartas donde X es el número de enemigos en el campo --Fin--
+                List<EnemyInGame> field = findById(currentGameId).get().getMonsterField();
+                List<AbilityCardInGame> lista = current_player.getAbilityHand();
+                for(EnemyInGame e:field) {
+                    Collections.shuffle(lista);
+                    discardAbilityCard(current_player.getUser(), currentGameId, lista.get(0).getId());
+                }
+                reduceDamage(turn, 100);
                 break;
             }
 

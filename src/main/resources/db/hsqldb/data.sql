@@ -249,7 +249,7 @@ INSERT INTO ability_cards(hero_type,  ability_type, damage, target)
 
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (1, 1);
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (1, 1);
-INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (38, 1);
+INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (61, 1);
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_id) VALUES (127, 1);
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_pile_id) VALUES (9, 1);
 INSERT INTO ABILITY_CARD_IN_GAME(ability_card_id, player_pile_id) VALUES (11, 1);
