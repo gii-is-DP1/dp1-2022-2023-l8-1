@@ -264,6 +264,7 @@ public class GameService {
         List<AbilityCardInGame> discards= player.getDiscardPile();
 
         if(pile.size()==0){
+            player.setWounds(player.getWounds()-1);
             pile = discards;
             Collections.shuffle(pile);
             for(int i = 0; i<pile.size(); i++){
