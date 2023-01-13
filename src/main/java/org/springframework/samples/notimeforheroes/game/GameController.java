@@ -379,26 +379,29 @@ public class GameController {
     public String userEvasion(@PathVariable("gameId") int gameId,  ModelMap modelMap){
         Game currentGame = service.findById(gameId).get();
         Turn currentTurn = currentGame.getTurn().get(currentGame.getTurn().size()-1);
-
         Player currentPlayerGaming = currentTurn.getPlayer();
         Player nextPlayerToGame = new Player();
-
-        try{
-            nextPlayerToGame = currentGame.getPlayer().get(currentGame.getPlayer().indexOf(currentPlayerGaming)+1);
-
-        }catch (Exception e){
-            nextPlayerToGame = currentGame.getPlayer().get(0);
+        if(currentPlayerGaming.isEvasion()) {//si no puede usarlo no hace nada 
+	        
+	        currentPlayerGaming.setEvasion(false);//evasion a false, ya no puede volver a usarlo
+	        
+	        try{
+	        	
+	            nextPlayerToGame = currentGame.getPlayer().get(currentGame.getPlayer().indexOf(currentPlayerGaming)+1);
+	        	
+	        }catch (Exception e){
+	            nextPlayerToGame = currentGame.getPlayer().get(0);
+	        }
+	
+	        if(currentPlayerGaming.getAbilityHand().size() >1){ // Al hacer la evasión se descartan 2 cartas
+	            int cardId1 = currentPlayerGaming.getAbilityHand().get(0).getId();
+	            int cardId2 = currentPlayerGaming.getAbilityHand().get(1).getId();
+	            service.discardAbilityCard(currentPlayerGaming.getUser(), gameId, cardId1);
+	            service.discardAbilityCard(currentPlayerGaming.getUser(), gameId, cardId2);
+	        }
+	        playerService.savePlayer(currentPlayerGaming);
+	        turnService.newTurn(currentGame, nextPlayerToGame, PhaseType.ATAQUE);
         }
-
-        if(currentPlayerGaming.getAbilityHand().size() >1){ // Al hacer la evasión se descartan 2 cartas
-            int cardId1 = currentPlayerGaming.getAbilityHand().get(0).getId();
-            int cardId2 = currentPlayerGaming.getAbilityHand().get(1).getId();
-            service.discardAbilityCard(currentPlayerGaming.getUser(), gameId, cardId1);
-            service.discardAbilityCard(currentPlayerGaming.getUser(), gameId, cardId2);
-        }
-        
-        turnService.newTurn(currentGame, nextPlayerToGame, PhaseType.ATAQUE);
-        
         return "redirect:/games/board/"+gameId;
     }
 
