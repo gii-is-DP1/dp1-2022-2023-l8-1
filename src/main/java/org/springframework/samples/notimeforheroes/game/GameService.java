@@ -2,6 +2,7 @@ package org.springframework.samples.notimeforheroes.game;
 
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.ArrayList;
 
 import javax.persistence.EnumType;
@@ -115,6 +117,12 @@ public class GameService {
   		Game currentGame = findById(gameId).get();
   		int currentNumEnemies = currentGame.getMonsterField().size();//los que quedan
   		int enemiesToAdd=0;//los que habría que añadir
+        for(EnemyInGame e:currentGame.getMonsterField()) {
+            if(e.getEnemy().getCondition()==ConditionType.REGENERACION) {
+                e.setWounds(0);
+                enemyService.saveEnemyInGame(e);
+            }
+        }
   		if (currentNumEnemies==0) {
   			enemiesToAdd=3;
   		}else if(currentNumEnemies==1 || currentNumEnemies==2) {
@@ -190,6 +198,7 @@ public class GameService {
             currentMarketCard.setPlayer(currentPlayer);
             
             AbilityType ability = (AbilityType) AbilityType.valueOf(currentMarketCard.getMarketCard().getType().toString());
+            System.out.println("HOLAMELLAMO"+ability.toString());
             List<AbilityCardInGame> ability_cards = abilityService.findAll().stream().filter(x -> x.getAbilityType().equals(ability)).map(card -> abilityService.createHandInPlayer(currentPlayer, card)).collect(Collectors.toList());
             abilityService.saveAbilityCardInGame(ability_cards.get(0));
 
@@ -262,6 +271,7 @@ public class GameService {
         List<AbilityCardInGame> discards= player.getDiscardPile();
 
         if(pile.size()==0){
+            player.setWounds(player.getWounds()-1);
             pile = discards;
             Collections.shuffle(pile);
             for(int i = 0; i<pile.size(); i++){
@@ -511,6 +521,70 @@ public class GameService {
                 enemyService.saveEnemyInGame(enemy);
         }
 	}
+
+    @Transactional
+    //Dañar a un enemigo y si fuera a matarlo me otorga su gloria y oro, sumandome su baja, considerando los efectos de los bosses
+	public void damageEnemyNoBotin (Player player, EnemyInGame enemy, AbilityCardInGame card, int damage, int addGold){ 
+        //Jugador que ataca, enemigo al que ataca, Carta que usa, Daño de la carta bajo las condiciones pertienentes, Oro adicional que 
+        //pueda ser necesario si el enemigo fue asesinado por una carta en específico como ATAQUE_FURTIVO
+
+		int current_enemy_wounds = enemy.getWounds(); // Las heridas que tiene mi enemigo
+        int endurance = enemy.getEnemy().getEndurance(); // La fortitud del mismo
+        int life_total = endurance-current_enemy_wounds; // El daño necesario para matarlo
+        int glory = player.getGlory(); // Gloria actual del jugador
+
+        if (life_total > damage){ // Caso donde el enemigo sobrevive
+                enemy.setWounds(current_enemy_wounds + damage); // Recalculo las heridas del enemigo
+                enemyService.saveEnemyInGame(enemy); // Guardo la actualización del enemy
+            if(enemy.getEnemy().getIsBoss()){ // Es un boss){
+
+                player.setGlory(glory + 1); // Como he dañado a un jefe gano 1 de Gloria
+                playerService.savePlayer(player); // Guardo los cambios a player
+
+                if(enemy.getEnemy().getType().equals(EnemyType.GURDRUG)){ // Si atacas a GUDRUG pierdes 1 carta
+                    loseCards(player, 1);
+                }else if(enemy.getEnemy().getType().equals(EnemyType.SHRIEKKNIFER) && damage == 1){ // Si atacas a SHRIEKKNIFER con cartas de 1 de daño recuperas 1 carta
+                    regainCards(player, 1);
+                }
+            }
+        }else{  
+            if(enemy.getEnemy().getIsBoss()){ // Es un boss){
+                glory++; //Incremento la gloria que le voy a asignar luego
+                if(enemy.getEnemy().getType().equals(EnemyType.GURDRUG)){ // Si atacas a GUDRUG pierdes 1 carta
+                    loseCards(player, 1);
+                }else if(enemy.getEnemy().getType().equals(EnemyType.SHRIEKKNIFER) && damage == 1){ // Si atacas a SHRIEKKNIFER con cartas de que le hagan 1 punto de daño recuperas 1 carta
+                    regainCards(player, 1);
+                }
+            }
+                int kills = player.getEnemy_kills(); 
+                int gold = player.getGold(); // Recojo las kills y el oro
+
+                player.setEnemy_kills(kills + 1);
+                player.setGlory( glory );
+                player.setGold( gold ); // Recalculo los campos del jugador
+
+                playerService.savePlayer(player); // Actualizo el jugador en la DB
+
+//                List<EnemyInGame> field = enemy.getGameField().getMonsterField(); // Me traigo el campo de Batalla
+//                field.remove(enemy);
+                //player.getGame().setMonsterField(field); // Actualizo el monsterfield donde se encontraba el enemigo en el Game NO HACE FALTA
+                enemy.setGameField(null); // Elimino la relación del enemigo con el campo
+
+                enemyService.saveEnemyInGame(enemy);
+                //gameRepository.save(player.getGame()); //Actualizo el enemigo y el game NO HACE FALTA
+
+                List<AbilityCardInGame> cards_used_on = enemy.getCardsPlayed();
+                for (AbilityCardInGame c:cards_used_on){
+                    c.setEnemyInGame(null);
+                    abilityService.saveAbilityCardInGame(c); //Elimino la relación de cada carta con el Enemy que fue derrotado
+
+                }
+                List<AbilityCardInGame> void_list = enemy.getCardsPlayed();
+                void_list.clear();
+                enemy.setCardsPlayed(void_list);
+                enemyService.saveEnemyInGame(enemy);
+        }
+	}
     
     @Transactional
 	public void reduceDamage (Turn turn, int reduction){ //Asigno el número de daño a reducir este turno, entra el turno y número fijo a sumar
@@ -701,18 +775,18 @@ public class GameService {
 		switch (card_type) {
 			case COMPANERO_LOBO: {
                 // Daño 2, Previenes 2 de Daño --Fin--
-				damageEnemy(current_player, enemy, card, card_damage + plain_add_dmg, 0);
+				damageEnemy(current_player, enemy, card, card_damage + plain_add_dmg+bonus, 0);
 				reduceDamage(turn, 2);
                 break;
             }
 			case DISPARO_CERTERO: {// Daño 3, Pierdes 1 cartas, Finalizas tu ataque --Fin--
-				damageEnemy(current_player, enemy, card, total_damage, 0);
+				damageEnemy(current_player, enemy, card, total_damage+bonus, 0);
 				loseCards(current_player, 1);
                 endAttack(current_player, turn);
                 break;
             }
 			case DISPARO_RAPIDO: {// Daño 1, Roba 1 si es "Disparo rápido" úsala, sino ponla al fondo del mazo de Habilidad --Fin--
-				damageEnemy(current_player, enemy, card, total_damage, 0);
+				damageEnemy(current_player, enemy, card, total_damage+bonus, 0);
 				drawCards(current_player, 1);
                 if(current_player.getAbilityHand().get(current_player.getAbilityHand().size()-1)
                             .getAbilityCard().getAbilityType().equals(AbilityType.DISPARO_RAPIDO)) {
@@ -725,7 +799,7 @@ public class GameService {
             }
 
 			case EN_LA_DIANA: {// Daño 4, Gana 1 de Gloria, Pierdes 1 carta --Fin--
-                damageEnemy(current_player, enemy, card, total_damage, 0);
+                damageEnemy(current_player, enemy, card, total_damage+bonus, 0);
                 current_player.setGlory(current_player.getGlory() + 1);
                 playerService.savePlayer(current_player);
                 loseCards(current_player, 1); 
@@ -733,13 +807,13 @@ public class GameService {
             }
 
 			case LLUVIA_DE_FLECHAS: {// Daño 2, Esta carta daña a 2 enemigos y al héroe con menos heridas, en empate tú eliges --Fin--
-                damageEnemy(current_player, enemy, card, total_damage, 0);
+                damageEnemy(current_player, enemy, card, total_damage+bonus, 0);
                 EnemyInGame enemy2 = findById(currentGameId).get().getMonsterField().get(0);
                 EnemyInGame enemy3 = findById(currentGameId).get().getMonsterField().get(1);
                 if(!(enemy.equals(enemy2))) {
-                    damageEnemy(current_player, enemy2, card, total_damage, 0);
+                    damageEnemy(current_player, enemy2, card, total_damage+bonus, 0);
                 } else if (!(enemy.equals(enemy3))){
-                    damageEnemy(current_player, enemy3, card, total_damage, 0);
+                    damageEnemy(current_player, enemy3, card, total_damage+bonus, 0);
                 }
                 
                 Player player = findById(currentGameId).get().getPlayer().stream().max(Comparator.comparing(Player::getWounds)).get();
@@ -748,25 +822,25 @@ public class GameService {
                 break;
             }
 			case ATAQUE_BRUTAL: {// Daño 3, Pierdes 1 carta --Fin--
-                damageEnemy(current_player, enemy, card, total_damage, 0);
+                damageEnemy(current_player, enemy, card, total_damage+bonus, 0);
                 loseCards(current_player, 1);
                 break;
             }
 
 			case CARGA_CON_ESCUDO: {// Daño 2, Previenes 2 de Daño --Fin--
-                damageEnemy(current_player, enemy, card, total_damage, 0);
+                damageEnemy(current_player, enemy, card, total_damage+bonus, 0);
                 reduceDamage(turn, 2);
                 break;
             }
 
 			case DOBLE_ESPADAZO: {// Daño 2, Pierdes 1 carta --Fin--
-                damageEnemy(current_player, enemy, card, total_damage, 0);
+                damageEnemy(current_player, enemy, card, total_damage+bonus, 0);
                 loseCards(current_player, 1);
                 break;
             }
 
 			case ESPADAZO: {// Daño 1, si el primer "Espadazo" que juegas Roba 1 --Fin--
-                damageEnemy(current_player, enemy, card, total_damage, 0);
+                damageEnemy(current_player, enemy, card, total_damage+bonus, 0);
                 if(turn_cards.stream().filter(x -> x.getAbilityCard().getAbilityType().equals(card.getAbilityCard().getAbilityType())).count() == 0) {
                     drawCards(current_player, 1);
                 }
@@ -779,7 +853,7 @@ public class GameService {
                 mazo_actual.add(top_card); // Esto la manda para abajo
                 current_player.setAbilityPile(mazo_actual);
                 playerService.savePlayer(current_player); // Guardo los cambios en la pila
-                damageEnemy(current_player, enemy, card, total_damage + top_card.getAbilityCard().getDamage(), 0);
+                damageEnemy(current_player, enemy, card, total_damage + top_card.getAbilityCard().getDamage()+bonus, 0);
                 break;
             }
 
@@ -789,7 +863,7 @@ public class GameService {
                         bonus++;
                     }
                 }
-                damageEnemy(current_player, enemy, card, total_damage, 0);
+                damageEnemy(current_player, enemy, card, total_damage+bonus, 0);
                 drawCards(current_player, 1);
                 break;
             }
@@ -800,7 +874,7 @@ public class GameService {
                         bonus++;
                     }
                 }
-                damageEnemy(current_player, enemy, card, total_damage, 0);
+                damageEnemy(current_player, enemy, card, total_damage+bonus, 0);
                 loseCards(current_player, 1);
                 break;
             }
@@ -825,7 +899,7 @@ public class GameService {
                         bonus++;
                     }
                 }
-                damageEnemy(current_player, enemy, card, total_damage, 0);
+                damageEnemy(current_player, enemy, card, total_damage+bonus, 0);
                 current_player.setGlory(current_player.getGlory() + 1);
                 playerService.savePlayer(current_player);
                 break;
@@ -841,7 +915,7 @@ public class GameService {
                 if(total_damage+bonus<0){
                     total_damage = 0;
                 }
-                damageEnemy(current_player, enemy, card, total_damage, 0);
+                damageEnemy(current_player, enemy, card, total_damage+bonus, 0);
                 List<Player> not_you = turn.getGame().getPlayer();
                 for (Player player:not_you){
                     if(!current_player.equals(player)){
@@ -854,21 +928,23 @@ public class GameService {
             }
 
 			case AL_CORAZON: {// Daño 4, Si derrotas un enemigo con esto gana 1 Moneda si el primer "Al Corazón" del turno, Pierdes 1 carta --Fin--
-                if(turn_cards.stream().filter(x->x.getAbilityCard().getAbilityType().equals(card.getAbilityCard().getAbilityType())).count() == 0 && 
+                int bonusGold=0;
+				if(turn_cards.stream().filter(x->x.getAbilityCard().getAbilityType().equals(card.getAbilityCard().getAbilityType())).count() == 0 && 
                     ((enemy.getEnemy().getEndurance() - enemy.getWounds()) <= total_damage)){
-                    bonus++;
+                    bonusGold++;
                 }
-                damageEnemy(current_player, enemy, card, total_damage, bonus);
+                damageEnemy(current_player, enemy, card, total_damage+bonus, bonusGold);
                 loseCards(current_player, 1);
                 break;
             }
 
 			case ATAQUE_FURTIVO: {// Daño 2, Si derrotas un enemigo con esto gana 1 Moneda si el primer "Ataque Furtivo" del turno --Fin--
-                if(turn_cards.stream().filter(x->x.getAbilityCard().getAbilityType().equals(card.getAbilityCard().getAbilityType())).count() == 0 && 
+				int bonusGold=0;
+				if(turn_cards.stream().filter(x->x.getAbilityCard().getAbilityType().equals(card.getAbilityCard().getAbilityType())).count() == 0 && 
                     ((enemy.getEnemy().getEndurance() - enemy.getWounds()) <= total_damage)){
-                    bonus++;
+                    bonusGold++;
                 }
-                damageEnemy(current_player, enemy, card, total_damage, bonus);
+                damageEnemy(current_player, enemy, card, total_damage+bonus, bonusGold);
                 break;
             }
 
@@ -881,13 +957,13 @@ public class GameService {
             }
 
 			case EN_LAS_SOMBRAS: {// Daño 1, Previenes 2 de Daño --Fin--
-                damageEnemy(current_player, enemy, card, total_damage, 0);
+                damageEnemy(current_player, enemy, card, total_damage+bonus, 0);
                 reduceDamage(turn, 2);
                 break;
             }
 
 			case DAGA_ELFICA: {//Daño 2, Coste 3, Si el héroe tiene como Proficiency "Pericia" se recupera tras jugarla, PROFICIENCIAS:  Distancia, Pericia, Melee --Fin--
-                damageEnemy(current_player, enemy, card, total_damage, 0);
+                damageEnemy(current_player, enemy, card, total_damage+bonus, 0);
                 
                 break;
             }
@@ -904,7 +980,7 @@ public class GameService {
             if(current_player.getSecondProfiency().equals(Profiency.DISTANCIA)){
                 bonus--;
             }
-                damageEnemy(current_player, enemy, card, total_damage, 0);
+                damageEnemy(current_player, enemy, card, total_damage+bonus, 0);
                 break;
             }
 
@@ -935,13 +1011,13 @@ public class GameService {
                 AbilityCardInGame disparo = current_player.getDiscardPile().stream().filter(x->x.getAbilityCard().getAbilityType().equals(AbilityType.DISPARO_RAPIDO)).findFirst().get();
                 List<AbilityCardInGame> descarte = current_player.getDiscardPile();
                 descarte.remove(disparo);
-                descarte.add(0, disparo);
-                current_player.setDiscardPile(descarte);
+                //descarte.add(0, disparo);
+                current_player.getAbilityPile().add(disparo);
                 playerService.savePlayer(current_player);
-                regainCards(current_player, 1);
+                //regainCards(current_player, 1);
                 List<AbilityCardInGame> mazo_nuevo = current_player.getAbilityPile();
                 Collections.shuffle(mazo_nuevo);
-                current_player.setAbilityPile(descarte);
+                current_player.setAbilityPile(mazo_nuevo);
                 current_player.setGold(current_player.getGold() + 1);
                 playerService.savePlayer(current_player);
                 break;
@@ -963,8 +1039,15 @@ public class GameService {
                 break;
             }
 
-			case AURA_PROTECTORA: {//Daño 0, Cancela el daño del próximo ataque sufrido, Pierdes X cartas donde X es el número de enemigos en el campo
-
+			case AURA_PROTECTORA: {//Daño 0, Cancela el daño del próximo ataque sufrido, Pierdes X cartas donde X es el número de enemigos en el campo --Fin--
+                List<EnemyInGame> field = findById(currentGameId).get().getMonsterField();
+                List<AbilityCardInGame> lista = current_player.getAbilityHand();
+                for(EnemyInGame e:field) {
+                    Collections.shuffle(lista);
+                    discardAbilityCard(current_player.getUser(), currentGameId, lista.get(0).getId());
+                }
+                reduceDamage(turn, 100);
+                turn.getCardsPlayed().add(card);
                 break;
             }
 
@@ -983,8 +1066,7 @@ public class GameService {
                 List<Player> jugadores = findById(currentGameId).get().getPlayer();
                 for(Player p:jugadores){
                     if(!p.equals(current_player)){
-                        p.setWounds(p.getWounds()-1);
-                        playerService.savePlayer(p);
+                        loseCards(p, 1);
                     }
                 }
                 break;
@@ -996,7 +1078,19 @@ public class GameService {
                 for (Player player:players){
                         regainCards(player, 2);
                 }
-                current_player.setWounds(current_player.getWounds() + 1);
+                if(current_player.getHero() == HeroType.MAGO_FEMENINO || current_player.getHero() == HeroType.MAGO_MASCULINO ||
+                current_player.getHero() == HeroType.PICARO_FEMENINO || current_player.getHero() == HeroType.PICARO_MASCULINO) {
+                    if(current_player.getWounds() <2) {
+                        current_player.setWounds(current_player.getWounds() + 1);
+                    }
+                }
+                if(current_player.getHero() == HeroType.EXPLORADOR_FEMENINO || current_player.getHero() == HeroType.EXPLORADOR_MASCULINO ||
+                current_player.getHero() == HeroType.GUERRERO_MASCULINO || current_player.getHero() == HeroType.GUERRERO_FEMENINO) {
+                    if(current_player.getWounds() <3) {
+                        current_player.setWounds(current_player.getWounds() + 1);
+                    }
+                }
+                
                 playerService.savePlayer(current_player);
                 break;
             }
@@ -1009,8 +1103,9 @@ public class GameService {
 
 			case ROBAR_BOLSILLOS: {//Daño 0, Roba 1 moneda a cada héroe
             List<Player> players = turn.getGame().getPlayer();
+            players.remove(current_player);
                 for (Player p:players){
-                    if(!(p.getGold() > 1)){
+                    if(p.getGold() > 1){
                         p.setGold(p.getGold() - 1);
                         playerService.savePlayer(p);
                         current_player.setGold(current_player.getGold() + 1);
@@ -1028,7 +1123,26 @@ public class GameService {
                 break;
             }
 
-			case TRAMPA: {// Daño 0, Al resolver el ataque de la horda derrotas al enemigo de mayor Fortaleza pero su botín se anula
+			case TRAMPA: {// Daño 0, Al resolver el ataque de la horda derrotas al enemigo de mayor Fortaleza pero su botín se anula --Fin--
+                List<EnemyInGame> field = findById(currentGameId).get().getMonsterField();
+                List<Integer> listawounds = new ArrayList<>();
+                
+                Integer j = 0;
+                for (EnemyInGame e:field) {
+                     listawounds.add(e.getWounds());
+                }
+                for (Integer i:listawounds) {
+                    if(j<i) {
+                        j = i;
+                    }
+                }
+                EnemyInGame newenemy = new EnemyInGame();
+                for (EnemyInGame e:field) {
+                    if(e.getWounds()==j) {
+                        newenemy = e;
+                    }
+               }
+                damageEnemyNoBotin(current_player, newenemy, card, 100, 0);
                 break;
 
             }
@@ -1038,6 +1152,7 @@ public class GameService {
             }
 
 			case PIEDRA_DE_AMOLAR: {// Daño 0. Coste 4, Todas tus cartas hacen 1 más de daño este turno si hacían al menos 1 de Daño --Fin--
+                //Implementada previamente al swicht
                 break;
             }
 
