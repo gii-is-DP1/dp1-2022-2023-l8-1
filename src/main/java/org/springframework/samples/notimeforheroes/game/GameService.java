@@ -3,6 +3,7 @@ package org.springframework.samples.notimeforheroes.game;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -721,12 +722,23 @@ public class GameService {
                 damageEnemy(current_player, enemy, card, total_damage, 0);
                 current_player.setGlory(current_player.getGlory() + 1);
                 playerService.savePlayer(current_player);
-                loseCards(current_player, 1);
+                loseCards(current_player, 1); 
                 break;
             }
 
-			case LLUVIA_DE_FLECHAS: {// Daño 2, Esta carta daña a 2 enemigos y al héroe con menos heridas, en empate tú eliges
-            //Le pongo un pin luego volvemos
+			case LLUVIA_DE_FLECHAS: {// Daño 2, Esta carta daña a 2 enemigos y al héroe con menos heridas, en empate tú eliges --Fin--
+                damageEnemy(current_player, enemy, card, total_damage, 0);
+                EnemyInGame enemy2 = findById(currentGameId).get().getMonsterField().get(0);
+                EnemyInGame enemy3 = findById(currentGameId).get().getMonsterField().get(1);
+                if(!(enemy.equals(enemy2))) {
+                    damageEnemy(current_player, enemy2, card, total_damage, 0);
+                } else if (!(enemy.equals(enemy3))){
+                    damageEnemy(current_player, enemy3, card, total_damage, 0);
+                }
+                
+                Player player = findById(currentGameId).get().getPlayer().stream().max(Comparator.comparing(Player::getWounds)).get();
+                loseCards(player, 2);
+                
                 break;
             }
 			case ATAQUE_BRUTAL: {// Daño 3, Pierdes 1 carta --Fin--
