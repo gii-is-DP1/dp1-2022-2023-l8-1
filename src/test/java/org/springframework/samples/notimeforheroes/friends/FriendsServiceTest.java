@@ -30,7 +30,7 @@ public class FriendsServiceTest {
     	friends.setUser1(userService.findUser(1).get());
     	friends.setUser2(userService.findUser(4).get());
     	friendService.saveFriend(friends);
-    	assertTrue(friendService.findFriend(n+1).isPresent());
+    	assertTrue(friendService.findFriend(friends.getId()).isPresent());
     }
     
     @Test

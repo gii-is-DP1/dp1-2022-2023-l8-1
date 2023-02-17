@@ -28,7 +28,7 @@
             <h4>Elige una o dos cartas para determinar quien ser&aacute el l&iacuteder de la partida</h4>
         </div>
 
-        <c:if test="${bestBet > 0}">El jugador con mayor puja es: ${bestPlayerBet.user.username} con una apuesta de ${bestBet} puntos</c:if>
+        <c:if test="${bestBet != null}">El jugador con mayor puja es: ${bestPlayerBet.user.username} con una apuesta de ${bestBet} puntos</c:if>
 
         
         <c:forEach items="${players}" var="player">

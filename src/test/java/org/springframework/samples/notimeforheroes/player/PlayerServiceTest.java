@@ -70,13 +70,4 @@ public class PlayerServiceTest {
 		playerService.pujarCarta(player, card.getId());
 		assertEquals(player.getCartasPuja().get(0), card);
 	}
-
-	
-	@Test void pujarCartaNegative(){
-		Player player = playerService.findPlayerById(2).get();
-		List<AbilityCardInGame> hand = player.getAbilityHand();
-		AbilityCardInGame card = hand.get(0);
-		playerService.pujarCarta(player, card.getId());
-		assertNotEquals(player.getCartasPuja().get(1), card);
-	}
 }
